@@ -11,7 +11,7 @@
                                 @if ($this->saved())
                                     <a href="{{ $post->permalink }}" target="_blank"
                                         class="link text-sm flex-space-2 mt-2">
-                                        @icon('bi-box-arrow-up-right')
+                                        <i class="icon bi-box-arrow-up-right"></i>
                                         <span>{{ $post->permalink }}</span>
                                     </a>
                                 @endif
@@ -58,6 +58,21 @@
                             <div class="col">
                                 <fgx:textarea id="seo_description" wire:model.live="seo_description"
                                     :label="__('Seo description')" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-6 overflow-visible">
+                    <fgx:card-header :title="__('Categories')" />
+                    <div class="card-body overflow-visible">
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="col">
+                                <x-select-categories class="text-xs" model="categories" id="categories"
+                                    :label="__('Categories')" :categories="get_categories()" :value="$categories" />
+                            </div>
+                            <div class="col">
+                                <x-select-choice model="tags" wire:model.live="tags" class="select-custom"
+                                    :placeholder="__('Select tags')" :label="__('Tags')" :options="tag_options($tags)" :choices="$tags" />
                             </div>
                         </div>
                     </div>

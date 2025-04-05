@@ -7,3 +7,5 @@ require __DIR__ . '/user-helpers.php';
 require __DIR__ . '/permission-helpers.php';
 require __DIR__ . '/role-helpers.php';
 require __DIR__ . '/datatable-helpers.php';
+require __DIR__ . '/category-helpers.php';
+require __DIR__ . '/tag-helpers.php';

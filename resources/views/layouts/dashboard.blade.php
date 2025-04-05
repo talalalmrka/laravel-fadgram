@@ -37,6 +37,10 @@
 
                     <x-nav-link wire:navigate :href="route('dashboard.posts')" wire:current="active" icon="bi-newspaper"
                         :label="__('Posts')" />
+                    <x-nav-link wire:navigate :href="route('dashboard.categories')" wire:current="active" icon="bi-folder-fill"
+                        :label="__('Categories')" />
+                    <x-nav-link wire:navigate :href="route('dashboard.tags')" wire:current="active" icon="bi-tags-fill"
+                        :label="__('Tags')" />
                     <x-nav-link wire:navigate :href="route('dashboard.media')" wire:current="active" icon="bi-image"
                         :label="__('Media')" />
 

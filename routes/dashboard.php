@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Dashboard\Categories\Index as Categories;
 use App\Livewire\Dashboard\Home\Index as DashboardHome;
 use App\Livewire\Dashboard\Media\Index as ManageMedia;
 use App\Livewire\Dashboard\Profile\Index as Profile;
@@ -10,6 +11,7 @@ use App\Livewire\Dashboard\Permissions\Index as Permissions;
 //use App\Livewire\Dashboard\Permissions\Edit as EditPermission;
 use App\Livewire\Dashboard\Posts\Index as Posts;
 use App\Livewire\Dashboard\Posts\Edit as EditPost;
+use App\Livewire\Dashboard\Tags\Index as Tags;
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Dashboard\Users\Index as UsersIndex;
@@ -45,6 +47,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::get('/', Posts::class)->name('dashboard.posts');
         Route::get('edit/{post}', EditPost::class)->name('dashboard.posts.edit');
         Route::get('create', EditPost::class)->name('dashboard.posts.create');
+    });
+
+    //categories
+    Route::group(['prefix' => 'categories', 'middleware' => ['can:manage_categories']], function () {
+        Route::get('/', Categories::class)->name('dashboard.categories');
+    });
+    //tags
+    Route::group(['prefix' => 'tags', 'middleware' => ['can:manage_categories']], function () {
+        Route::get('/', Tags::class)->name('dashboard.tags');
     });
 
     //media

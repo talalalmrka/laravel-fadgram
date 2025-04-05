@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\HasCategories;
 use App\Traits\HasMeta;
+use App\Traits\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -13,7 +15,7 @@ use Illuminate\Support\Str;
 
 class Post extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, HasThumbnail, HasMeta, WithEditUrl;
+    use HasFactory, InteractsWithMedia, HasThumbnail, HasMeta, WithEditUrl, HasCategories, HasTags;
     protected $fillable = [
         'user_id',
         'name',
@@ -41,7 +43,8 @@ class Post extends Model implements HasMedia
     {
         return $this->created_at->format('d M, Y');
     }
-    public function getThumbnailFallbackUrlAttribute() {
+    public function getThumbnailFallbackUrlAttribute()
+    {
         return asset('assets/img/post-thumbnail.png');
     }
     public function registerMediaCollections(): void
@@ -66,7 +69,8 @@ class Post extends Model implements HasMedia
         return $slug;
     }
 
-    public function getLayout() {
+    public function getLayout()
+    {
         $template = $this->getMeta('template', 'cover');
         $layout = "layouts.$template";
         return view()->exists($layout) ? $layout : "layouts.app";

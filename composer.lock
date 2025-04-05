@@ -2243,16 +2243,16 @@
         },
         {
             "name": "milwad/laravel-validate",
-            "version": "v1.9.1",
+            "version": "v1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milwad-dev/laravel-validate.git",
-                "reference": "9ef6519ed208515f524f3f37628cbec30df3a9a2"
+                "reference": "3ddd0ce6fb7136eccf63458673b85f20fb3f132d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milwad-dev/laravel-validate/zipball/9ef6519ed208515f524f3f37628cbec30df3a9a2",
-                "reference": "9ef6519ed208515f524f3f37628cbec30df3a9a2",
+                "url": "https://api.github.com/repos/milwad-dev/laravel-validate/zipball/3ddd0ce6fb7136eccf63458673b85f20fb3f132d",
+                "reference": "3ddd0ce6fb7136eccf63458673b85f20fb3f132d",
                 "shasum": ""
             },
             "require": {
@@ -2307,9 +2307,9 @@
             ],
             "support": {
                 "issues": "https://github.com/milwad-dev/laravel-validate/issues",
-                "source": "https://github.com/milwad-dev/laravel-validate/tree/v1.9.1"
+                "source": "https://github.com/milwad-dev/laravel-validate/tree/v1.9.2"
             },
-            "time": "2025-03-03T16:49:08+00:00"
+            "time": "2025-04-04T18:35:25+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6262,16 +6262,16 @@
         },
         {
             "name": "talalalmrka/fgx",
-            "version": "1.1.0",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/talalalmrka/fgx.git",
-                "reference": "b2db36a5ba4d67f728242e7a7fb3c7f974e22a60"
+                "reference": "2317fd1d41e68cc45125eef4d6ed981687e23fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/talalalmrka/fgx/zipball/b2db36a5ba4d67f728242e7a7fb3c7f974e22a60",
-                "reference": "b2db36a5ba4d67f728242e7a7fb3c7f974e22a60",
+                "url": "https://api.github.com/repos/talalalmrka/fgx/zipball/2317fd1d41e68cc45125eef4d6ed981687e23fd8",
+                "reference": "2317fd1d41e68cc45125eef4d6ed981687e23fd8",
                 "shasum": ""
             },
             "require": {
@@ -6320,9 +6320,9 @@
             ],
             "support": {
                 "issues": "https://github.com/talalalmrka/fgx/issues",
-                "source": "https://github.com/talalalmrka/fgx/tree/1.1.0"
+                "source": "https://github.com/talalalmrka/fgx/tree/1.1.3"
             },
-            "time": "2025-04-03T20:33:11+00:00"
+            "time": "2025-04-05T17:03:36+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

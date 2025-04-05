@@ -14,11 +14,11 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    /*server:{
-      cors: true,
-      watch: {
-        usePolling: true,
-        interval: 5000,
-      }
-    }*/
+    server: {
+        cors: true,
+        watch: {
+            usePolling: true,
+            interval: 1000,
+        }
+    }
 });

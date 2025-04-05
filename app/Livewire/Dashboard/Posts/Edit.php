@@ -28,8 +28,10 @@ class Edit extends Component
 
     public $thumbnail;
     public $files = [];
+    public $categories = [];
+    public $tags = [];
 
-    protected $fillable_data = ['user_id','name', 'slug', 'type', 'status', 'content'];
+    protected $fillable_data = ['user_id', 'name', 'slug', 'type', 'status', 'content'];
     protected $fillable_meta = ['seo_title', 'seo_description', 'template'];
     protected $fillable_media = ['thumbnail', 'files'];
     public function mount(?Post $post)
@@ -39,43 +41,53 @@ class Edit extends Component
     public function afterFill()
     {
         $this->type = 'post';
+        $this->categories = $this->post->getCategoryIds()->toArray();
+        $this->tags = $this->post->getTagIds()->toArray();
     }
     public function rules()
     {
         return [
-            "user_id" => ["required","integer",Rule::exists('users', 'id')],
-            "name" => ["required","string","max:255"],
-            "slug" => ["required", "string", "max:255",Rule::unique("posts", "slug")->ignore($this->post)],
-            "type" => ["required","string", Rule::in(['post'])],
-            "status" => ["required","string",Rule::in(['draft', 'publish', 'trash'])],
-            "content" => ["nullable","string",],
-            "template" => ["nullable","string",Rule::in(config('layouts.layouts'))],
-            "seo_title" => ["nullable","string","max:255"],
-            "seo_description" => ["nullable","string","max:255"],
-            'thumbnail' => ['nullable','image','max:5120'],
-            'files' => ['nullable','array'],
-            'files.*' => ['nullable','file'],
+            "user_id" => ["required", "integer", Rule::exists('users', 'id')],
+            "name" => ["required", "string", "max:255"],
+            "slug" => ["required", "string", "max:255", Rule::unique("posts", "slug")->ignore($this->post)],
+            "type" => ["required", "string", Rule::in(['post'])],
+            "status" => ["required", "string", Rule::in(['draft', 'publish', 'trash'])],
+            "content" => ["nullable", "string",],
+            "template" => ["nullable", "string", Rule::in(config('layouts.layouts'))],
+            "seo_title" => ["nullable", "string", "max:255"],
+            "seo_description" => ["nullable", "string", "max:255"],
+            'thumbnail' => ['nullable', 'image', 'max:5120'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['nullable', 'file'],
+            'categories' => ['nullable', 'array'],
+            'categories.*' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('type', 'category')],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('type', 'tag')],
         ];
     }
-    public function beforeSave() {
-        if(empty($this->slug)){
+    public function beforeSave()
+    {
+        if (empty($this->slug)) {
             $this->slug = Post::generateSlug($this->name);
         }
-        if(empty($this->user_id)){
+        if (empty($this->user_id)) {
             $this->user_id = auth()->user()->id;
         }
         $this->type = 'post';
     }
-    public function afterSave() {
+    public function afterSave()
+    {
+        $this->post->syncCategories($this->categories);
+        $this->post->syncTags($this->tags);
         $currentUrl = url()->current();
-        $this->toastInfo('its edit current :current, url :url', ['current' => $currentUrl,'url' => $this->post->edit_url]);
+        $this->toastInfo('its edit current :current, url :url', ['current' => $currentUrl, 'url' => $this->post->edit_url]);
         if ($this->post && url()->current() !== $this->post->edit_url) {
             $this->toastError('Not edit :url', ['url' => $this->post->edit_url]);
             //$this->redirect(route('dashboard.posts.edit', $this->post), true);
         }
-
     }
-    public function statusKey() {
+    public function statusKey()
+    {
         return 'save';
     }
 

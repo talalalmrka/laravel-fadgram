@@ -17,6 +17,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'manage_permissions',
                 'manage_posts',
                 'manage_pages',
+                'manage_categories',
                 'manage_menus',
                 'manage_media',
                 'manage_settings',
@@ -31,12 +32,14 @@ class RolesAndPermissionsSeeder extends Seeder
                 'writer' => [
                     'manage_posts',
                     'manage_pages',
+                    'manage_categories',
                     'manage_menus',
                     'manage_media',
                     'manage_settings',
                 ],
                 'editor' => [
                     'manage_posts',
+                    'manage_categories',
                 ],
                 'member' => [],
             ],

@@ -58,4 +58,17 @@
     .end-icon {
         @apply text-gray-600 dark:text-gray-300;
     }
+
+    .categories-list {
+        @apply list-none p-0;
+
+        li {
+            @apply list-none;
+
+            ul {
+                @apply ms-3 mb-0;
+            }
+        }
+    }
+
 }

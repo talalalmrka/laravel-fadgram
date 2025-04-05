@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Traits\HasMeta;
+use App\Traits\HasThumbnail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,10 +13,11 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\DB;
+
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, InteractsWithMedia, HasMeta;
+    use HasFactory, Notifiable, HasRoles, InteractsWithMedia, HasMeta, HasThumbnail;
 
     /**
      * The attributes that are mass assignable.
@@ -63,12 +65,14 @@ class User extends Authenticatable implements HasMedia
             }
         });
     }
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
     public function registerMediaCollections(): void
     {
-        $this
+        $this->registerThumbnail();
+        /*$this
             ->addMediaCollection('avatar')
             ->useFallbackUrl(asset('assets/img/profile.svg'))
             ->useFallbackPath(public_path('/assets/img/profile.svg'))
@@ -78,7 +82,7 @@ class User extends Authenticatable implements HasMedia
                 'image/png',
                 'image/webp',
                 'image/gif'
-            ]);
+            ]);*/
         $this
             ->addMediaCollection('images')
             ->acceptsMimeTypes([
@@ -89,7 +93,6 @@ class User extends Authenticatable implements HasMedia
             ]);
         $this
             ->addMediaCollection('files');
-
     }
 
     public function getAvatarUrl($conversionName = null): string
@@ -102,7 +105,8 @@ class User extends Authenticatable implements HasMedia
         return $this->getAvatarUrl('sm');
     }
 
-    public function getDisplayNameAttribute() {
+    public function getDisplayNameAttribute()
+    {
         return $this->getMeta('display_name', $this->name);
     }
 }
