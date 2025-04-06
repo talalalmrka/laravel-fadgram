@@ -7,6 +7,7 @@
 ])
 <a href="{{ route('home') }}" title="{{ config('app.name') }}"
     {{ $attributes->merge(array_merge(['id' => $id, 'class' => css_classes(['app-logo', $class])], $atts)) }}>
+
     <svg {{ attributes($image_atts)->merge([
         'class' => css_classes(['w-10', 'h-10']),
     ]) }}

@@ -27,4 +27,9 @@ trait WithToast
     {
         $this->toast($message, ['type' => 'error', 'position' => $position]);
     }
+
+    public function addSuccess($name, $message)
+    {
+        session()->flash($name, $message);
+    }
 }

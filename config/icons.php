@@ -1,5 +1,13 @@
 <?php
 return [
+    'user' => 'bi-person-fill',
+    'role' => 'bi-person-cog',
+    'permission' => 'bi-key-fill',
+    'post' => 'bi-newspaper',
+    'category' => 'bi-folder-fill',
+    'tag' => 'bi-tag-fill',
+    'media' => 'bi-image',
+    'setting' => 'bi-gear-wide-connected',
     'admin' => 'bi-person-badge',
     'writer' => 'bi-pencil-square',
     'editor' => 'bi-scissors',
@@ -12,4 +20,5 @@ return [
     'manage_pages' => 'bi-file-earmark-richtext',
     'manage_media' => 'bi-images',
     'manage_settings' => 'bi-gear',
+    'manage_categories' => 'bi-folder-fill',
 ];

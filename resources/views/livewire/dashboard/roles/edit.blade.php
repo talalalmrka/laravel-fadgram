@@ -1,7 +1,6 @@
 <x-edit-dialog :model="$role" :title="$title">
     <div class="grid grid-cols-1 gap-4">
         <div class="col">
-            Show: {{ $show }}
             <fgx:input id="name" wire:model.live="name" :label="__('Name')" />
         </div>
         <div class="col">

@@ -120,10 +120,10 @@ trait WithEditModel
 
     public function saveData()
     {
+        $this->model()->fill($this->only($this->fillable_data));
         if (method_exists($this, 'beforeSaveData')) {
             $this->beforeSaveData();
         }
-        $this->model()->fill($this->only($this->fillable_data));
         $this->model()->save();
         if (method_exists($this, 'afterSaveData')) {
             $this->afterSaveData();

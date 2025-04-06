@@ -8,13 +8,15 @@
     }
 }">
     @teleport('body')
-        <div wire:show="show" x-transition.duration.500ms class="modal fade show">
-            <form wire:submit="save">
-                <div class="modal-dialog">
-                    @if ($model)
-                        <div class="modal-content">
+        <div wire:show="show" wire:transition class="modal fade show">
+            <div class="modal-dialog">
+                @if ($model)
+                    <div class="modal-content">
+                        <form wire:submit="save">
+
+
                             <div class="modal-header">
-                                <h5 class="modal-title">{{ $title }}</h5>
+                                <h5 class="modal-title">{{ $title ?? '' }}</h5>
                                 <button type="button" class="btn-close" x-on:click="closeModal">
                                     <i class="icon bi-x-lg"></i>
                                 </button>
@@ -38,10 +40,10 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                </div><!-- Modal Dialog -->
-            </form>
+                        </form>
+                    </div>
+                @endif
+            </div><!-- Modal Dialog -->
         </div><!-- Modal -->
     @endteleport
     @teleport('body')

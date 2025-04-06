@@ -110,8 +110,8 @@ abstract class Datatable extends Component
     public function getActions()
     {
         return [
-            Action::make('edit')->icon('bi-pencil-square'),
-            Action::make('delete')->icon('bi-trash'),
+            Action::make('edit')->icon('bi-pencil-square')->title(__('Edit')),
+            Action::make('delete')->icon('bi-trash')->title(__('Delete')),
         ];
     }
     #[Computed]
@@ -265,10 +265,23 @@ abstract class Datatable extends Component
     {
         return str()->singular($this->getPluralName());
     }
+    public function authorizeShow($id)
+    {
+        $this->authorize("manage_{$this->getPluralName()}", $id);
+    }
+    public function show($id)
+    {
+        $this->authorizeShow($id);
+        $routeName = "{$this->getSingularName()}";
+        if (Route::has($routeName)) {
+            $this->redirect(route($routeName), true);
+        }
+    }
     public function authorizeCreate()
     {
         $this->authorize("manage_{$this->getPluralName()}");
     }
+
     public function create()
     {
         $this->authorizeCreate();

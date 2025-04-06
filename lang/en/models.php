@@ -3,6 +3,7 @@
 return [
     'user' => [
         'plural' => 'Users',
+        'single' => 'User',
         'create' => 'Create user',
         'edit' => 'Edit user :name',
         'delete' => 'Delete user :name',
@@ -10,6 +11,7 @@ return [
     ],
     'post' => [
         'plural' => 'Posts',
+        'single' => 'Post',
         'create' => 'Create post',
         'edit' => 'Edit post :name',
         'delete' => 'Delete post :name',
@@ -17,6 +19,7 @@ return [
     ],
     'role' => [
         'plural' => 'Roles',
+        'single' => 'Role',
         'create' => 'Create role',
         'edit' => 'Edit role :name',
         'delete' => 'Delete role :name',
@@ -24,10 +27,31 @@ return [
     ],
     'permission' => [
         'plural' => 'Permissions',
+        'single' => 'Permission',
         'create' => 'Create permission',
         'edit' => 'Edit permission :name',
         'delete' => 'Delete permission :name',
         'view' => 'View permission :name'
+    ],
+    'setting' => [
+        'plural' => 'Settings',
+        'single' => 'Setting',
+    ],
+    'category' => [
+        'plural' => 'Categories',
+        'single' => 'Category',
+        'create' => 'Create category',
+        'edit' => 'Edit category :name',
+        'delete' => 'Delete category :name',
+        'view' => 'View category :name'
+    ],
+    'tag' => [
+        'plural' => 'Tags',
+        'single' => 'Tag',
+        'create' => 'Create tag',
+        'edit' => 'Edit tag :name',
+        'delete' => 'Delete tag :name',
+        'view' => 'View tag :name'
     ],
     'roles' => [
         'admin' => 'Admin',
@@ -41,6 +65,7 @@ return [
         'manage_roles' => 'Manage roles',
         'manage_permissions' => 'Manage permissions',
         'manage_posts' => 'Manage posts',
+        'manage_categories' => 'Manage categories',
         'manage_pages' => 'Manage pages',
         'manage_menus' => 'Manage menus',
         'manage_media' => 'Manage media',

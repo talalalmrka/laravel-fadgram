@@ -1,7 +1,7 @@
 @props(['media', 'class' => null, 'atts' => []])
 
 <div
-    class="relative flex items-center justify-center w-32 h-32 rounded border bg-gray/5 border-gray-300 dark:border-gray-600">
+    class="relative flex items-center justify-center w-32 h-32 rounded border bg-gray/5 border-gray-300 dark:border-gray-600 {{ $class }}">
     @switch($media->type)
         @case('image')
             <img class="max-w-full max-h-full" src="{{ $media->original_url }}" alt="{{ $media->name }}" />

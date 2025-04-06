@@ -19,6 +19,11 @@
         @apply bg-white dark:bg-gray-900;
     }
 
+    a {
+        /*@apply inline-flex flex-space-2;
+        @apply text-blue dark:text-blue-500 no-underline hover:underline;*/
+    }
+
     pre {
         overflow: auto;
         font-size: 13px !important;
@@ -42,6 +47,10 @@
 }
 
 @layer components {
+    .link {
+        @apply inline-flex flex-space-2;
+        @apply text-blue dark:text-blue-500 no-underline hover:underline;
+    }
 
     .dashboard-sidebar {
         .nav-link {
