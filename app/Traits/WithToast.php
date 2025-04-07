@@ -32,4 +32,9 @@ trait WithToast
     {
         session()->flash($name, $message);
     }
+
+    public function status($message)
+    {
+        session()->flash('status', $message);
+    }
 }

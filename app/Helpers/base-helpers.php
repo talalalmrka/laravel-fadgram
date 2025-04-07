@@ -8,3 +8,10 @@ if (!function_exists('route_has')) {
         return Route::has($name);
     }
 }
+
+if (!function_exists('home_url')) {
+    function home_url($path = '')
+    {
+        return config('app.url') . $path;
+    }
+}

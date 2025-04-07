@@ -11,7 +11,7 @@ class Index extends Datatable
     public $id_column = true;
     public function builder()
     {
-        return Post::post();
+        return Post::query();
     }
     public function getColumns()
     {

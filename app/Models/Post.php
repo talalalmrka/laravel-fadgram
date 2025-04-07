@@ -11,7 +11,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Traits\HasThumbnail;
 use App\Traits\WithEditUrl;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model implements HasMedia
 {
@@ -27,13 +29,35 @@ class Post extends Model implements HasMedia
     protected $appends = [
         'permalink',
     ];
+    protected static function booted()
+    {
+        static::addGlobalScope('post', function (Builder $builder) {
+            $builder->where('type', 'post');
+        });
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = self::generateSlug($post->name);
+            }
+        });
+
+        static::updating(function ($post) {
+            if (empty($post->slug)) {
+                $post->slug = self::generateSlug($post->name);
+            }
+        });
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
     public function getPermalinkAttribute()
     {
-        return !empty($this->id) ? route('post', $this) : null;
+        return !empty($this->id) && Route::has('post') ? route('post', $this) : null;
     }
     public function getAuthorNameAttribute()
     {
@@ -75,13 +99,20 @@ class Post extends Model implements HasMedia
         $layout = "layouts.$template";
         return view()->exists($layout) ? $layout : "layouts.app";
     }
-
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
     public function scopePublish($query)
     {
         return $query->where('status', 'publish');
     }
-    public function scopePost($query)
+    public function scopeDraft($query)
     {
-        return $query->where('type', 'post');
+        return $query->where('status', 'draft');
+    }
+    public function scopeTrash($query)
+    {
+        return $query->where('status', 'trash');
     }
 }

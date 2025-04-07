@@ -14,9 +14,8 @@
     @endphp
     @if ($color)
         <style>
-            @reference "../../../app.css";
-
-            @theme {
+            :root,
+            :host {
                 --color-primary: var(--color-{{ $color }}-600);
                 --color-primary-50: var(--color-{{ $color }}-50);
                 --color-primary-50: var(--color-{{ $color }}-50);

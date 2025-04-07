@@ -58,6 +58,6 @@ class PostSeeder extends Seeder
         ])->each(function (Post $post) {
             $post->addMedia(public_path('assets/img/fadgram-ui.png'))->preservingOriginal()->toMediaCollection($post->thumbnailCollection());
         });
-        Post::factory(28)->create();
+        //Post::factory(28)->create();
     }
 }
