@@ -9,12 +9,7 @@
         <i class="bi-list"></i>
     </button>
     <x-app-logo class="navbar-brand" />
-    <div class="nav navbar-nav navbar-collapse expand-md">
-        <x-nav-link wire:navigate :href="route('home')" wire:current="active" icon="bi-house-fill" :label="__('Home')" />
-        <x-nav-link wire:navigate :href="route('blog')" wire:current="active" icon="bi-newspaper" :label="__('Blog')" />
-        <x-nav-link wire:navigate href="/design" wire:current="active" icon="bi-palette-fill" :label="__('Design')" />
-
-    </div>
+    <x-nav-menu position="header" class="nav navbar-nav navbar-collapse expand-md" />
     <div class="nav">
         <button type="button" class="nav-link dark-mode-toggle">
         </button>

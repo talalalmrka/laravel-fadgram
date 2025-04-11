@@ -42,6 +42,15 @@
 }
 
 @layer components {
+    .card {
+        @apply shadow-sm;
+    }
+
+    .card-header,
+    .card-footer {
+        @apply bg-gray-50;
+    }
+
     .link {
         @apply inline-flex flex-space-2;
         @apply text-blue dark:text-blue-500 no-underline hover:underline;
@@ -75,4 +84,68 @@
         }
     }
 
+    .divider {
+        @apply border-b border-gray-200 dark:border-gray-700;
+    }
+
+    .accordion {
+        @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300;
+        @apply rounded-lg border border-gray-200 dark:border-gray-700;
+        @apply shadow-sm;
+        @apply divide-y divide-gray-200 dark:divide-gray-700;
+        @apply overflow-hidden;
+    }
+
+    .accordion-item {
+        .accordion-header {
+            @apply flex items-center justify-between w-full px-3 py-2 cursor-pointer text-left;
+            @apply bg-gray-50 dark:bg-gray-800;
+            @apply text-gray-600 dark:text-white;
+        }
+
+        .accordion-title {
+            @apply text-gray-800 dark:text-white;
+        }
+
+        .accordion-icon {
+            @apply w-5 h-5 text-gray-500 transform transition-transform duration-300;
+        }
+
+        .accordion-body {
+            @apply text-gray-600 bg-gray-50 text-sm leading-relaxed;
+            padding: var(--card-body-padding);
+        }
+
+        &.active {
+            .accordion-header {
+                @apply border-b border-gray-200 dark:border-gray-700;
+            }
+
+            .accordion-icon {
+                @apply rotate-180;
+            }
+        }
+    }
+
+    .sort {
+        &.nested {
+            @apply ms-3;
+        }
+    }
+
+    .sort-item {
+        @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300;
+        @apply rounded-lg border border-gray-200 dark:border-gray-700;
+        @apply mb-3;
+    }
+
+    .sortable-ghost {
+        opacity: 0.5 !important;
+        background-color: var(--color-primary) !important;
+        @apply rounded-lg;
+
+        .sort-item {
+            opacity: 0 !important;
+        }
+    }
 }

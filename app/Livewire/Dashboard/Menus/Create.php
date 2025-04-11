@@ -26,7 +26,7 @@ class Create extends Component
         if ($menu) {
             $this->reset('name');
             $this->addSuccess('status', __('Menu created'));
-            $this->dispatch('menu-created', id: $menu->id);
+            $this->dispatch('created', 'menu', $menu->id);
         } else {
             $this->addError('status', __('Create failed!'));
         }

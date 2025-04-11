@@ -25,7 +25,7 @@ class Menu extends Model
     }
     public function newItemOrder()
     {
-        return $this->itemsCount() + 1;
+        return $this->itemsCount();
     }
     public function scopePosition($query, $position)
     {

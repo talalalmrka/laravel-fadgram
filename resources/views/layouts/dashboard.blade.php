@@ -1,5 +1,5 @@
 <x-app-layout :title="$title ?? ''">
-    <div class="min-h-screen">
+    <div class="min-h-screen bg-primary/3 dark:bg-gray-900">
         <div class="offcanvas offcanvas-start offcanvas-primary expand-lg dashboard-sidebar" id="dashboard-sidebar">
             <div class="offcanvas-header flex-space-2 items-center h-14">
                 <x-app-logo />
@@ -115,7 +115,7 @@
             </div>
         </div>
         <main class="lg:ps-64 min-h-75vh relative">
-            <div class="navbar h-14 bg-gray-100 dark:bg-gray-700 sticky top-0">
+            <div class="navbar h-14 bg-white dark:bg-gray-700 shadow-xs sticky top-0">
                 <div class="nav">
                     <button class="navbar-brand nav-link md:hidden offcanvas-toggle" data-fg-toggle="offcanvas"
                         data-fg-target="#dashboard-sidebar">

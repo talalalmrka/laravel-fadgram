@@ -172,12 +172,16 @@ trait WithEditModel
     {
         return method_exists($this, 'statusKey') ? $this->statusKey() : $this->status_key;
     }
+    public function authorizeSave()
+    {
+        $this->authorize("manage_{$this->table()}");
+    }
     public function save()
     {
         if (method_exists($this, 'beforeSave')) {
             $this->beforeSave();
         }
-        $this->authorize("manage_{$this->table()}");
+        $this->authorizeSave();
         $this->validate();
         try {
             $this->saveData();

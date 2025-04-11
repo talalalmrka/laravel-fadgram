@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard\Menus;
 use App\Models\Menu;
 use App\Traits\WithToast;
 use Illuminate\Validation\Rule;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Settings extends Component
@@ -15,11 +14,15 @@ class Settings extends Component
     public $name = '';
     public $position = '';
     public $class_name = '';
-    public function mount(?Menu $menu)
+    public function mount(Menu $menu)
     {
         $this->authorize('manage_menus');
         $this->menu = $menu;
-        $this->fill($this->menu->only(['name', 'position', 'class_name']));
+        if ($this->menu->id) {
+            $this->fill($this->menu->only(['name', 'position', 'class_name']));
+        } else {
+            $this->reset('name', 'position', 'class_name');
+        }
     }
     public function rules()
     {
@@ -32,14 +35,18 @@ class Settings extends Component
     public function delete()
     {
         $this->authorize('manage_menus');
-        $id = $this->menu->id;
-        //$this->dispatch('menu-deleted', $id);
-        $delete = $this->menu->delete();
-        if ($delete) {
-            $this->dispatch('menu-deleted', id: $id);
-            $this->addSuccess('status', __('Delete succeed'));
+        if ($this->menu) {
+            $id = $this->menu->id;
+            $delete = $this->menu->delete();
+            if ($delete) {
+                $this->menu = new Menu;
+                $this->dispatch('deleted', 'menu', $id);
+                $this->toastSuccess(__('Delete succeed'));
+            } else {
+                $this->toastError('status', __('Delete failed'));
+            }
         } else {
-            $this->addError('status', __('Delete failed'));
+            $this->toastError(__('Nothing to delete!'));
         }
     }
     public function save()
@@ -50,16 +57,9 @@ class Settings extends Component
         $save = $this->menu->save();
         if ($save) {
             $this->addSuccess('status', __('Saved'));
+            $this->dispatch('saved', 'menu', id: $this->menu->id);
         } else {
             $this->addError('status', __('Save failed'));
-        }
-    }
-    #[On('menu-updated')]
-    public function onMenuUpdated($id)
-    {
-        $menu = Menu::find($id);
-        if ($menu) {
-            $this->mount($menu);
         }
     }
     public function render()

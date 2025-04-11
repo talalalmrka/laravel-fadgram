@@ -34,8 +34,13 @@ class Page extends Post
         return $query->where('type', 'page');
     }
 
-    public function getPermalinkAttribute()
+    public function scopeSlug($query, $slug)
+    {
+        return $query->firstWhere('slug', $slug);
+    }
+
+    /*public function getPermalinkAttribute()
     {
         return !empty($this->id) && Route::has('page') ? route('page', $this) : null;
-    }
+    }*/
 }

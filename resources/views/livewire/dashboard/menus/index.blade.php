@@ -7,17 +7,35 @@
             <fgx:card>
                 <fgx:card-body>
                     <fgx:select id="menu_id" wire:model.live="menu_id" class="sm" :label="__('Select menu')"
-                        :options="$menu_options" />
+                        :options="menu_options(__('None'))" wire:key="menu-select-{{ $this->menu?->id ?? uniqid() }}" />
                 </fgx:card-body>
             </fgx:card>
         </div>
     </div>
-    @if (!empty($menu) && !empty($menu->id))
-        <div class="grid grid-cols-1 gap-4 mt-4">
-            <div class="col">
-                {{ $menu->name }}
-                <livewire:dashboard.menus.settings :menu="$menu" wire:key="menu-settings" />
-            </div>
+    <div class="grid grid-cols-1 gap-4 mt-4">
+        <div class="col">
+            <livewire:dashboard.menus.settings :menu="$this->menu"
+                wire:key="menu-settings-{{ $this->menu?->id ?? uniqid() }}" />
         </div>
-    @endif
+    </div>
+    <div class="mt-4">
+        <div class="mb-3">
+            <button wire:click="resetDefaults" type="button" class="btn btn-red btn-xs pill">
+                <i class="icon bi-arrow-counterclockwise"></i>
+                <span wire:loading.remove wire:target="resetDefaults">{{ __('Reset defaults') }}</span>
+                <fgx:loader wire:loading wire:target="resetDefaults" />
+            </button>
+            <fgx:status id="reset_status" class="alert-soft xs mt-2" />
+        </div>
+        <livewire:dashboard.menus.structure :menu="$this->menu"
+            wire:key="menu-structure-{{ $this->menu?->id ?? uniqid() }}" />
+    </div>
+
 </div>
+@script
+    <script>
+        $js('reseted', () => {
+            $wire.$refresh();
+        });
+    </script>
+@endscript

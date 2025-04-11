@@ -1,3 +1,8 @@
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import sort from '@alpinejs/sort'
+
+Alpine.plugin(sort)
+
 import { initFadgramUI } from "fadgram-ui/helpers";
 import Toast from "fadgram-ui/helpers/toast";
 document.addEventListener('livewire:navigated', () => {
@@ -13,4 +18,6 @@ document.addEventListener('livewire:init', () => {
         });
     }
 });
+Livewire.start()
+
 //import "./textarea-direction";

@@ -4,6 +4,7 @@ use App\Livewire\Dashboard\Users\Index as Users;
 use App\Livewire\Dashboard\Categories\Index as Categories;
 use App\Livewire\Dashboard\Home\Index as DashboardHome;
 use App\Livewire\Dashboard\Media\Index as ManageMedia;
+use App\Livewire\Dashboard\Menus\EditItem;
 use App\Livewire\Dashboard\Profile\Index as Profile;
 //use App\Livewire\Dashboard\Users\Edit as UsersEdit;
 use App\Livewire\Dashboard\Roles\Index as Roles;
@@ -14,7 +15,7 @@ use App\Livewire\Dashboard\Tags\Index as Tags;
 use App\Livewire\Dashboard\Pages\Index as Pages;
 use App\Livewire\Dashboard\Pages\Edit as EditPage;
 use App\Livewire\Dashboard\Menus\Index as Menus;
-
+use App\Livewire\Dashboard\Menus\Structure;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], function () {
@@ -70,6 +71,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     //menus
     Route::group(['prefix' => 'menus', 'middleware' => ['can:manage_menus']], function () {
         Route::get('/', Menus::class)->name('dashboard.menus');
+        Route::get('/struct/{menu}', Structure::class)->name('dashboard.menus.structure');
+        Route::get('/items/edit/{item}', EditItem::class)->name('dashboard.menus.items.edit');
     });
 
     //media

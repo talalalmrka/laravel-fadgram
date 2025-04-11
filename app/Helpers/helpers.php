@@ -10,5 +10,7 @@ require __DIR__ . '/role-helpers.php';
 require __DIR__ . '/datatable-helpers.php';
 require __DIR__ . '/category-helpers.php';
 require __DIR__ . '/tag-helpers.php';
+require __DIR__ . '/post-helpers.php';
+require __DIR__ . '/page-helpers.php';
 require __DIR__ . '/menu-helpers.php';
 require __DIR__ . '/menu-item-helpers.php';

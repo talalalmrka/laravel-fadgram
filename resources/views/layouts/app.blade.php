@@ -8,6 +8,7 @@
     <title>{{ $title ?? '' }} | {{ config('app.name', 'Fadgram starter kit') }}</title>
     <meta name="description" content="{{ $description ?? config('app.description') }}">
     <link rel="stylesheet" href="{{ asset('assets/fonts/poppins/style.css') }}">
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @php
         $color = config('theme.color');
@@ -39,6 +40,7 @@
 
 <body>
     {{ $slot }}
+    @livewireScriptConfig
     @if (config('eruda.enabled'))
         <script src="{{ asset('assets/eruda/eruda.js') }}"></script>
         <script>

@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard\Menus;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use App\Traits\WithToast;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -12,12 +13,9 @@ class Index extends Component
 {
     use WithToast;
     public $menu_id;
-    public ?Menu $menu = null;
-
     public function mount()
     {
         $this->loadMenuId();
-        $this->loadMenu();
     }
     public function loadMenuId()
     {
@@ -26,38 +24,50 @@ class Index extends Component
             $this->menu_id = $menu->id;
         }
     }
-    public function loadMenu()
+    #[Computed]
+    public function menu()
     {
-        $this->menu = Menu::find($this->menu_id);
-        $this->dispatch('menu-updated', id: $this->menu_id);
+        return Menu::find($this->menu_id) ?? new Menu;
     }
-    public function dispatchUpdated() {}
-    public function updatedMenuId($value)
+    public function deleteMenu($id)
     {
-        $this->loadMenu();
+        $this->toastInfo(__('Delete menu :id', ['id' => $id]));
     }
-    #[On('menu-created')]
-    public function onMenuCreated($id)
+    #[On('created')]
+    public function onCreated($model_type, $id)
     {
-        $this->menu_id = $id;
-        $this->loadMenu();
-    }
-    #[On('menu-deleted')]
-    public function onMenuDeleted($id)
-    {
-        //dd($id);
-        if ($id === $this->menu_id) {
-            $this->toastInfo(__('Deleted :id', ['id' => $id]));
-            $this->menu = null;
-            $this->loadMenuId();
-            $this->loadMenu();
+        if ($model_type === 'menu') {
+            $this->menu_id = $id;
         }
+    }
+    #[On('saved')]
+    public function onSaved($model_type, $id)
+    {
+        if ($model_type === 'menu') {
+            $this->menu_id = $id;
+        }
+    }
+    #[On('deleted')]
+    public function onDeleted($model_type, $id)
+    {
+        if ($model_type === 'menu') {
+            $this->menu_id = null;
+        }
+    }
+    public function resetDefaults()
+    {
+        Menu::truncate();
+        MenuItem::truncate();
+
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => 'MenuSeeder',
+        ]);
+        $this->addSuccess('reset_status', __('Reset successfully'));
+        $this->js('reseted');
     }
     public function render()
     {
-        return view('livewire.dashboard.menus.index', [
-            'menu_options' => menu_options(__('Select menu')),
-        ])->layout('layouts.dashboard', [
+        return view('livewire.dashboard.menus.index')->layout('layouts.dashboard', [
             'title' => __('Menus'),
         ]);
     }
