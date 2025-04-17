@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMenuRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateMenuRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->can('manage_menus');
     }
 
     /**
@@ -21,8 +22,11 @@ class UpdateMenuRequest extends FormRequest
      */
     public function rules(): array
     {
+        //dd('rules');
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['nullable', 'string', Rule::in(menu_positions())],
+            'class_name' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -4,8 +4,8 @@
             <fgx:input id="name" wire:model.live="name" class="sm" :label="__('Name')" />
         </div>
         <div class="col">
-            <fgx:icon-picker id="icon" wire:model.live="icon" class="sm" :label="__('Icon')"
-                value="{{ $icon }}" />
+            <fgx:icon-picker id="icon" wire:model.live="icon" size="sm" :label="__('Icon')"
+                value="{{ $icon }}" wire:key="item-icon-{{ $item->id }}" />
         </div>
         <div class="col">
             <fgx:input id="class_name" wire:model.live="class_name" class="sm" :label="__('Css classes')"

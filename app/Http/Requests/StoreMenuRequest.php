@@ -11,7 +11,7 @@ class StoreMenuRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->can('manage_menus');
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'min:1', 'max:255'],
         ];
     }
 }

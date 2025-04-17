@@ -4,6 +4,7 @@ return [
         'header',
         'footer',
         'social',
+        'marwan',
     ],
     'default' => [
         [

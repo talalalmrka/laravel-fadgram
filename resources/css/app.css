@@ -1,11 +1,15 @@
 @import 'tailwindcss';
 @import "fadgram-ui";
 @import "./icons.css";
+@source '../js/components/**/*.vue';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/talalalmrka/fgx/resources/views/**/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../../vueform.config.js';
+@source'../../node_modules/@vueform/vueform/themes/tailwind/**/*.vue';
+@source'../../node_modules/@vueform/vueform/themes/tailwind/**/*.js';
 
 @theme {
     --font-poppins: Poppins, sans-serif;
@@ -88,12 +92,11 @@
         @apply border-b border-gray-200 dark:border-gray-700;
     }
 
-    .accordion {
+    /*.accordion {
         @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300;
         @apply rounded-lg border border-gray-200 dark:border-gray-700;
         @apply shadow-sm;
         @apply divide-y divide-gray-200 dark:divide-gray-700;
-        @apply overflow-hidden;
     }
 
     .accordion-item {
@@ -125,7 +128,7 @@
                 @apply rotate-180;
             }
         }
-    }
+    }*/
 
     .sort {
         &.nested {

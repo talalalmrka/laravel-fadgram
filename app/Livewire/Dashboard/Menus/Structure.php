@@ -12,11 +12,14 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
 
 class Structure extends Component
 {
     use WithToast;
     public Menu $menu;
+    public ?MenuItem $editItem = null;
+    public bool $showEdit = false;
     public $selectAllPages = false;
     public $pages = [];
     public $selectAllPosts = false;
@@ -256,14 +259,30 @@ class Structure extends Component
             ->where('parent_id', $parentId === 'null' ? null : $parentId)
             ->max('order') ?? 0;
     }
-    #[On('menu-item-updated')]
-    public function onItemUpdated($id)
+    #[On('saved')]
+    public function onSaved($model_type, $id)
+    {
+        if ($model_type === 'menu_item') {
+            $this->editItem = null;
+            $this->loadItems();
+        }
+    }
+    #[On('items-added')]
+    public function onItemsAdded()
     {
         $this->loadItems();
     }
-    public function edit($id)
+    public function edit(MenuItem $item)
     {
-        $this->dispatch('edit', 'item', $id);
+        $this->editItem = $item;
+        $this->showEdit = true;
+        //dd($item->toArray());
+        //$this->dispatch('edit', 'item', $id);
+    }
+    #[Computed]
+    public function editTitle()
+    {
+        return $this->editItem ? __('Edit :name', ['name' => $this->editItem->name]) : __('Edit');
     }
     public function deleteItem(MenuItem $item)
     {

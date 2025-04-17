@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('class_name')->nullable();
             $table->boolean('navigate')->default(true);
-            $table->enum('target', ['_self', '_blank'])->default('_self');
+            $table->boolean('new_tab')->default(false);
             $table->timestamps();
         });
     }

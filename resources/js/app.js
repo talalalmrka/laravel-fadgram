@@ -1,7 +1,8 @@
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import sort from '@alpinejs/sort'
-
+import accordion from 'fadgram-ui/alpine/accordion';
 Alpine.plugin(sort)
+Alpine.plugin(accordion)
 
 import { initFadgramUI } from "fadgram-ui/helpers";
 import Toast from "fadgram-ui/helpers/toast";

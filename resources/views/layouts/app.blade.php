@@ -8,6 +8,7 @@
     <title>{{ $title ?? '' }} | {{ config('app.name', 'Fadgram starter kit') }}</title>
     <meta name="description" content="{{ $description ?? config('app.description') }}">
     <link rel="stylesheet" href="{{ asset('assets/fonts/poppins/style.css') }}">
+    @stack('head_before_scripts')
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @php

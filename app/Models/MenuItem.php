@@ -22,22 +22,51 @@ class MenuItem extends Model
         'url',
         'class_name',
         'navigate',
-        'target',
+        'new_tab',
     ];
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($menuItem) {
-            if ($menuItem->menu_id) {
-                $menu = Menu::find($menuItem->menu_id);
-                if ($menu) {
-                    $menuItem->order = $menu->newItemOrder();
+            if ($menuItem->order === null) {
+                if ($menuItem->parent_id) {
+                    $parent = static::find($menuItem->parent_id);
+                    if ($parent) {
+                        $menuItem->order = $parent->children()->count();
+                    }
+                } else {
+                    if ($menuItem->menu_id) {
+                        $menu = Menu::find($menuItem->menu_id);
+                        if ($menu) {
+                            $menuItem->order = $menu->items()->count();
+                        }
+                    }
                 }
             }
         });
+        static::updating(function ($menuItem) {
+            /*if ($menuItem->isDirty('parent_id')) {
+                // Reorder old siblings
+                $oldParentId = $menuItem->getOriginal('parent_id');
+                if ($oldParentId) {
+                    $oldSiblings = static::where('parent_id', $oldParentId)->orderBy('order')->get();
+                    foreach ($oldSiblings as $index => $sibling) {
+                        $sibling->order = $index;
+                        $sibling->saveQuietly();
+                    }
+                }
 
-        static::updating(function ($menuItem) {});
+                // Reorder new siblings
+                if ($menuItem->parent_id) {
+                    $newSiblings = static::where('parent_id', $menuItem->parent_id)->orderBy('order')->get();
+                    foreach ($newSiblings as $index => $sibling) {
+                        $sibling->order = $index;
+                        $sibling->saveQuietly();
+                    }
+                }
+            }*/
+        });
     }
     public function menu()
     {
@@ -99,5 +128,17 @@ class MenuItem extends Model
             'category' => $this->category?->permalink,
             default => $this->url,
         };
+    }
+
+    public function getTargetAttribute()
+    {
+        return $this->new_tab ? '_blank' : null;
+    }
+
+    public function render()
+    {
+        return view('components.nav-menu-item', [
+            'item' => $this,
+        ]);
     }
 }

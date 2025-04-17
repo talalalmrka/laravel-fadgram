@@ -5,14 +5,16 @@
                 :title="__('Settings (:name)', ['name' => $name])">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="col">
-                        <fgx:input id="name" wire:model.live="name" :label="__('Name')" />
+                        <fgx:input id="name" wire:model.live="name" class="sm" :label="__('Name')" />
                     </div>
                     <div class="col">
-                        <fgx:select id="position" wire:model.live="position" :label="__('Position')"
+
+                        <fgx:radio id="position" wire:model.live="position" :label="__('Position')"
                             :options="menu_position_options(__('None'))" />
                     </div>
                     <div class="col">
-                        <fgx:input id="class_name" wire:model.live="class_name" :label="__('Css classes')" />
+                        <fgx:input id="class_name" wire:model.live="class_name" class="sm"
+                            :label="__('Css classes')" />
                     </div>
                     <div class="col">
                         <button type="button" wire:click="delete"

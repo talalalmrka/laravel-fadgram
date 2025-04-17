@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use App\Livewire\Dashboard\Users\Index as Users;
 use App\Livewire\Dashboard\Categories\Index as Categories;
 use App\Livewire\Dashboard\Home\Index as DashboardHome;
@@ -15,6 +16,8 @@ use App\Livewire\Dashboard\Tags\Index as Tags;
 use App\Livewire\Dashboard\Pages\Index as Pages;
 use App\Livewire\Dashboard\Pages\Edit as EditPage;
 use App\Livewire\Dashboard\Menus\Index as Menus;
+use App\Livewire\Dashboard\Menus\MenuBuilder;
+use App\Livewire\Dashboard\Menus\MenuVue;
 use App\Livewire\Dashboard\Menus\Structure;
 use Illuminate\Support\Facades\Route;
 
@@ -71,8 +74,16 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     //menus
     Route::group(['prefix' => 'menus', 'middleware' => ['can:manage_menus']], function () {
         Route::get('/', Menus::class)->name('dashboard.menus');
-        Route::get('/struct/{menu}', Structure::class)->name('dashboard.menus.structure');
-        Route::get('/items/edit/{item}', EditItem::class)->name('dashboard.menus.items.edit');
+        Route::get('/builder/{menu?}', [MenuController::class, 'index'])->name('dashboard.menus.builder');
+        Route::post('/create', [MenuController::class, 'store'])->name('dashboard.menus.store');
+        Route::get('/test', [MenuController::class, 'test'])->name('dashboard.menus.index');
+        Route::get('/edit/{menu}', [MenuController::class, 'edit'])->name('dashboard.menus.edit');
+        Route::post('/update/{menu}', [MenuController::class, 'update'])->name('dashboard.menus.update');
+        Route::get('/delete/{menu}', [MenuController::class, 'destroy'])->name('dashboard.menus.delete');
+        //Route::get('/{menu}', MenuBuilder::class)->name('dashboard.menus.builder');
+        //Route::get('/{menu}/show', [MenuController::class, 'show'])->name('dashboard.menus.show');
+        //Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('dashboard.menus.edit');
+        //Route::get('/items/edit/{item}', EditItem::class)->name('dashboard.menus.items.edit');
     });
 
     //media

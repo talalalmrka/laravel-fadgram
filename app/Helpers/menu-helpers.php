@@ -60,3 +60,13 @@ if (!function_exists('menu_position_options')) {
         return $options->toArray();
     }
 }
+
+if (!function_exists('navMenu')) {
+    function navMenu($position, $attributes = [])
+    {
+        $menu = menus()->firstWhere('position', $position);
+        if ($menu) {
+            echo view('components.nav-menu', ['menu' => $menu, 'atts' => $attributes])->render();
+        }
+    }
+}

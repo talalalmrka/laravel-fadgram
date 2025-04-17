@@ -9,7 +9,7 @@
         <i class="bi-list"></i>
     </button>
     <x-app-logo class="navbar-brand" />
-    <x-nav-menu position="header" class="nav navbar-nav navbar-collapse expand-md" />
+    @menu('header', ['class' => 'nav navbar-nav navbar-collapse expand-md'])
     <div class="nav">
         <button type="button" class="nav-link dark-mode-toggle">
         </button>

@@ -63,6 +63,29 @@ class MenuSeeder extends Seeder
                     'page_id' => $privacy->id,
                 ]);
             }
+
+            $parent = $headerMenu->items()->create([
+                'name' => 'Parent',
+                'icon' => 'bi-star',
+                'type' => 'custom',
+                'url' => url('/parent'),
+            ]);
+            if ($parent) {
+                $sub1 = $headerMenu->items()->create([
+                    'parent_id' => $parent->id,
+                    'name' => 'Sub 1',
+                    'icon' => 'bi-activity',
+                    'type' => 'custom',
+                    'url' => url('/sub1'),
+                ]);
+                $sub2 = $headerMenu->items()->create([
+                    'parent_id' => $parent->id,
+                    'name' => 'Sub 2',
+                    'icon' => 'bi-airplane',
+                    'type' => 'custom',
+                    'url' => url('/sub2'),
+                ]);
+            }
         }
 
         //footer

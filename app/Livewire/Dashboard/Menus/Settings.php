@@ -52,7 +52,8 @@ class Settings extends Component
     public function save()
     {
         $this->authorize('manage_menus');
-        $this->validate();
+        $validated = $this->validate();
+        //dd($validated);
         $this->menu->fill($this->only(['name', 'position', 'class_name']));
         $save = $this->menu->save();
         if ($save) {

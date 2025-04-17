@@ -135,6 +135,7 @@
                         <i class="icon bi-search"></i>
                     </button>
                 </div>
+
                 <div class="nav">
                     <button type="button" class="nav-link dark-mode-toggle">
                     </button>

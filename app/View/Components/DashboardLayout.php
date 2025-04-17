@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class DashboardLayout extends AppLayout
 {
-    public $actions = [];
+    public $actions = null;
     /**
      * Get the view / contents that represent the component.
      */

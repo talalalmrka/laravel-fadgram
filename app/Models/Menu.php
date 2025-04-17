@@ -13,7 +13,6 @@ class Menu extends Model
         'name',
         'position',
         'class_name',
-        'description',
     ];
     public function items()
     {
@@ -30,5 +29,9 @@ class Menu extends Model
     public function scopePosition($query, $position)
     {
         return $query->where('position', $position);
+    }
+    public function render()
+    {
+        return view('components.nav-menu', ['menu' => $this]);
     }
 }

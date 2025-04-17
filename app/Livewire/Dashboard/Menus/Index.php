@@ -7,15 +7,17 @@ use App\Models\MenuItem;
 use App\Traits\WithToast;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Session;
 use Livewire\Component;
 
 class Index extends Component
 {
     use WithToast;
+    #[Session]
     public $menu_id;
     public function mount()
     {
-        $this->loadMenuId();
+        //$this->loadMenuId();
     }
     public function loadMenuId()
     {
@@ -27,7 +29,8 @@ class Index extends Component
     #[Computed]
     public function menu()
     {
-        return Menu::find($this->menu_id) ?? new Menu;
+        //return Menu::find($this->menu_id) ?? new Menu;
+        return Menu::find($this->menu_id) ?? null;
     }
     public function deleteMenu($id)
     {
@@ -47,6 +50,7 @@ class Index extends Component
             $this->menu_id = $id;
         }
     }
+
     #[On('deleted')]
     public function onDeleted($model_type, $id)
     {

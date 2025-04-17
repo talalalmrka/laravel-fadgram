@@ -50,6 +50,13 @@ if (!function_exists('parent_category_options')) {
     }
 }
 
+if (!function_exists('categories')) {
+    function categories()
+    {
+        return Category::type('category');
+    }
+}
+
 if (!function_exists('get_categories')) {
     function get_categories($data = [])
     {

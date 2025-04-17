@@ -25,23 +25,20 @@ class EditItem extends Component
     public $category_id = null;
     public $url = null;
     public bool $navigate = true;
-    public $target = '_self';
-    public $new_tab = false;
-    protected $fillable_data = ['name', 'icon', 'class_name', 'type', 'page_id', 'post_id', 'category_id', 'url', 'target'];
+    public bool $new_tab = false;
+    protected $fillable_data = ['name', 'icon', 'class_name', 'type', 'page_id', 'post_id', 'category_id', 'url', 'new_tab'];
     public function mount(MenuItem $item)
     {
         $this->authorize('manage_menus');
         $this->item = $item;
+        $this->show = true;
     }
     public function afterFill()
     {
         $this->navigate = (bool) $this->item->navigate;
         $this->new_tab = $this->item->target === '_blank';
     }
-    public function updatedNewTab($value)
-    {
-        $this->target = $value ? '_blank' : '_self';
-    }
+
     public function rules()
     {
         return [
@@ -53,7 +50,7 @@ class EditItem extends Component
             'category_id' => ['nullable', Rule::exists('categories', 'id')->where('type', 'category')],
             'url' => ['nullable', 'string', 'max:255'],
             'navigate' => ['boolean'],
-            'target' => ['nullable', 'string', 'in:_self,_blank'],
+            'new_tab' => ['boolean'],
         ];
     }
     public function title()
