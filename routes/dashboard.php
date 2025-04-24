@@ -80,6 +80,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::get('/edit/{menu}', [MenuController::class, 'edit'])->name('dashboard.menus.edit');
         Route::post('/update/{menu}', [MenuController::class, 'update'])->name('dashboard.menus.update');
         Route::get('/delete/{menu}', [MenuController::class, 'destroy'])->name('dashboard.menus.delete');
+        Route::delete('/delete/{menu}', [MenuController::class, 'destroy'])->name('dashboard.menus.delete');
+        Route::post('/{menu}/add/pages', [MenuController::class, 'addPages'])->name('dashboard.menus.add.pages');
+        Route::post('/{menu}/add/posts', [MenuController::class, 'addPosts'])->name('dashboard.menus.add.posts');
+        Route::post('/{menu}/add/categories', [MenuController::class, 'addCategories'])->name('dashboard.menus.add.categories');
+        Route::post('/{menu}/add/custom', [MenuController::class, 'addCustomLink'])->name('dashboard.menus.add.custom');
         //Route::get('/{menu}', MenuBuilder::class)->name('dashboard.menus.builder');
         //Route::get('/{menu}/show', [MenuController::class, 'show'])->name('dashboard.menus.show');
         //Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('dashboard.menus.edit');

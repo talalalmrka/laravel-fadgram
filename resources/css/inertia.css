@@ -1,0 +1,17 @@
+@source '../../node_modules/fadgram-vue/dist/**/*.js';
+@import "./app.css";
+
+@layer components {
+    .categories-list {
+        @apply list-none m-0 p-0;
+
+        li {
+            @apply p-1;
+
+            ul {
+                @apply list-none m-0 p-0 ms-3 border-s;
+            }
+        }
+
+    }
+}

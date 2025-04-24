@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useForm } from '@inertiajs/vue3';
-import { Alert, Error } from "@/components";
-defineProps<{
-    status?: string;
-}>();
+import { useForm, usePage } from '@inertiajs/vue3'
+import { FgIcon, FgAlert, FgError, FgLoader } from 'fadgram-vue'
+import Status from '@/components/Status.vue'
+
+const page = usePage()
 const nameInput = ref<HTMLInputElement | null>(null);
 const form = useForm({
     name: '',
-});
+})
 const submit = () => {
     form.post(route('dashboard.menus.store'), {
         preserveScroll: true,
@@ -19,10 +19,10 @@ const submit = () => {
         },
         onError: (errors) => {
             if (errors.name && nameInput.value instanceof HTMLInputElement) {
-                nameInput.value.focus();
+                nameInput.value.focus()
             }
         },
-    });
+    })
 
 };
 </script>
@@ -40,14 +40,14 @@ const submit = () => {
                     <input ref="nameInput" type="text" v-model="form.name" name="name" class="form-control"
                         :class="{ 'error': form.errors.name }" @input="form.clearErrors('name')"
                         placeholder="Enter menu name">
-                    <button type="submit" class="btn btn-primary w-[87px]" :disabled="form.processing">
-                        <i class="icon fg-plus"></i>
+                    <button type="submit" class="btn btn-primary w-[100px]" :disabled="form.processing">
+                        <fg-icon icon="fg-plus" />
                         <span v-if="!form.processing">Create</span>
-                        <i v-if="form.processing" class="icon fg-loader"></i>
+                        <fg-loader v-if="form.processing" dots-scale />
                     </button>
                 </div>
-                <Alert v-if="status" type="success" size="xs" soft class="mt-2" :content="status" />
-                <Error :error="form.errors.name" />
+                <fg-error :error="form.errors.name" />
+                <Status name="create_menu" class="mt-2" />
             </form>
         </div>
     </div>

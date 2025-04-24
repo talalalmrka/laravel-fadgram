@@ -14,7 +14,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = 'layouts.dashboard-inertia';
 
     /**
      * Determines the current asset version.
@@ -35,9 +35,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            //
-        ];
+        $flashKeys = array_values($request->session()->get('_flash.old', []));
+        $flash = collect($request->session()->all())
+            ->only($flashKeys)
+            ->toArray();
+
+        return array_merge(parent::share($request), [
+            'flash'  => fn() => $flash,
+        ]);
     }
 }

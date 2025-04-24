@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @import "fadgram-ui";
 @import "./icons.css";
 @source '../js/components/**/*.vue';
@@ -7,9 +7,6 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
-@source '../../vueform.config.js';
-@source'../../node_modules/@vueform/vueform/themes/tailwind/**/*.vue';
-@source'../../node_modules/@vueform/vueform/themes/tailwind/**/*.js';
 
 @theme {
     --font-poppins: Poppins, sans-serif;
@@ -28,7 +25,7 @@
         font-size: 13px !important;
         font-family: var(--font-mono) !important;
         margin: 0 !important;
-        padding: .7em !important;
+        padding: 0.7em !important;
         color: #f8f8f2;
         text-shadow: 0 1px #0000004d;
         text-align: left;
@@ -91,44 +88,6 @@
     .divider {
         @apply border-b border-gray-200 dark:border-gray-700;
     }
-
-    /*.accordion {
-        @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300;
-        @apply rounded-lg border border-gray-200 dark:border-gray-700;
-        @apply shadow-sm;
-        @apply divide-y divide-gray-200 dark:divide-gray-700;
-    }
-
-    .accordion-item {
-        .accordion-header {
-            @apply flex items-center justify-between w-full px-3 py-2 cursor-pointer text-left;
-            @apply bg-gray-50 dark:bg-gray-800;
-            @apply text-gray-600 dark:text-white;
-        }
-
-        .accordion-title {
-            @apply text-gray-800 dark:text-white;
-        }
-
-        .accordion-icon {
-            @apply w-5 h-5 text-gray-500 transform transition-transform duration-300;
-        }
-
-        .accordion-body {
-            @apply text-gray-600 bg-gray-50 text-sm leading-relaxed;
-            padding: var(--card-body-padding);
-        }
-
-        &.active {
-            .accordion-header {
-                @apply border-b border-gray-200 dark:border-gray-700;
-            }
-
-            .accordion-icon {
-                @apply rotate-180;
-            }
-        }
-    }*/
 
     .sort {
         &.nested {

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateMenuRequest extends FormRequest
+class MenuAddPagesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class UpdateMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'position' => ['nullable', 'string', Rule::in(menu_positions())],
-            'class_name' => ['nullable', 'string', 'max:255'],
+            'pages' => ['required', 'array'],
+            'pages.*' => ['required', Rule::exists('posts', 'id')->where('type', 'page')]
         ];
     }
 }

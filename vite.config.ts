@@ -1,21 +1,20 @@
-import vue from '@vitejs/plugin-vue';
-import laravel from 'laravel-vite-plugin';
-import path from 'path';
+import vue from "@vitejs/plugin-vue";
+import laravel from "laravel-vite-plugin";
+import path from "path";
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from 'node:path';
+import { resolve } from "node:path";
 
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-                'resources/js/preview.js',
-                'resources/js/menu-builder.js',
-                'resources/js/inertia.ts',
+                "resources/css/app.css",
+                "resources/js/app.js",
+                "resources/js/preview.js",
+                "resources/js/inertia.ts",
             ],
-            ssr: 'resources/js/ssr.ts',
+            ssr: "resources/js/ssr.ts",
             refresh: true,
         }),
         tailwindcss(),
@@ -30,15 +29,15 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './resources/js'),
-            'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
+            "@": path.resolve(__dirname, "./resources/js"),
+            "ziggy-js": resolve(__dirname, "vendor/tightenco/ziggy"),
         },
     },
-    /*server: {
+    server: {
         cors: true,
         watch: {
             usePolling: true,
             interval: 1000,
-        }
-    }*/
+        },
+    },
 });

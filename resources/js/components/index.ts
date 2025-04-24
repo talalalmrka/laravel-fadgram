@@ -1,7 +1,1 @@
-export { default as Alert } from './Alert.vue'
-export { default as Error } from './Error.vue'
-export { default as Info } from './Info.vue'
-export { default as Input } from './Input.vue'
-export { default as Label } from './Label.vue'
-export { default as Select } from './Select.vue'
-export { default as Switch } from './Switch.vue'
+export { default as Status } from "./Status.vue";
