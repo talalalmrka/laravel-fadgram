@@ -25,9 +25,10 @@
     "dependencies": {
         "@alpinejs/sort": "^3.14.9",
         "@inertiajs/inertia-vue3": "^0.6.0",
+        "@morev/vue-transitions": "^3.0.5",
         "@vueuse/core": "^13.1.0",
         "fadgram-ui": "^0.5.0",
-        "fadgram-vue": "^1.1.3",
+        "fadgram-vue": "^1.1.6",
         "jodit": "^4.6.1",
         "lucide-vue-next": "^0.488.0",
         "primevue": "^4.3.3",

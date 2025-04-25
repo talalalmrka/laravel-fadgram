@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { router } from '@inertiajs/vue3'
-import { FgSelect, FgRichSelect } from "fadgram-vue";
-import { OptionType } from '@/types/types';
+import { ref, watch, computed } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
+import { FgRichSelect, FgLoader } from "fadgram-vue";
+import { MenuType } from '@/types/types';
 
-const props = defineProps<{
-    menuId?: number;
-    options?: OptionType[];
-}>();
-const selectedMenuId = ref<number | null>(props.menuId ?? null);
+const page = usePage<{ props: { menus: MenuType[]; menu: MenuType } }>();
+const menus = page.props.menus ?? [];
+const menu = page.props.menu;
+const options = computed(() => menus.map((item) => ({ label: item.name, value: item.id })));
+const selectedMenuId = ref<number | null>(menu?.id ?? null);
+
 watch(selectedMenuId, (newVal) => {
-    router.get(route('dashboard.menus.builder', { menu: newVal }));
+    router.visit(route('dashboard.menus.builder', { menu: newVal }));
 });
 </script>
 <template>

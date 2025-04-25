@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useForm, usePage } from '@inertiajs/vue3'
-import { FgIcon, FgAlert, FgError, FgLoader } from 'fadgram-vue'
+import { useForm } from '@inertiajs/vue3'
+import { FgIcon, FgError, FgLoader } from 'fadgram-vue'
 import Status from '@/components/Status.vue'
 
-const page = usePage()
 const nameInput = ref<HTMLInputElement | null>(null);
 const form = useForm({
     name: '',
@@ -36,7 +35,7 @@ const submit = () => {
         </div>
         <div class="card-body">
             <form @submit.prevent="submit">
-                <div class="input-group sm w-full">
+                <div class="input-group xs w-full">
                     <input ref="nameInput" type="text" v-model="form.name" name="name" class="form-control"
                         :class="{ 'error': form.errors.name }" @input="form.clearErrors('name')"
                         placeholder="Enter menu name">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import type { MenuType } from '@/types'
 import Status from '@/components/Status.vue'
@@ -10,22 +10,21 @@ import {
     FgLoader,
     FgError,
     FgAlert,
+    FgIcon,
 } from 'fadgram-vue'
-
-/*const props = defineProps<{
-    menu?: MenuType;
-    status?: string;
-}>();*/
-const page = usePage()
-const menu = computed<MenuType>(() => page.props.menu as MenuType)
-const nameInput = ref<HTMLInputElement | null>(null)
+const page = usePage<{
+    props: {
+        menu: MenuType;
+    }
+}>();
+const menu = page.props.menu;
 const form = useForm({
     name: '',
     icon: '',
     url: '',
 });
 const submit = () => {
-    form.post(route('dashboard.menus.add.custom', { menu: page.props.menu?.id }), {
+    form.post(route('dashboard.menus.add.custom', { menu: menu.id }), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
@@ -35,23 +34,27 @@ const submit = () => {
         },
     })
 }
+
 </script>
 
 <template>
     <form @submit.prevent="submit">
         <div class="grid grid-cols-1 gap-4">
             <div class="col">
-                <fg-input v-model="form.name" label="Name" :error="form.errors.name" class="sm" placeholder="name" />
+                <fg-input v-model="form.name" label="Name" :error="form.errors.name" class="xs" placeholder="name"
+                    @input="form.clearErrors('name')" />
             </div>
             <div class="col">
-                <fg-icon-picker v-model="form.icon" label="Icon" group-class="sm" placeholder="icon"
-                    :error="form.errors.icon" />
+                <fg-icon-picker v-model="form.icon" label="Icon" group-class="xs" placeholder="icon"
+                    :error="form.errors.icon" @change="form.clearErrors('icon')" />
             </div>
             <div class="col">
-                <fg-input v-model="form.url" label="Url" :error="form.errors.url" class="sm" placeholder="url" />
+                <fg-input v-model="form.url" label="Url" :error="form.errors.url" class="xs" placeholder="url"
+                    @input="form.clearErrors('url')" />
             </div>
             <div class="col flex-space-2 justify-between">
                 <button type="submit" class="btn xs btn-primary w-auto text-nowrap">
+                    <fg-icon icon="fg-plus" />
                     <span>Add to menu</span>
                     <fg-loader v-if="form.processing" dots-scale />
                 </button>

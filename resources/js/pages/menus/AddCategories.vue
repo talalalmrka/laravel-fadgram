@@ -14,9 +14,14 @@ import {
 } from 'fadgram-vue'
 import CategoriesCheckboxGroup from './CategoriesCheckboxGroup.vue'
 
-const page = usePage()
-const menu = computed<MenuType>(() => page.props.menu as MenuType)
-const categories = computed<CategoryType[]>(() => page.props.categories as CategoryType[])
+const page = usePage<{
+    props: {
+        menu: MenuType;
+        categories: CategoryType[];
+    }
+}>();
+const menu = page.props.menu;
+const categories = page.props.categories ?? [];
 const selectAll = ref<boolean>(false);
 const form = useForm({
     categories: [] as string[],
@@ -28,14 +33,14 @@ watch(() => menu, () => {
 
 watch(selectAll, (newVal) => {
     if (newVal) {
-        form.categories = categories.value?.map(category => category.id) ?? [];
+        form.categories = categories.map(category => category.id) ?? [];
     } else {
         form.categories = [];
     }
 });
 
 const submit = () => {
-    form.post(route('dashboard.menus.add.categories', { menu: page.props.menu?.id }), {
+    form.post(route('dashboard.menus.add.categories', { menu: page.props.menu.id }), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset()
@@ -46,7 +51,6 @@ const submit = () => {
     });
 };
 
-const submitDisabled = computed(() => !form.categories.length);
 </script>
 
 <template>
@@ -56,7 +60,7 @@ const submitDisabled = computed(() => !form.categories.length);
         <div class="divider my-1"></div>
         <div class="flex-space-2 justify-between">
             <fg-checkbox v-model="selectAll" label="Select all" />
-            <button type="submit" class="btn xs btn-primary w-auto text-nowrap" :disabled="submitDisabled">
+            <button type="submit" class="btn xs btn-primary w-auto text-nowrap" :disabled="!form.categories.length">
                 <span v-if="!form.processing">Add to menu</span>
                 <fg-loader v-if="form.processing" dots-scale />
             </button>

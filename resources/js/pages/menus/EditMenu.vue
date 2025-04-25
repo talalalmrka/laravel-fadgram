@@ -1,24 +1,27 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
-import { useForm, usePage, router } from '@inertiajs/vue3'
+import { ref, watch } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { MenuType, OptionType } from '@/types'
 import { FgInput, FgSelect, FgAlert, FgIcon, FgLoader } from 'fadgram-vue'
 import Status from '@/components/Status.vue'
-
-const page = usePage()
-const menu = computed<MenuType>(() => page.props.menu as MenuType)
-const positions = computed<OptionType[]>(() => page.props.positions as OptionType[])
-
+const page = usePage<{
+    props: {
+        menu: MenuType;
+        positions: OptionType[];
+    }
+}>();
+const menu = page.props.menu;
+const positions = page.props.positions;
 const nameInput = ref<{ inputRef: HTMLInputElement } | null>(null)
 const classNameInput = ref<{ inputRef: HTMLInputElement } | null>(null)
 
 const form = useForm({
-    name: menu.value.name ?? '',
-    position: menu.value.position ?? '',
-    class_name: menu.value.class_name ?? '',
+    name: menu.name ?? '',
+    position: menu.position ?? '',
+    class_name: menu.class_name ?? '',
 })
 const deleteForm = useForm({
-    menu: menu.value.id ?? '',
+    menu: menu.id ?? '',
 })
 
 // Whenever `menu` changes, reset the form to its new values:
@@ -39,7 +42,7 @@ watch(
 )
 
 const submit = () => {
-    form.post(route('dashboard.menus.update', { menu: menu.value.id }), {
+    form.post(route('dashboard.menus.update', { menu: menu.id }), {
         preserveScroll: true,
         onSuccess: () => {
             // You can optionally emit an event or show a toast here
@@ -52,12 +55,12 @@ const submit = () => {
                 classNameInput.value.inputRef.focus()
             }
         },
-    })
+    });
 }
 const deleteMenu = () => {
     deleteForm.delete(route('dashboard.menus.delete', { menu: menu.value.id }), {
         preserveScroll: true,
-    })
+    });
 }
 </script>
 
@@ -78,7 +81,7 @@ const deleteMenu = () => {
                     </div>
                     <div class="col">
                         <fg-select v-model="form.position" name="position" class="sm" :error="form.errors.position"
-                            label="Position" :options="positions" />
+                            label="Position" :options="positions" placeholder="None" />
                     </div>
                     <div class="col">
                         <fg-input ref="classNameInput" v-model="form.class_name" name="class_name" class="sm"

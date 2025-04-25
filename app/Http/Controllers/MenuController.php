@@ -6,6 +6,7 @@ use App\Http\Requests\MenuAddCategoriesRequest;
 use App\Http\Requests\MenuAddCustomLinkRequest;
 use App\Http\Requests\MenuAddPagesRequest;
 use App\Http\Requests\MenuAddPostsRequest;
+use App\Http\Requests\MenuUpdateItemsRequest;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
@@ -24,21 +25,25 @@ class MenuController extends Controller
     {
         return Inertia::render('menus/Index', [
             'menus' => Menu::all()->toArray(),
-            'categories' => Category::category()->with('children')->get()->toArray(),
             'menu' => $menu,
             'positions' => menu_position_options(),
-            'items' => $menu ? $menu->items()->with('children')->get()->toArray() : [],
+            'pages' => fn() => Page::all()->toArray(),
+            'posts' => fn() => Post::all()->toArray(),
+            'categories' => fn() => Category::category()->with('children')->get()->toArray(),
+            'item_types' => menu_item_type_options(),
+            'items' => fn() => $menu ? $menu->items()->with('children')->get()->toArray() : [],
+            //'items' => $menu ? $menu->items()->with('children')->get()->toArray() : [],
             //'menu_position_options' => menu_position_options(),
             //'create_status' => $request->session()->get('create_status'),
             //'update_status' => $request->session()->get('update_status'),
             //'status' => $request->session()->get('status'),
-            'page_options' => page_options(),
+            //'page_options' => page_options(),
             //'add_pages_status' => $request->session()->get('add_pages_status'),
-            'post_options' => post_options(),
+            //'post_options' => post_options(),
             //'add_posts_status' => $request->session()->get('add_posts_status'),
-            'category_options' => category_options(),
+            //'category_options' => category_options(),
             //'add_categories_status' => $request->session()->get('add_categories_status'),
-            'menu_item_type_options' => menu_item_type_options(),
+            //'menu_item_type_options' => menu_item_type_options(),
             //'add_custom_link_status' => $request->session()->get('add_custom_link_status'),
         ])->withViewData([
             'title' => $menu ? __('Edit menu :name', ['name' => $menu->name]) : __('Menus'),
@@ -142,6 +147,16 @@ class MenuController extends Controller
         } else {
             return back()->withErrors('add_custom_link', __('Add link failed!'));
         }
+    }
+    public function updateItems(MenuUpdateItemsRequest $request, Menu $menu)
+    {
+        $items = $this->normalizeItems($request->validated());
+        return response()->json($items);
+        $menu->update([
+            'items' => $this->normalizeItems($request->validated()),
+        ]);
+
+        return back()->with('update_items', 'Menu updated successfully');
     }
     public function updatee(Menu $menu, Request $request)
     {

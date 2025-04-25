@@ -85,6 +85,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::post('/{menu}/add/posts', [MenuController::class, 'addPosts'])->name('dashboard.menus.add.posts');
         Route::post('/{menu}/add/categories', [MenuController::class, 'addCategories'])->name('dashboard.menus.add.categories');
         Route::post('/{menu}/add/custom', [MenuController::class, 'addCustomLink'])->name('dashboard.menus.add.custom');
+        Route::post('/{menu}/items/update', [MenuController::class, 'updateItems'])->name('dashboard.menus.update.items');
         //Route::get('/{menu}', MenuBuilder::class)->name('dashboard.menus.builder');
         //Route::get('/{menu}/show', [MenuController::class, 'show'])->name('dashboard.menus.show');
         //Route::get('/{menu}/edit', [MenuController::class, 'edit'])->name('dashboard.menus.edit');
