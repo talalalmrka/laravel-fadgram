@@ -36,13 +36,14 @@ const submit = () => {
         <div class="card-body">
             <form @submit.prevent="submit">
                 <div class="input-group xs w-full">
-                    <input ref="nameInput" type="text" v-model="form.name" name="name" class="form-control"
+                    <input ref="nameInput" type="text" v-model="form.name" name="name" class="form-control flex-1"
                         :class="{ 'error': form.errors.name }" @input="form.clearErrors('name')"
                         placeholder="Enter menu name">
-                    <button type="submit" class="btn btn-primary w-[100px]" :disabled="form.processing">
+                    <button type="submit" class="btn btn-primary text-nowrap flex-space-2 w-[100px]"
+                        :disabled="form.processing">
                         <fg-icon icon="fg-plus" />
-                        <span v-if="!form.processing">Create</span>
-                        <fg-loader v-if="form.processing" dots-scale />
+                        <span v-show="true">Create</span>
+                        <fg-loader v-show="form.processing" dots-scale />
                     </button>
                 </div>
                 <fg-error :error="form.errors.name" />

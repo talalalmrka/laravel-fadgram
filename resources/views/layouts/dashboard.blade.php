@@ -76,8 +76,8 @@
                             :label="__('Pages')" />
                     @endcan
                     @can('manage_menus')
-                        <x-nav-link wire:navigate :href="route('dashboard.menus')" wire:current="active" icon="bi-list-ul"
-                            :label="__('Menus')" />
+                        <x-nav-link :href="route('dashboard.menus')" wire:current="active" icon="bi-list-ul" :label="__('Menus')"
+                            :navigate="false" />
                     @endcan
                     @can('manage_media')
                         <x-nav-link wire:navigate :href="route('dashboard.media')" wire:current="active" icon="bi-image"

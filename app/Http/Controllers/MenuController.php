@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Menu\DeleteItemRequest;
+use App\Http\Requests\Menu\UpdateItemsRequest;
 use App\Http\Requests\MenuAddCategoriesRequest;
 use App\Http\Requests\MenuAddCustomLinkRequest;
 use App\Http\Requests\MenuAddPagesRequest;
 use App\Http\Requests\MenuAddPostsRequest;
-use App\Http\Requests\MenuUpdateItemsRequest;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
 use App\Models\Menu;
+use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Post;
+use App\Services\MenuService;
 use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-
 
 class MenuController extends Controller
 {
@@ -32,22 +34,8 @@ class MenuController extends Controller
             'categories' => fn() => Category::category()->with('children')->get()->toArray(),
             'item_types' => menu_item_type_options(),
             'items' => fn() => $menu ? $menu->items()->with('children')->get()->toArray() : [],
-            //'items' => $menu ? $menu->items()->with('children')->get()->toArray() : [],
-            //'menu_position_options' => menu_position_options(),
-            //'create_status' => $request->session()->get('create_status'),
-            //'update_status' => $request->session()->get('update_status'),
-            //'status' => $request->session()->get('status'),
-            //'page_options' => page_options(),
-            //'add_pages_status' => $request->session()->get('add_pages_status'),
-            //'post_options' => post_options(),
-            //'add_posts_status' => $request->session()->get('add_posts_status'),
-            //'category_options' => category_options(),
-            //'add_categories_status' => $request->session()->get('add_categories_status'),
-            //'menu_item_type_options' => menu_item_type_options(),
-            //'add_custom_link_status' => $request->session()->get('add_custom_link_status'),
         ])->withViewData([
             'title' => $menu ? __('Edit menu :name', ['name' => $menu->name]) : __('Menus'),
-            //'title' => __('Edit menu :name', ['name' => $menu?->name])
         ]);
     }
 
@@ -148,52 +136,41 @@ class MenuController extends Controller
             return back()->withErrors('add_custom_link', __('Add link failed!'));
         }
     }
-    public function updateItems(MenuUpdateItemsRequest $request, Menu $menu)
+    public function updateItems(UpdateItemsRequest $request, Menu $menu, MenuService $menuService)
     {
-        $items = $this->normalizeItems($request->validated());
+        $items = $request->validated('items', []);
+        $update = $menuService->updateItems($menu, $items);
+        return $update
+            ? back()->with('update_items', __('Saved'))
+            : back()->withErrors(['update_items' => __('Save failed!')]);
+    }
+    public function showItems(Menu $menu)
+    {
+        $items = $menu->items()->get()->toArray();
         return response()->json($items);
-        $menu->update([
-            'items' => $this->normalizeItems($request->validated()),
-        ]);
-
-        return back()->with('update_items', 'Menu updated successfully');
     }
-    public function updatee(Menu $menu, Request $request)
+
+    public function reset()
     {
-        $validated = $request->validate([
-            'items' => 'required|array',
-            'items.*.id' => 'required|string',
-            'items.*.name' => 'required|string|max:255',
-            'items.*.url' => 'nullable|string|max:255',
-            'items.*.type' => 'required|in:custom,page,category,post',
-            'items.*.parent_id' => 'nullable|string',
-            'items.*.order' => 'required|integer',
-        ]);
+        try {
+            Menu::truncate();
+            MenuItem::truncate();
 
-        $menu->update([
-            'items' => $this->normalizeItems($request->items)
-        ]);
-
-        return back()->with('success', 'Menu updated successfully');
+            \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                '--class' => 'MenuSeeder',
+            ]);
+            return back()->with('reset_defaults', __('Reset success'));
+        } catch (\Exception $e) {
+            return back()->withErrors(['reset_defaults', $e->getMessage()]);
+        }
     }
-
-    private function normalizeItems(array $items, string|null $parentId = null): array
+    public function deleteItem(DeleteItemRequest $request, MenuItem $menuItem)
     {
-        return collect($items)->map(function ($item, $index) use ($parentId) {
-            return [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'url' => $item['url'] ?? null,
-                'type' => $item['type'],
-                'parent_id' => $parentId,
-                'order' => $index,
-                'children' => isset($item['children'])
-                    ? $this->normalizeItems($item['children'], $item['id'])
-                    : []
-            ];
-        })->toArray();
+        $delete = $menuItem->delete();
+        return $delete
+            ? back()->with('delete_item', __('Item deleted'))
+            : back()->withErrors(['delete_item' => __('Delete failed!')]);
     }
-
     /**
      * Remove the specified resource from storage.
      */

@@ -24,6 +24,9 @@ class MenuItem extends Model
         'navigate',
         'new_tab',
     ];
+    protected $with = [
+        'children'
+    ];
     protected static function boot()
     {
         parent::boot();

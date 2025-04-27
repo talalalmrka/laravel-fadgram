@@ -11,13 +11,16 @@ interface Props {
 const props = defineProps<Props>()
 
 interface InertiaPageProps {
-  errors: Record<string, string | string[]>
-  flash?: Record<string, string>
+  errors?: Record<string, string | string[]>
+  flash?: Record<string, string | undefined>
+  [key: string]: any
 }
 
-const page = usePage<{ props: InertiaPageProps }>()
+// Correctly type the page props
+const page = usePage<InertiaPageProps>()
 
 const errorMessage = computed(() => {
+  // TypeScript now knows page.props.errors is a Record<string, string | string[]>
   const error = page.props.errors?.[props.name]
   if (typeof error === 'string') return error
   if (Array.isArray(error)) return error[0]
@@ -25,13 +28,15 @@ const errorMessage = computed(() => {
 })
 
 const flashMessage = computed(() => {
+  // TypeScript now knows page.props.flash is a Record<string, string | undefined>
   return page.props.flash?.[props.name] || null
 })
 </script>
 
 <template>
-  <fg-alert v-if="flashMessage" v-bind="$attrs" success outline size="xs" class="p-0 border-0" :class="class"
-    :content="flashMessage" />
-  <fg-alert v-if="errorMessage" v-bind="$attrs" error outline size="xs" class="p-0 border-0" :class="class"
+  <!-- Template remains unchanged -->
+  <fg-alert v-if="flashMessage" v-bind="$attrs" type="success" outline size="xs" class="p-0 border-0"
+    :class="props.class" :content="flashMessage" />
+  <fg-alert v-if="errorMessage" v-bind="$attrs" type="error" outline size="xs" class="p-0 border-0" :class="props.class"
     :content="errorMessage" />
 </template>

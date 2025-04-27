@@ -8,6 +8,7 @@ import {
     FgError,
     FgLoader,
 } from 'fadgram-vue';
+import { route } from 'ziggy-js';
 
 const page = usePage<{
     props: {

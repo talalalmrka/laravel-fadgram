@@ -28,7 +28,7 @@
         "@morev/vue-transitions": "^3.0.5",
         "@vueuse/core": "^13.1.0",
         "fadgram-ui": "^0.5.0",
-        "fadgram-vue": "^1.1.6",
+        "fadgram-vue": "^1.1.7",
         "jodit": "^4.6.1",
         "lucide-vue-next": "^0.488.0",
         "primevue": "^4.3.3",

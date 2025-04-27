@@ -6,6 +6,7 @@ import type { DefineComponent } from "vue";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "ziggy-js";
 import { initializeTheme } from "./composables/useAppearance";
+import { useMessages } from './composables/useMessages';
 
 // Extend ImportMeta interface for Vite...
 declare module "vite/client" {
@@ -30,10 +31,14 @@ createInertiaApp({
             import.meta.glob<DefineComponent>("./pages/**/*.vue"),
         ),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
+        const vueApp = createApp({ render: () => h(App, props) });
+        vueApp.use(plugin);
+        vueApp.use(ZiggyVue);
+        // Add global helpers
+        const { getErrorMessage, getFlashMessage } = useMessages();
+        vueApp.config.globalProperties.$getErrorMessage = getErrorMessage;
+        vueApp.config.globalProperties.$getFlashMessage = getFlashMessage;
+        vueApp.mount(el);
     },
     progress: {
         color: "#4B5563",

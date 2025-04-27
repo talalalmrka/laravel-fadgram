@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import draggable from 'vuedraggable'
 import { TransitionExpand } from '@morev/vue-transitions'
-import type { MenuType, MenuItemType, MenuItemPayload, PageType, PostType, CategoryType, OptionType } from '@/types'
+import type { MenuType, MenuItemType, PageType, PostType, CategoryType, OptionType } from '@/types'
 import {
     FgInput,
     FgSelect,
     FgSwitch,
     FgIconPicker,
+    FgIcon,
+    FgLoader
 } from 'fadgram-vue';
 
 interface Props {
@@ -28,150 +30,105 @@ const page = usePage<{
     }
 }>();
 const menu = page.props.menu;
-const pages = page.props.pages;
-const posts = page.props.posts;
-const categories = page.props.categories;
-const typeOptions = page.props.item_types;
-const pageOptions = computed(() => pages.map((el) => ({ label: el.name, value: el.id })));
-const postOptions = computed(() => posts.map((el) => ({ label: el.name, value: el.id })));
+const pages = page.props.pages as PageType[];
+const posts = page.props.posts as PostType[];
+const categories = page.props.categories as CategoryType[];
+const typeOptions = page.props.item_types as OptionType[];
+const pageOptions = computed(() => pages.map((el: PageType) => ({ label: el.name, value: el.id })));
+const postOptions = computed(() => posts.map((el: PostType) => ({ label: el.name, value: el.id })));
 const categoryOptions = computed(() => categories.map((el) => ({ label: el.name, value: el.id })));
-const localItem = ref<MenuItemType>({ ...props.item })
-const errors = page.props.errors;
+//const localItem = ref<MenuItemType>({ ...props.item })
 const open = ref(false)
-const isEditing = ref(false)
 function getError(field: string) {
-    return errors?.[`${props.path}.${field}`] || null;
+    return page.props.errors?.[`${props.path}.${field}`] || null;
 }
-/*
-const typeOptions = [
-    { label: 'Custom Link', value: 'custom' },
-    { label: 'Page', value: 'page' },
-    { label: 'Category', value: 'category' },
-    { label: 'Post', value: 'post' }
-]
-*/
-watch(() => props.item, (newVal) => {
-    localItem.value = { ...newVal }
-}, { deep: true });
-function deepCopy(obj) {
-    return JSON.parse(JSON.stringify(obj))
+function update(updated: MenuItemType) {
+    emit('update', updated);
 }
-function handleUpdate() {
-    console.log('handleUpdate');
-
-    emit('update', { ...localItem });
+function remove(id: string | number) {
+    emit('remove', id);
 }
 
-function handleChildUpdate(updatedChild) {
-    console.log('handleChildUpdate');
-
-    const index = localItem.children.findIndex(c => c.id === updatedChild.id)
-    if (index >= 0) {
-        localItem.children.splice(index, 1, updatedChild)
-    } else {
-        localItem.children.push(updatedChild)
-    }
-    handleUpdate()
-}
-
-function handleRemove() {
-    emit('remove', localItem.id)
-}
-
-function checkMove(evt) {
-    const depth = getDepth(evt.draggedContext.element)
-    return depth <= 3
-}
-
-function getDepth(item, current = 1) {
-    if (!item.children || item.children.length === 0) return current
-    return Math.max(...item.children.map(c => getDepth(c, current + 1)))
-}
-
-function handleDragChange(evt) {
-    if (evt.added) {
-        const newIndex = evt.added.newIndex;
-        const movedItem = localItem.children[newIndex];
-        movedItem.parent_id = localItem.id; // Set parent to current item
-    }
-
-    // Reorder children based on their index
-    localItem.children.forEach((child, index) => {
-        child.order = index;
-    });
-
-    handleUpdate(); // Emit updated item upward
-}
+const hasErrors = computed(() => {
+    return Object.keys(page.props.errors).some(key => key.startsWith(props.path));
+});
 </script>
 
 <template>
     <div>
-        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm">
-            <div class="flex justify-between items-center space-x-2 px-3 py-2">
-                <div class="flex-space-2 items-center grow justify-between">
-                    <div class="flex-space-2">
-                        <span class="handle cursor-move flex items-center">
-                            <i class="icon bi-arrows-move w-4 h-4"></i>
-                        </span>
-                        <span v-if="item.icon" class="flex items-center">
-                            <i class="icon" :class="item.icon"></i>
-                        </span>
-                        <span>{{ item.name }}</span>
-                        <span class="text-xs flex items-center rounded-full inset-shadow-sm inset-shadow-gray-200 px-2">
-                            {{ item.order }}
-                        </span>
-                        <span>{{ path }}</span>
+        <div :id="path"
+            class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm shadow-xs"
+            :class="{ 'bg-red/30': hasErrors }">
+            <div class="flex items-center rounded-t-lg" :class="{ 'bg-gray-100 dark:bg-gray-600': open }">
+                <span class="handle cursor-move flex items-center px-3 py-2 hover:font-semibold">
+                    <fg-icon icon="bi-arrows-move" class=" w-4 h-4" />
+                </span>
+                <button @click="open = !open" type="button" class="flex items-center px-3 py-2 justify-between grow">
+                    <div class="grow flex items-center justify-between">
+                        <div class="flex-space-2">
+                            <span v-if="item.icon" class="flex items-center">
+                                <i class="icon" :class="item.icon"></i>
+                            </span>
+                            <span>{{ item.name }}</span>
+                            <span
+                                class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">
+                                {{ item.order }}
+                            </span>
+                        </div>
+                        <span class="badge xs">{{ item.type }}</span>
                     </div>
-                    <span class="badge xs">{{ item.type }}</span>
-                </div>
-                <button @click="open = !open" class="flex items-center">
-                    <i class="icon bi-chevron-down transition-transform duration-200"
-                        :class="{ 'rotate-180': open }"></i>
+                    <span class="flex items-center">
+                        <i class="icon bi-chevron-down transition-transform duration-200"
+                            :class="{ 'rotate-180': open }"></i>
+                    </span>
                 </button>
             </div>
             <transition-expand>
-                <div v-show="open" class="border-t px-3 py-2">
+                <div v-show="open" class="border-t border-gray-200 dark:border-gray-600 px-3 py-2 rounded-b-lg">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="col md:col-span-3">
-                            <fg-input label="Name" :id="'item.' + localItem.id + '.name'" type="text"
-                                v-model="item.name" class="xs" :error="null" />
+                            <fg-input label="Name" type="text" v-model="item.name" class="xs"
+                                :error="getError('name')" />
                         </div>
                         <div class="col">
-                            <fg-icon-picker label="Icon" :id="'item.' + localItem.id + '.icon'" v-model="item.icon"
-                                :error="getError('icon')" groupClass="xs" />
+                            <fg-icon-picker label="Icon" v-model="item.icon" :error="getError('icon')"
+                                groupClass="xs" />
                         </div>
                         <div class="col">
-                            <fg-input label="Css class" :id="'item.' + localItem.id + '.class_name'" type="text"
-                                v-model="item.class_name" class="xs" :error="null" />
+                            <fg-input label="Css class" type="text" v-model="item.class_name" class="xs"
+                                :error="getError('class_name')" />
                         </div>
                         <div class="col">
-                            <fg-select label="Type" :id="'item.' + localItem.id + '.type'" v-model="item.type"
-                                class="xs" :error="null" :options="typeOptions" />
+                            <fg-select label="Type" v-model="item.type" class="xs" :error="getError('type')"
+                                :options="typeOptions" placeholder="Select type" />
                         </div>
-                        <div v-if="localItem.type === 'custom'" class="col md:col-span-3">
-                            <fg-input label="Url" :id="'item.' + localItem.id + '.url'" type="text" v-model="item.url"
-                                class="xs" :error="null" />
+                        <div v-if="item.type === 'custom'" class="col md:col-span-3">
+                            <fg-input label="Url" type="text" v-model="item.url" class="xs"
+                                placeholder="Item url (url or # or #hash)" :error="getError('url')" />
                         </div>
-                        <div v-if="localItem.type === 'page'" class="col md:col-span-3">
-                            <fg-select label="Page" :id="'item.' + localItem.id + '.page_id'" v-model="item.page_id"
-                                class="xs" :error="null" :options="pageOptions" />
+                        <div v-if="item.type === 'page'" class="col md:col-span-3">
+                            <fg-select label="Page" v-model="item.page_id" class="xs" :error="getError('page_id')"
+                                placeholder="Select page" :options="pageOptions" />
                         </div>
-                        <div v-if="localItem.type === 'post'" class="col md:col-span-3">
-                            <fg-select label="Post" :id="'item.' + localItem.id + '.post_id'" v-model="item.post_id"
-                                class="xs" :error="null" :options="postOptions" />
+                        <div v-if="item.type === 'post'" class="col md:col-span-3">
+                            <fg-select label="Post" v-model="item.post_id" class="xs" :error="getError('post_id')"
+                                placeholder="Select post" :options="postOptions" />
                         </div>
-                        <div v-if="localItem.type === 'category'" class="col md:col-span-3">
-                            <fg-select label="Category" :id="'item.' + localItem.id + '.category_id'"
-                                v-model="item.category_id" class="xs" :error="null" :options="categoryOptions" />
-                        </div>
-                        <div class="col">
-                            <fg-switch v-model="item.navigate" label="Navigate" info="wire navigate" :value="1" />
+                        <div v-if="item.type === 'category'" class="col md:col-span-3">
+                            <fg-select label="Category" v-model="item.category_id" class="xs"
+                                :error="getError('category_id')" placeholder="Select category"
+                                :options="categoryOptions" />
                         </div>
                         <div class="col">
-                            <fg-switch v-model="item.new_tab" label="Open in new tab" :value="1" />
+                            <fg-switch v-model="item.navigate" label="Navigate" info="wire navigate" :value="1"
+                                :error="getError('navigate')" />
                         </div>
                         <div class="col">
-                            <button class="btn xs btn-outline-red" @click="handleRemove">
+                            <fg-switch v-model="item.new_tab" label="Open in new tab" :value="1"
+                                :error="getError('new_tab')" info="open item in new tab." />
+                        </div>
+                        <div class="col">
+                            <button class="btn xs btn-outline-red" @click="remove(item.id)">
                                 <i class="icon bi-trash-fill"></i>
                                 <span>Remove</span>
                             </button>
@@ -183,7 +140,8 @@ function handleDragChange(evt) {
         <div class="ms-4 mt-2">
             <draggable v-model="item.children" group="menu-items" item-key="id" handle=".handle" class="space-y-2">
                 <template #item="{ element }">
-                    <menu-item :item="element" :path="`${path}.children.${item.children.indexOf(element)}`" />
+                    <menu-item :item="element" :path="`${path}.children.${item.children!.indexOf(element)}`"
+                        @remove="remove(element.id)" />
                 </template>
             </draggable>
         </div>
