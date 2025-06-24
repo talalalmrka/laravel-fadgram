@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { FgCheckbox } from 'fadgram-vue'
+import type { CategoryType } from '@/types'
 
 const props = defineProps<{
     categories: CategoryType[];

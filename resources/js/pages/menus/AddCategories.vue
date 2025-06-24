@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import Status from '@/components/Status.vue'
+import { route } from 'ziggy-js';
 import type {
     MenuType,
     CategoryType
 } from '@/types'
-import {
-    FgCheckbox,
-    FgAlert,
-    FgError,
-    FgLoader,
-} from 'fadgram-vue'
 import CategoriesCheckboxGroup from './CategoriesCheckboxGroup.vue'
 
 const page = usePage<{
@@ -20,8 +15,8 @@ const page = usePage<{
         categories: CategoryType[];
     }
 }>();
-const menu = page.props.menu;
-const categories = page.props.categories ?? [];
+const menu = page.props.menu as MenuType;
+const categories = (page.props.categories ?? []) as CategoryType[];
 const selectAll = ref<boolean>(false);
 const form = useForm({
     categories: [] as string[],
@@ -40,7 +35,7 @@ watch(selectAll, (newVal) => {
 });
 
 const submit = () => {
-    form.post(route('dashboard.menus.add.categories', { menu: page.props.menu.id }), {
+    form.post(route('dashboard.menus.add.categories', { menu: menu.id }), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset()

@@ -46,10 +46,15 @@
     .card {
         @apply shadow-sm;
     }
-
+    .card-header{
+        @apply rounded-t-lg;
+    }
+    .card-footer{
+        @apply rounded-b-lg;
+    }
     .card-header,
     .card-footer {
-        @apply bg-gray-50;
+        @apply bg-gray-50 dark:bg-gray-800;
     }
 
     .link {

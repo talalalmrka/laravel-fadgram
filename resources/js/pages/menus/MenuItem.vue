@@ -4,14 +4,6 @@ import { usePage } from '@inertiajs/vue3'
 import draggable from 'vuedraggable'
 import { TransitionExpand } from '@morev/vue-transitions'
 import type { MenuType, MenuItemType, PageType, PostType, CategoryType, OptionType } from '@/types'
-import {
-    FgInput,
-    FgSelect,
-    FgSwitch,
-    FgIconPicker,
-    FgIcon,
-    FgLoader
-} from 'fadgram-vue';
 
 interface Props {
     item: MenuItemType,

@@ -49,7 +49,7 @@ class MenuController extends Controller
     {
         $menu = Menu::create($request->validated());
         if ($menu) {
-            return redirect()->to(route('dashboard.menus.builder', $menu))->with('create_menu', __('Menu created'));
+            return redirect()->to(route('dashboard.menus', $menu))->with('create_menu', __('Menu created'));
         } else {
             return back()->withErrors(['create_menu' => __('Create menu failed!')]);
         }

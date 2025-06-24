@@ -3,7 +3,6 @@ import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { TransitionExpand } from '@morev/vue-transitions'
 import { MenuType, OptionType } from '@/types'
-import { FgInput, FgSelect, FgIcon, FgLoader } from 'fadgram-vue'
 import Status from '@/components/Status.vue'
 import { route } from 'ziggy-js'
 
@@ -69,7 +68,7 @@ const deleteMenu = () => {
 <template>
     <div v-if="menu" class="card mt-4">
         <div class="card-header flex-space-2" :class="{ 'border-b-0 bg-white': !open }">
-            <div class="card-title text-primary flex-space-2 grow">
+            <div class="card-title flex-space-2 grow">
                 <fg-icon icon="bi-gear-wide-connected" />
                 <span>Settings ({{ menu.name }})</span>
             </div>

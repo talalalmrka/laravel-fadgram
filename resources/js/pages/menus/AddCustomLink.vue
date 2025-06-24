@@ -1,23 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
+import { route } from 'ziggy-js';
 import type { MenuType } from '@/types'
 import Status from '@/components/Status.vue'
-
-import {
-    FgInput,
-    FgIconPicker,
-    FgLoader,
-    FgError,
-    FgAlert,
-    FgIcon,
-} from 'fadgram-vue'
 const page = usePage<{
     props: {
         menu: MenuType;
     }
 }>();
-const menu = page.props.menu;
+const menu = page.props.menu as MenuType;
 const form = useForm({
     name: '',
     icon: '',

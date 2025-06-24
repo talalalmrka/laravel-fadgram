@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { usePage, useForm } from '@inertiajs/vue3'
-import { computed, watchEffect, watch } from 'vue'
+import { computed } from 'vue'
 import draggable from 'vuedraggable'
 import MenuItem from './MenuItem.vue'
-import { FgLoader, FgIcon, FgAlert } from 'fadgram-vue'
 import Status from '@/components/Status.vue'
 import type { MenuType, MenuItemType } from '@/types'
 import { route } from 'ziggy-js'
@@ -14,7 +13,7 @@ interface PageProps {
     flash?: Record<string, string>;
 }
 const page = usePage<{ props: PageProps }>();
-const menu = computed(() => page.props.menu)
+const menu = computed(() => page.props.menu as MenuType)
 const items = computed(() => {
     const ensureChildren = (list: MenuItemType[]): MenuItemType[] =>
         list.map(item => ({
@@ -50,7 +49,7 @@ function updateItem(index: number, updated: MenuItemType) {
 
 // Submit
 function submit() {
-    form.post(route('dashboard.menus.items.update', { menu: page.props.menu.id }), {
+    form.post(route('dashboard.menus.items.update', { menu: menu.value.id }), {
         preserveScroll: true,
     });
 }
@@ -59,30 +58,23 @@ function submit() {
 </script>
 
 <template>
-    <div class="card">
-        <div class="card-header flex-space-2 justify-between">
-            <div class="card-title flex-space-2 text-primary">
-                <fg-icon icon="bi-list-nested" />
-                <span>Structure</span>
+    <fg-card icon="bi-list-nested" title="Structure">
+        <draggable v-if="hasItems" v-model="form.items" group="menu-items" item-key="id" handle=".handle"
+            class="space-y-2">
+            <template #item="{ element, index }">
+                <menu-item :item="element" :path="`items.${index}`" @remove="removeItem" />
+            </template>
+        </draggable>
+        <fg-alert v-else soft content="No items found!" />
+        <template #footer>
+            <div class="flex-space-2 justify-between">
+                <button @click="submit" type="button" class="btn sm btn-primary w-auto text-nowrap">
+                    <fg-icon icon="bi-floppy" />
+                    <span>Save changes</span>
+                    <fg-loader v-if="form.processing" dots-scale />
+                </button>
+                <Status name="update_items" class="text-sm" />
             </div>
-            <button type="button" class="text-sm link" @click="form.items = page.props.items">Reset</button>
-        </div>
-        <div class="card-body">
-            <draggable v-if="hasItems" v-model="form.items" group="menu-items" item-key="id" handle=".handle"
-                class="space-y-2">
-                <template #item="{ element, index }">
-                    <menu-item :item="element" :path="`items.${index}`" @remove="removeItem" />
-                </template>
-            </draggable>
-            <fg-alert v-else soft content="No items found!" />
-        </div>
-        <div class="card-footer flex-space-2 justify-between">
-            <button @click="submit" type="button" class="btn sm btn-primary w-auto text-nowrap">
-                <fg-icon icon="bi-floppy" />
-                <span>Save changes</span>
-                <fg-loader v-if="form.processing" dots-scale />
-            </button>
-            <Status name="update_items" class="text-sm" />
-        </div>
-    </div>
+        </template>
+    </fg-card>
 </template>

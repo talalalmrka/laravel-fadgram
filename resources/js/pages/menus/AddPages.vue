@@ -3,11 +3,6 @@ import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import type { MenuType, PageType } from '@/types'
 import Status from '@/components/Status.vue'
-import {
-    FgCheckbox,
-    FgError,
-    FgLoader,
-} from 'fadgram-vue';
 import { route } from 'ziggy-js';
 
 const page = usePage<{
@@ -16,8 +11,8 @@ const page = usePage<{
         pages: PageType[];
     }
 }>();
-const menu = page.props.menu;
-const pages = page.props.pages ?? [];
+const menu = page.props.menu as MenuType;
+const pages = (page.props.pages ?? []) as PageType[];
 const options = computed(() => pages.map((item) => ({ label: item.name, value: item.id })));
 const selectAll = ref<boolean>(false);
 const form = useForm({

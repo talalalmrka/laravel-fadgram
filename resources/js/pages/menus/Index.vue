@@ -5,7 +5,6 @@ import CreateMenu from './CreateMenu.vue'
 import SelectMenu from './SelectMenu.vue'
 import EditMenu from './EditMenu.vue'
 import AddItems from './AddItems.vue'
-import { FgAlert, FgIcon, FgLoader } from 'fadgram-vue'
 import { Status } from '@/components'
 import MenuStructure from './MenuStructure.vue';
 import { route } from 'ziggy-js'

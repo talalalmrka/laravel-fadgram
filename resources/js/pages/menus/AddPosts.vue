@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 import type { MenuType, PostType } from '@/types'
 import Status from '@/components/Status.vue'
-import {
-    FgCheckbox,
-    FgError,
-    FgLoader,
-} from 'fadgram-vue';
 
 const page = usePage<{
     props: {
@@ -15,8 +11,8 @@ const page = usePage<{
         posts: PostType[];
     }
 }>();
-const menu = page.props.menu;
-const posts = page.props.posts ?? [];
+const menu = page.props.menu as MenuType;
+const posts = (page.props.posts ?? []) as PostType[];
 const options = computed(() => posts.map((item) => ({ label: item.name, value: item.id })));
 const selectAll = ref<boolean>(false);
 const form = useForm({

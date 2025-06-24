@@ -7,6 +7,7 @@ import { createApp, h } from "vue";
 import { ZiggyVue } from "ziggy-js";
 import { initializeTheme } from "./composables/useAppearance";
 import { useMessages } from './composables/useMessages';
+import FadgramVue from 'fadgram-vue'
 
 // Extend ImportMeta interface for Vite...
 declare module "vite/client" {
@@ -34,6 +35,7 @@ createInertiaApp({
         const vueApp = createApp({ render: () => h(App, props) });
         vueApp.use(plugin);
         vueApp.use(ZiggyVue);
+        vueApp.use(FadgramVue);
         // Add global helpers
         const { getErrorMessage, getFlashMessage } = useMessages();
         vueApp.config.globalProperties.$getErrorMessage = getErrorMessage;
