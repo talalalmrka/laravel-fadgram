@@ -1,0 +1,1023 @@
+[
+    {
+        "type": "container",
+        "attributes": {
+            "type": "container-fluid",
+            "textAlign": null,
+            "bgColor": "bg-gradient-primary",
+            "bgAttachment": null,
+            "margin": {
+                "sm": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "md": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "lg": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "xl": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                }
+            },
+            "padding": {
+                "sm": {
+                    "top": "pt-10",
+                    "start": null,
+                    "end": null,
+                    "bottom": "pb-10"
+                },
+                "md": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "lg": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "xl": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                }
+            },
+            "borderRadius": null,
+            "shadowColor": null,
+            "htmlAnchor": "hero-section",
+            "className": "h-screen flex flex-col justify-center relative",
+            "style": null,
+            "textColor": "text-white",
+            "bgImage": "http://localhost:8000/uploads/33/flowers.jpg",
+            "bgSize": "bg-cover",
+            "bgPosition": "bg-center"
+        },
+        "children": [
+            {
+                "type": "container",
+                "id": "block-68a4d46897bc9",
+                "attributes": {
+                    "type": "container-fluid",
+                    "textAlign": null,
+                    "bgColor": null,
+                    "bgAttachment": null,
+                    "margin": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "padding": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "borderRadius": null,
+                    "shadowColor": null,
+                    "htmlAnchor": null,
+                    "className": "bg-black/40 absolute inset-0 !w-full",
+                    "style": null
+                },
+                "children": []
+            },
+            {
+                "type": "heading",
+                "id": "block-68a4d46897c5e",
+                "attributes": {
+                    "tag": "h1",
+                    "title": "This is heading",
+                    "icon": null,
+                    "textAlign": "text-center",
+                    "bgColor": null,
+                    "margin": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "padding": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "borderRadius": null,
+                    "shadowColor": null,
+                    "htmlAnchor": null,
+                    "className": "z-1",
+                    "style": null,
+                    "fontSize": "text-6xl",
+                    "textTransform": null,
+                    "fontWeight": "font-medium"
+                }
+            },
+            {
+                "type": "paragraph",
+                "id": "block-68a4d46897ce6",
+                "attributes": {
+                    "content": "This is paragraph",
+                    "textAlign": "text-center",
+                    "bgColor": null,
+                    "margin": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "padding": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "htmlAnchor": null,
+                    "className": "z-1",
+                    "style": null,
+                    "textColor": null,
+                    "fontSize": "text-4xl",
+                    "fontWeight": "font-medium"
+                }
+            },
+            {
+                "type": "container",
+                "id": "block-68a4d46897d68",
+                "attributes": {
+                    "type": "container",
+                    "textAlign": null,
+                    "bgColor": null,
+                    "bgAttachment": null,
+                    "margin": {
+                        "sm": {
+                            "top": "mt-5",
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "padding": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "borderRadius": null,
+                    "shadowColor": null,
+                    "htmlAnchor": null,
+                    "className": "flex justify-center gap-4 items-center z-1",
+                    "style": null
+                },
+                "children": [
+                    {
+                        "type": "button",
+                        "id": "block-68a4d46897dea",
+                        "attributes": {
+                            "color": "btn-primary",
+                            "size": null,
+                            "url": "#",
+                            "target": "_blank",
+                            "margin": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "padding": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "borderRadius": "rounded-full",
+                            "htmlAnchor": null,
+                            "className": "inline-block",
+                            "style": null,
+                            "label": "Button 1",
+                            "icon": "bi-house"
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "id": "block-68a4d46897e6e",
+                        "attributes": {
+                            "color": "btn-outline-white",
+                            "size": null,
+                            "url": "#",
+                            "target": null,
+                            "margin": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "padding": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "borderRadius": "rounded-full",
+                            "htmlAnchor": null,
+                            "className": null,
+                            "style": null,
+                            "label": "Button 2"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "container",
+        "attributes": {
+            "type": "container",
+            "textAlign": null,
+            "bgColor": null,
+            "bgAttachment": null,
+            "margin": {
+                "sm": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "md": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "lg": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "xl": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                }
+            },
+            "padding": {
+                "sm": {
+                    "top": "pt-6",
+                    "start": null,
+                    "end": null,
+                    "bottom": "pb-6"
+                },
+                "md": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "lg": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                },
+                "xl": {
+                    "top": null,
+                    "start": null,
+                    "end": null,
+                    "bottom": null
+                }
+            },
+            "borderRadius": null,
+            "shadowColor": null,
+            "htmlAnchor": null,
+            "className": null,
+            "style": null
+        },
+        "children": [
+            {
+                "type": "container",
+                "attributes": {
+                    "type": "grid",
+                    "textAlign": null,
+                    "bgColor": null,
+                    "bgAttachment": null,
+                    "margin": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "padding": {
+                        "sm": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "md": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "lg": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        },
+                        "xl": {
+                            "top": null,
+                            "start": null,
+                            "end": null,
+                            "bottom": null
+                        }
+                    },
+                    "borderRadius": null,
+                    "shadowColor": null,
+                    "htmlAnchor": null,
+                    "className": "grid grid-cols1 md:grid-cols-3 gap-6",
+                    "style": null
+                },
+                "children": [
+                    {
+                        "type": "container",
+                        "id": "block-ipwwpl2",
+                        "attributes": {
+                            "type": "col",
+                            "textAlign": null,
+                            "bgColor": null,
+                            "bgAttachment": null,
+                            "margin": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "padding": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "borderRadius": null,
+                            "shadowColor": null,
+                            "htmlAnchor": null,
+                            "className": null,
+                            "style": null
+                        },
+                        "children": [
+                            {
+                                "type": "paragraph",
+                                "id": "block-q9fby9m",
+                                "attributes": {
+                                    "content": "this is paragraph this is paragraph this is paragraph",
+                                    "textAlign": "text-center",
+                                    "bgColor": null,
+                                    "margin": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "padding": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "htmlAnchor": null,
+                                    "className": null,
+                                    "style": null,
+                                    "fontSize": "text-lg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "container",
+                        "id": "block-r93wdyd",
+                        "attributes": {
+                            "type": "col",
+                            "textAlign": null,
+                            "bgColor": null,
+                            "bgAttachment": null,
+                            "margin": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "padding": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "borderRadius": null,
+                            "shadowColor": null,
+                            "htmlAnchor": null,
+                            "className": null,
+                            "style": null
+                        },
+                        "children": [
+                            {
+                                "type": "paragraph",
+                                "id": "block-68a4d46897f70",
+                                "attributes": {
+                                    "content": "this is paragraph this is paragraph this is paragraph",
+                                    "textAlign": "text-center",
+                                    "bgColor": null,
+                                    "margin": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "padding": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "htmlAnchor": null,
+                                    "className": null,
+                                    "style": null,
+                                    "fontSize": "text-xl"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "container",
+                        "id": "block-1op94al",
+                        "attributes": {
+                            "type": "col",
+                            "textAlign": null,
+                            "bgColor": null,
+                            "bgAttachment": null,
+                            "margin": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "padding": {
+                                "sm": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "md": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "lg": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                },
+                                "xl": {
+                                    "top": null,
+                                    "start": null,
+                                    "end": null,
+                                    "bottom": null
+                                }
+                            },
+                            "borderRadius": null,
+                            "shadowColor": null,
+                            "htmlAnchor": null,
+                            "className": null,
+                            "style": null
+                        },
+                        "children": [
+                            {
+                                "type": "paragraph",
+                                "id": "block-cocmnq3",
+                                "attributes": {
+                                    "content": "this is paragraph this is paragraph this is paragraph",
+                                    "textAlign": "text-center",
+                                    "bgColor": null,
+                                    "margin": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "padding": {
+                                        "sm": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "md": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "lg": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        },
+                                        "xl": {
+                                            "top": null,
+                                            "start": null,
+                                            "end": null,
+                                            "bottom": null
+                                        }
+                                    },
+                                    "htmlAnchor": null,
+                                    "className": null,
+                                    "style": null,
+                                    "fontSize": "text-xl"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "id": "block-68a4d46897ef1"
+            }
+        ]
+    }
+]
