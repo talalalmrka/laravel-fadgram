@@ -13,13 +13,13 @@ class AuthLayout extends CurveLayout
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.auth', [
+        return view('layouts.auth'/*, [
             'title' => $this->title,
             'showTitle' => false,
             'description' => $this->description,
             'color' => $this->color,
             'headerClass' => $this->headerClass,
             'headerAtts' => $this->headerAtts,
-        ]);
+        ]*/);
     }
 }

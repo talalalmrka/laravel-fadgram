@@ -24,10 +24,10 @@
                             <div class="col">
                                 <fgx:input wire:model.live="name" id="name" :label="__('Name')" autofocus />
                                 @if ($this->saved())
-                                    <a href="{{ $page->permalink }}" target="_blank"
+                                    <a href="{{ $post->permalink }}" target="_blank"
                                         class="link text-sm flex-space-2 mt-2">
                                         <i class="icon bi-box-arrow-up-right"></i>
-                                        <span>{{ $page->permalink }}</span>
+                                        <span>{{ $post->permalink }}</span>
                                     </a>
                                 @endif
                             </div>
@@ -42,30 +42,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mt-6">
-                    <div class="card-body">
-                        <fgx:file id="files" wire:model.live="files" :label="__('Files')"
-                            :previews="$previewsFiles" multiple />
-                    </div>
-                </div>
             </div>
             <!-- End Column 1 -->
             <div class="col">
+
                 <div class="card">
-                    <fgx:card-header :title="__('Featured image')" />
                     <div class="card-body">
                         <div class="grid grid-cols-1 gap-4">
                             <div class="col">
                                 <fgx:file id="thumbnail" wire:model.live="thumbnail" :label="__('Featured image')"
                                     :previews="$previewsThumbnail" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-6">
-                    <fgx:card-header :title="__('Seo')" />
-                    <div class="card-body">
-                        <div class="grid grid-cols-1 gap-4">
+                            <div class="col">
+                                <fgx:textarea id="excerpt" wire:model.live="excerpt" :label="__('Excerpt')" />
+                            </div>
                             <div class="col">
                                 <fgx:input type="text" id="seo_title" wire:model.live="seo_title"
                                     :label="__('Seo title')" />
@@ -74,13 +64,6 @@
                                 <fgx:textarea id="seo_description" wire:model.live="seo_description"
                                     :label="__('Seo description')" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-6 overflow-visible">
-                    <fgx:card-header :title="__('Categories')" />
-                    <div class="card-body overflow-visible">
-                        <div class="grid grid-cols-1 gap-4">
                             <div class="col">
                                 <x-select-categories class="text-xs" model="categories" id="categories"
                                     :label="__('Categories')" :categories="get_categories()" :value="$categories" />
@@ -89,40 +72,13 @@
                                 <x-select-choice model="tags" wire:model.live="tags" class="select-custom"
                                     :placeholder="__('Select tags')" :label="__('Tags')" :options="tag_options($tags)" :choices="$tags" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-6">
-                    <fgx:card-header :title="__('Appearance')" />
-                    <div class="card-body">
-                        <div class="grid grid-cols-1 gap-4">
                             <div class="col">
-                                <fgx:select id="template" wire:model.live="template" :label="__('Template')"
-                                    :options="layout_options()" />
+                                <fgx:radio id="template" wire:model.live="template" :label="__('Template')"
+                                    :options="template_options()" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-6">
-                    <fgx:card-header :title="__('Publish')" />
-                    <div class="card-body">
-                        <div class="grid grid-cols-1 gap-4">
                             <div class="col">
                                 <fgx:radio id="status" wire:model.live="status" :label="__('Status')"
-                                    :options="[
-                                        [
-                                            'label' => __('Draft'),
-                                            'value' => 'draft',
-                                        ],
-                                        [
-                                            'label' => __('Publish'),
-                                            'value' => 'publish',
-                                        ],
-                                        [
-                                            'label' => __('Trash'),
-                                            'value' => 'trash',
-                                        ],
-                                    ]" />
+                                    :options="status_options()" />
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-primary w-full">

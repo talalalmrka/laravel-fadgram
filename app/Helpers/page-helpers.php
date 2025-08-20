@@ -1,24 +1,24 @@
 <?php
 
-use App\Models\Page;
+use App\Models\Post;
 
 if (!function_exists('page')) {
     function page($id)
     {
-        return Page::find($id);
+        return Post::type('page')->find($id);
     }
 }
 if (!function_exists('page_options')) {
-    function page_options($emptyOption = null)
+    function page_options($emptyOption = true, $emptyOptionLabel = null)
     {
         $options = collect([]);
         if ($emptyOption) {
             $options->push([
-                'label' => $emptyOption,
+                'label' => $emptyOptionLabel ?? __('Select page'),
                 'value' => '',
             ]);
         }
-        $pages = Page::all();
+        $pages = Post::type('page')->get();
         if ($pages->isNotEmpty()) {
             foreach ($pages as $page) {
                 $options->push([

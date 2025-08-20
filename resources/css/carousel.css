@@ -1,0 +1,82 @@
+@layer components {
+    .carousel {
+        @apply relative w-full overflow-hidden;
+
+        /* transition slide */
+        &.carousel-slide {
+            .transition-start {
+                @apply -translate-x-full;
+            }
+
+            .transition-in {
+                @apply translate-x-0;
+            }
+
+            .transition-end {
+                @apply translate-x-full;
+            }
+
+            .transition-property {
+                @apply transition-transform;
+            }
+
+            &.reverse {
+                .transition-start {
+                    @apply translate-x-full;
+                }
+
+                .transition-end {
+                    @apply -translate-x-full;
+                }
+            }
+        }
+
+        &.carousel-fade {
+            .transition-start {
+                @apply opacity-0;
+            }
+
+            .transition-in {
+                @apply opacity-100;
+            }
+
+            .transition-end {
+                @apply opacity-0;
+            }
+
+            .transition-property {
+                @apply transition-opacity;
+            }
+        }
+
+        .title-start {
+            /* @apply -translate-y-72; */
+            @apply translate-x-full;
+        }
+
+        .title-in {
+            /* @apply translate-y-0; */
+            @apply translate-x-0;
+        }
+
+        .title-end {
+            /* @apply -translate-y-72; */
+            @apply -translate-x-full;
+        }
+
+        .description-start {
+            /* @apply translate-y-72; */
+            @apply -translate-x-72;
+        }
+
+        .description-in {
+            /* @apply translate-y-0; */
+            @apply translate-x-0;
+        }
+
+        .description-end {
+            /* @apply translate-y-72; */
+            @apply -translate-x-72;
+        }
+    }
+}

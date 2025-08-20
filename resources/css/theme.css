@@ -1,0 +1,153 @@
+@theme {
+    --color-primary: var(--color-emerald-600);
+    --color-primary-50: var(--color-emerald-50);
+    --color-primary-100: var(--color-emerald-100);
+    --color-primary-200: var(--color-emerald-200);
+    --color-primary-300: var(--color-emerald-300);
+    --color-primary-400: var(--color-emerald-400);
+    --color-primary-500: var(--color-emerald-500);
+    --color-primary-600: var(--color-emerald-600);
+    --color-primary-700: var(--color-emerald-700);
+    --color-primary-800: var(--color-emerald-800);
+    --color-primary-900: var(--color-emerald-900);
+    --color-primary-950: var(--color-emerald-950);
+
+    --color-body-bg: var(--color-white);
+    --color-body-bg-dark: var(--color-gray-900);
+
+    --color-instagram: #b9344c;
+    --color-instagram-50: #fce4ea;
+    --color-instagram-100: #f8b9c8;
+    --color-instagram-200: #f48da5;
+    --color-instagram-300: #ef6182;
+    --color-instagram-400: #eb3660;
+    --color-instagram-500: #e4405f;
+    --color-instagram-600: #b9344c;
+    --color-instagram-700: #8e273a;
+    --color-instagram-800: #621a27;
+    --color-instagram-900: #370d14;
+
+    --color-snapchat: #ccc900;
+    --color-snapchat-50: #fffde7;
+    --color-snapchat-100: #fffbc2;
+    --color-snapchat-200: #fff99c;
+    --color-snapchat-300: #fff776;
+    --color-snapchat-400: #fff550;
+    --color-snapchat-500: #fffc00;
+    --color-snapchat-600: #ccc900;
+    --color-snapchat-700: #999600;
+    --color-snapchat-800: #666400;
+    --color-snapchat-900: #333200;
+
+    --color-telegram: #1c7fb2;
+    --color-telegram-50: #e6f4fa;
+    --color-telegram-100: #bfe6f5;
+    --color-telegram-200: #99d7f0;
+    --color-telegram-300: #73c8eb;
+    --color-telegram-400: #4cb9e6;
+    --color-telegram-500: #24a1de;
+    --color-telegram-600: #1c7fb2;
+    --color-telegram-700: #155e85;
+    --color-telegram-800: #0d3c59;
+    --color-telegram-900: #061b2c;
+
+    --color-pinterest: #960614;
+    --color-pinterest-50: #fbe6e9;
+    --color-pinterest-100: #f5b3bb;
+    --color-pinterest-200: #ef808d;
+    --color-pinterest-300: #e94d5f;
+    --color-pinterest-400: #e31a31;
+    --color-pinterest-500: #bd081c;
+    --color-pinterest-600: #960614;
+    --color-pinterest-700: #70040f;
+    --color-pinterest-800: #490209;
+    --color-pinterest-900: #230104;
+
+    --color-tiktok: #be1741;
+    --color-tiktok-50: #fde6ee;
+    --color-tiktok-100: #fabfd7;
+    --color-tiktok-200: #f698c0;
+    --color-tiktok-300: #f371a9;
+    --color-tiktok-400: #ef4a92;
+    --color-tiktok-500: #ee1d51;
+    --color-tiktok-600: #be1741;
+    --color-tiktok-700: #8f1131;
+    --color-tiktok-800: #5f0b20;
+    --color-tiktok-900: #300510;
+
+    --color-linkedin: #08519b;
+    --color-linkedin-50: #e6f0fa;
+    --color-linkedin-100: #b3d1f0;
+    --color-linkedin-200: #80b2e6;
+    --color-linkedin-300: #4d93dc;
+    --color-linkedin-400: #1a74d2;
+    --color-linkedin-500: #0a66c2;
+    --color-linkedin-600: #08519b;
+    --color-linkedin-700: #063c74;
+    --color-linkedin-800: #04264d;
+    --color-linkedin-900: #021127;
+
+    --color-whatsapp: #1ca74f;
+    --color-whatsapp-50: #e6f9ef;
+    --color-whatsapp-100: #b3efd2;
+    --color-whatsapp-200: #80e5b5;
+    --color-whatsapp-300: #4ddb98;
+    --color-whatsapp-400: #1ad17b;
+    --color-whatsapp-500: #25d366;
+    --color-whatsapp-600: #1ca74f;
+    --color-whatsapp-700: #147b39;
+    --color-whatsapp-800: #0b4f22;
+    --color-whatsapp-900: #03230c;
+
+    --color-youtube: #a11a19;
+    --color-youtube-50: #fdeaea;
+    --color-youtube-100: #fac1c1;
+    --color-youtube-200: #f69898;
+    --color-youtube-300: #f36f6f;
+    --color-youtube-400: #f04646;
+    --color-youtube-500: #cd201f;
+    --color-youtube-600: #a11a19;
+    --color-youtube-700: #751314;
+    --color-youtube-800: #490d0e;
+    --color-youtube-900: #1d0607;
+
+    --color-twitter: #1781c2;
+    --color-twitter-50: #e6f6fd;
+    --color-twitter-100: #b3e4fa;
+    --color-twitter-200: #80d2f7;
+    --color-twitter-300: #4dc0f4;
+    --color-twitter-400: #1aaef1;
+    --color-twitter-500: #1da1f2;
+    --color-twitter-600: #1781c2;
+    --color-twitter-700: #116192;
+    --color-twitter-800: #0b4161;
+    --color-twitter-900: #052131;
+
+    --color-facebook: #135fc2;
+    --color-facebook-50: #e7f0fd;
+    --color-facebook-100: #c2dbfa;
+    --color-facebook-200: #9cc6f7;
+    --color-facebook-300: #76b1f4;
+    --color-facebook-400: #509cf1;
+    --color-facebook-500: #1877f2;
+    --color-facebook-600: #135fc2;
+    --color-facebook-700: #0e4792;
+    --color-facebook-800: #092f61;
+    --color-facebook-900: #041731;
+
+    --text-bg-white: var(--color-gray-700);
+    --text-bg-light: var(--color-gray-700);
+
+    --font-poppins: Poppins, sans-serif;
+    --text-bg-snapchat: var(--color-yellow-900);
+
+    --animate-highlight: highlight 2s ease-out forwards;
+    @keyframes highlight {
+        0% {
+            background-color: var(--color-yellow-200);
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+}

@@ -8,27 +8,19 @@ use Illuminate\View\Component;
 
 class AppLayout extends Component
 {
-    public $title;
-    public $description;
-    /**
-     * Create a new component instance.
-     */
     public function __construct(
-        $title = '',
-        $description = null,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-    }
+        public string $title = '',
+        public string|null $description = null,
+        public string|null $seo_title = null,
+        public string|null $seo_description = null,
+
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.app', [
-            'title' => $this->title,
-            'description' => $this->description,
-        ]);
+        return view('layouts.app');
     }
 }

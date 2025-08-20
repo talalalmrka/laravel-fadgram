@@ -1,6 +1,7 @@
 <?php
 
 use Spatie\Permission\Models\Permission;
+
 if (!function_exists('permission_options')) {
     function permission_options($guard_name = 'web')
     {
@@ -11,5 +12,12 @@ if (!function_exists('permission_options')) {
                 'label' => $permission->name,
             ];
         })->toArray();
+    }
+}
+
+if (!function_exists('can')) {
+    function can($permission)
+    {
+        return auth()->check() && auth()->user()->can($permission);
     }
 }

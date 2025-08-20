@@ -85,7 +85,7 @@ class MenuItem extends Model
     }
     public function page()
     {
-        return $this->belongsTo(Page::class);
+        return $this->belongsTo(Post::class);
     }
     public function post()
     {

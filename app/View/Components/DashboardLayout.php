@@ -9,6 +9,8 @@ use Illuminate\View\Component;
 class DashboardLayout extends AppLayout
 {
     public $actions = null;
+    //public $showTitle = true;
+    //public $containerClass = true;
     /**
      * Get the view / contents that represent the component.
      */
@@ -17,7 +19,8 @@ class DashboardLayout extends AppLayout
         return view('layouts.dashboard', [
             'title' => $this->title,
             'description' => $this->description,
-            'actions' => $this->actions,
+            //'actions' => $this->actions,
+            //'showTitle' => $this->showTitle,
         ]);
     }
 }

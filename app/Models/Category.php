@@ -2,21 +2,47 @@
 
 namespace App\Models;
 
+use App\Models\Post;
+use App\Traits\Favoritable;
+use App\Traits\HasAuthor;
 use App\Traits\HasMeta;
+use App\Traits\HasNextPrev;
+use App\Traits\HasSlug;
 use App\Traits\HasThumbnail;
+use App\Traits\WithDate;
+use App\Traits\WithEditUrl;
+use App\Traits\WithExcerpt;
+use App\Traits\WithPermalink;
+use App\Traits\WithSeo;
+use App\Traits\WithShare;
+use App\Traits\WithViews;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Arr;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Arr;
 
 class Category extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
-    use HasFactory, InteractsWithMedia, HasThumbnail, HasMeta;
+    use HasFactory,
+        InteractsWithMedia,
+        HasThumbnail,
+        HasMeta,
+        WithDate,
+        WithEditUrl,
+        HasAuthor,
+        HasSlug,
+        WithPermalink,
+        WithDate,
+        WithViews,
+        WithExcerpt,
+        WithSeo,
+        Favoritable,
+        HasNextPrev,
+        WithShare;
     protected $fillable = [
         'name',
         'slug',
@@ -28,27 +54,81 @@ class Category extends Model implements HasMedia
         'permalink',
         'thumbnails',
         'thumbnail',
-
     ];
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
-    public function getParentNameAttribute()
+    public function parentName(): Attribute
     {
-        return $this->parent?->name;
+        return Attribute::get(fn() => $this->parent?->name);
     }
+    public function parents()
+    {
+        $parents = collect();
+        $category = $this->parent;
+        while ($category) {
+            $parents->push($category);
+            $category = $category->parent;
+        }
+        return $parents;
+    }
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id')->orderBy('id', 'asc');
     }
     public function posts()
     {
-        return $this->morphedByMany(Post::class, 'model', 'model_category');
+        return $this->morphedByMany(
+            Post::class,
+            'model',
+            'model_category'
+        );
+    }
+    public function postsCount(): Attribute
+    {
+        return Attribute::get(fn() => $this->posts()->status('publish')->count());
+    }
+    public function books()
+    {
+        return $this->morphedByMany(
+            Book::class,
+            'model',
+            'model_category'
+        );
+    }
+    public function booksCount(): Attribute
+    {
+        return Attribute::get(fn() => $this->books()->status('publish')->count());
+    }
+    public function quotes()
+    {
+        return $this->morphedByMany(
+            Quote::class,
+            'model',
+            'model_category'
+        );
+    }
+    public function quotesCount(): Attribute
+    {
+        return Attribute::get(fn() => $this->quotes()->status('publish')->count());
+    }
+    public function quoteImages()
+    {
+        return $this->morphedByMany(
+            QuoteImage::class,
+            'model',
+            'model_category'
+        );
+    }
+    public function quoteImagesCount(): Attribute
+    {
+        return Attribute::get(fn() => $this->quoteImages()->count());
     }
     public function scopeTop($query)
     {
-        return $query->where('parent_id', 'null');
+        return $query->where('parent_id', null);
     }
     public function scopeSearch($query, $term)
     {
@@ -61,7 +141,7 @@ class Category extends Model implements HasMedia
     }
     public function getThumbnailFallbackUrlAttribute()
     {
-        return asset('assets/img/category.png');
+        return asset('assets/images/category.svg');
     }
     public function registerMediaCollections(): void
     {
@@ -95,39 +175,14 @@ class Category extends Model implements HasMedia
     {
         return str_repeat('-', $this->parentsCount()) . $this->name;
     }
-    public function getPermalinkAttribute()
-    {
-        return !empty($this->id) ? (Route::has('category') ? route('post', $this) : null) : null;
-    }
-    public static function generateSlug($name, $separator = '-', $language = 'en', $dictionary = ['@' => 'at']): string
-    {
-        $slug = Str::slug($name, $separator, $language, $dictionary);
-        $originalSlug = $slug;
-        $count = 1;
-        while (self::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $count++;
-        }
-        return $slug;
-    }
-    public function getFullDescriptionAttribute()
-    {
-        if (!empty($this->description)) {
-            return $this->description;
-        }
 
-        $categoryNames = [$this->name];
-        $parentCategory = $this->parent;
-
-        while ($parentCategory) {
-            $categoryNames[] = $parentCategory->name;
-            $parentCategory = $parentCategory->parent;
-        }
-
-        return implode(' ', array_reverse($categoryNames));
-    }
     public function scopeCategory($query)
     {
         return $query->where('type', 'category');
+    }
+    public function scopeTag($query)
+    {
+        return $query->where('type', 'tag');
     }
     public function hasAnyChild($categories)
     {

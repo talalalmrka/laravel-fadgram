@@ -6,19 +6,27 @@ namespace App\Models;
 
 use App\Traits\HasMeta;
 use App\Traits\HasThumbnail;
+use App\Traits\WithPermalink;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, InteractsWithMedia, HasMeta, HasThumbnail;
-
+    use HasFactory,
+        Notifiable,
+        HasApiTokens,
+        HasRoles,
+        InteractsWithMedia,
+        HasMeta,
+        HasThumbnail;
     /**
      * The attributes that are mass assignable.
      *
@@ -29,7 +37,9 @@ class User extends Authenticatable implements HasMedia
         'email',
         'password',
     ];
-
+    protected $appends = [
+        'display_name',
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -65,9 +75,37 @@ class User extends Authenticatable implements HasMedia
             }
         });
     }
+    public function displayName(): Attribute
+    {
+        return Attribute::get(fn() => $this->getMeta('display_name', $this->name));
+    }
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function approvedComments()
+    {
+        return $this->comments()->where('approved', true);
+    }
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
+    public function publishedQuotes()
+    {
+        return $this->quotes()->where('status', 'publish');
+    }
+    public function permalink(): Attribute
+    {
+        return Attribute::get(fn() => route_has('user') ? route('user', $this) : null);
+    }
+    public function about(): Attribute
+    {
+        return Attribute::get(fn() => $this->getMeta('about'));
     }
     public function registerMediaCollections(): void
     {
@@ -92,9 +130,21 @@ class User extends Authenticatable implements HasMedia
                 'image/gif'
             ]);
         $this
+            ->addMediaCollection('croppedimage')
+            ->singleFile()
+            ->acceptsMimeTypes([
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+                'image/gif'
+            ]);
+        $this
             ->addMediaCollection('files');
     }
-
+    public function getThumbnailFallbackUrlAttribute()
+    {
+        return asset('assets/images/profile.svg');
+    }
     public function getAvatarUrl($conversionName = null): string
     {
         $conversionName = $conversionName ?? '';
@@ -105,8 +155,8 @@ class User extends Authenticatable implements HasMedia
         return $this->getAvatarUrl('sm');
     }
 
-    public function getDisplayNameAttribute()
+    /* public function getDisplayNameAttribute()
     {
         return $this->getMeta('display_name', $this->name);
-    }
+    } */
 }

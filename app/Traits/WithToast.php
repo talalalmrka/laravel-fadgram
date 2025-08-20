@@ -32,9 +32,21 @@ trait WithToast
     {
         session()->flash($name, $message);
     }
+    public function addSuccesses(array $array)
+    {
+        foreach ($array as $key => $message) {
+            $this->addSuccess($key, $message);
+        }
+    }
 
     public function status($message)
     {
         session()->flash('status', $message);
+    }
+    public function addErrors(array $errors)
+    {
+        foreach ($errors as $key => $message) {
+            $this->addError($key, $message);
+        }
     }
 }

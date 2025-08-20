@@ -4,7 +4,4 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MenuBuilderController extends Controller
-{
-    //
-}
+class MenuBuilderController extends Controller {}

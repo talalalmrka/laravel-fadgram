@@ -45,7 +45,8 @@ trait HasThumbnail
             if ($single) {
                 $collection->singleFile();
             }
-            $fallback_url = $this->thumbnailConfig('fallback_url');
+            // $fallback_url = $this->thumbnailConfig('fallback_url');
+            $fallback_url = $this->thumbnail_fallback_url;
             if ($fallback_url) {
                 $collection->useFallbackUrl($fallback_url);
             }

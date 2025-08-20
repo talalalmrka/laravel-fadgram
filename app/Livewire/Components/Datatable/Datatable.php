@@ -38,11 +38,12 @@ abstract class Datatable extends Component
     public $selectAll = false;
     public $checkbox = true;
     public $created_at_column = true;
-    public $id_column = false;
+    public $id_column = true;
     public $date_format = null;
     public function boot()
     {
         $this->restoreState();
+        $this->date_format = get_option('date_format', 'j F، Y');
     }
     abstract public function builder();
 
@@ -344,6 +345,12 @@ abstract class Datatable extends Component
     {
         if ($model_name == $this->getSingularName()) {
             $this->dispatch('itemUpdated');
+        }
+    }
+    public function loadEdit($id = null)
+    {
+        if ($id) {
+            $this->edit($id);
         }
     }
     #[Computed]

@@ -5,11 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? '' }} | {{ config('app.name', 'Fadgram starter kit') }}</title>
-    <meta name="description" content="{{ $description ?? config('app.description') }}">
-    <link rel="stylesheet" href="{{ asset('assets/fonts/poppins/style.css') }}">
+    <title>{{ ($title ?? '') . ' | ' . get_option('name') }}</title>
+    <meta name="description" content="{{ $description ?? get_option('description') }}">
+    @if (get_option('disable_search_engines', false))
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+    <x-favicon />
+    <link rel="stylesheet" href="{{ route('fonts-style') }}">
     @stack('head_before_scripts')
-    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @php
         $color = config('theme.color');
@@ -34,21 +37,25 @@
             }
         </style>
     @endif
-    @stack('head')
-    @stack('styles')
-    @stack('scripts')
-</head>
-
-<body>
-    {{ $slot }}
-    @livewireScriptConfig
-    @if (config('eruda.enabled'))
+    @if (get_option('eruda_enabled', config('eruda.enabled')))
         <script src="{{ asset('assets/eruda/eruda.js') }}"></script>
         <script>
             eruda.init();
         </script>
     @endif
+    @stack('head')
+    @stack('styles')
+    @stack('scripts')
+</head>
+@php
+    $font_family = get_option('font_family');
+    $font_smoothing = get_option('font_smoothing');
+    $font_size = get_option('font_size');
+@endphp
 
+<body class="font-{{ $font_family }} {{ $font_smoothing }} {{ $font_size }}" x-data="{ mobileMenu: false }">
+    {{ $slot }}
+    @stack('footer')
 </body>
 
 </html>

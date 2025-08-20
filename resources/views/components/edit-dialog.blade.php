@@ -1,6 +1,7 @@
 @props([
     'model' => null,
     'title' => '',
+    'class' => null,
 ])
 <div x-data="{
     closeModal() {
@@ -8,20 +9,18 @@
     }
 }">
     @teleport('body')
-        <div wire:show="show" wire:transition class="modal fade show">
-            <div class="modal-dialog">
-                @if ($model)
-                    <div class="modal-content">
-                        <form wire:submit="save">
-
-
+        <form wire:submit="save" class="relative max-h-full overflow-y-hidden flex-col">
+            <div wire:show="show" wire:transition class="modal fade show {{ $class ?? '' }}">
+                <div class="modal-dialog">
+                    @if ($model)
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">{{ $title ?? '' }}</h5>
                                 <button type="button" class="btn-close" x-on:click="closeModal">
                                     <i class="icon bi-x-lg"></i>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body flex-1 overflow-y-auto">
                                 {{ $slot }}
                             </div>
                             <div class="modal-footer flex-space-2 justify-between">
@@ -40,13 +39,17 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                @endif
-            </div><!-- Modal Dialog -->
-        </div><!-- Modal -->
+
+                        </div>
+                    @endif
+                </div><!-- Modal Dialog -->
+            </div><!-- Modal -->
+        </form>
     @endteleport
     @teleport('body')
         <div class="modal-backdrop show" wire:show="show" x-on:click="closeModal"></div>
     @endteleport
+    @if (isset($after))
+        {{ $after }}
+    @endif
 </div>

@@ -1,0 +1,4 @@
+onlyBuiltDependencies:
+  - '@morev/vue-transitions'
+  - core-js
+  - esbuild

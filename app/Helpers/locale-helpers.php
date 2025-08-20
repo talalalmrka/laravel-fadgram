@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\ComponentAttributeBag;
+
 if (!function_exists('locale_options')) {
     function locale_options()
     {
@@ -24,7 +24,7 @@ if (!function_exists('locale_options')) {
 if (!function_exists('locales')) {
     function locales()
     {
-        return Arr::map(locale_options(), function ($option) {
+        return arr_map(locale_options(), function ($option) {
             return data_get($option, 'value');
         });
     }
@@ -55,5 +55,3 @@ if (!function_exists('locale_attributes')) {
         ]);
     }
 }
-
-//$locale_attributes = locale_attributes();

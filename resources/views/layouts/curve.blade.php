@@ -9,6 +9,8 @@
     'color' => 'primary',
     'headerClass' => null,
     'headerAtts' => [],
+    'avatarImage' => null,
+    'avatarText' => null,
 ])
 @php
     $hasTitle = !empty($title) && $showTitle;
@@ -69,42 +71,39 @@
     ];
     $navbarColor = data_get($navbarColors, $color, 'navbar-transparent-primary');
 @endphp
-<x-app-layout :title="$title">
-    @include('partials.header', [
-        'class' => css_classes(['fixed top-0 start-0 end-0 z-40', $navbarColor => $navbarColor]),
-    ])
-    <main>
-        <div class="relative h-80 {{ $coverColor }}">
-            <svg id="svg" viewBox="0 0 1440 690" xmlns="http://www.w3.org/2000/svg"
-                class="absolute inset-0 object-cover w-full -z-20 transition duration-300 ease-in-out delay-150">
-                <path
-                    d="M 0,700 L 0,262 C 172,262 344,262 518,290 C 692,318 868,374 1022,374 C 1176,374 1308,318 1440,262 L 1440,700 L 0,700 Z"
-                    stroke="none" stroke-width="0" fill="currentColor" fill-opacity="1"
-                    class="transition-all duration-300 ease-in-out delay-150 path-0" transform="rotate(-180 720 350)">
-                </path>
-            </svg>
-            @if ($hasAnyTitle)
-                <div class="absolute z-30 flex items-center inset-0 text-white">
-                    <div class="container mx-auto px-4">
-                        <div class="text-center">
-                            @if ($hasTitle)
-                                <h1 class="text-4xl font-bold">{{ $title }}</h1>
-                            @endif
-                            @if ($hasSubtitle)
-                                <div class="text-lg">{!! $subtitle !!}</div>
-                            @endif
-                            @if ($hasSecondSubtitle)
-                                <div class="text-sm">{!! $secondSubtitle !!}</div>
-                            @endif
-                            <p class="text-lg">{{ $description }}</p>
-                        </div>
-                    </div>
-                </div>
+<x-default-layout :title="$title" logo_theme="light" :navbarclass="css_classes(['navbar-transparent-top fixed top-0 start-0 end-0 z-40', $navbarColor => $navbarColor])" description="$description">
+    <section class="relative bg-gradient-to-br from-primary-800 to-primary-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 pt-18 pb-12 md:py-28 text-center relative" data-theme="dark">
+            @if ($hasTitle)
+                <h1 class="">{{ $title }}</h1>
+            @endif
+            @if ($hasSubtitle)
+                <div class="text-lg">{!! $subtitle !!}</div>
+            @endif
+            @if ($hasSecondSubtitle)
+                <div class="text-sm">{!! $secondSubtitle !!}</div>
+            @endif
+            @if (isset($curve))
+                {!! $curve !!}
             @endif
         </div>
-        <div class="mt-[60px]">
-            {{ $slot }}
+        <div
+            class="flex flex-col items-center justify-center w-full absolute pointer-events-none bg-no-repeat -bottom-px -left-px -right-px leading-[0] overflow-hidden mx-px text-body-bg dark:text-body-bg-dark">
+            <svg class="w-[120vw] md:w-[180vw]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"
+                preserveAspectRatio="none">
+                <path class="bg-white fill-current"
+                    d="M500,97C126.7,96.3,0.8,19.8,0,0v100l1000,0V1C1000,19.4,873.3,97.8,500,97z"></path>
+            </svg>
         </div>
-    </main>
-    @include('partials.footer')
-</x-app-layout>
+    </section>
+    <div class="md:container mobile:px-2 relative">
+        @stack('above-content')
+        {{ $slot }}
+        @stack('below-content')
+    </div>
+    @if (isset($footer))
+        <x-slot name="footer">
+            {{ $footer }}
+        </x-slot>
+    @endif
+</x-default-layout>

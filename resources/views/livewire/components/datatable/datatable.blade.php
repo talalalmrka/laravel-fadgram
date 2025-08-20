@@ -1,4 +1,4 @@
-<div class="datatable" @itemUpdated($refresh)>
+<div wire:init="loadEdit({{ request('edit') }})" class="datatable" @itemUpdated($refresh)>
     <div class="md:flex-space-2 md:justify-between md:items-center p-2">
         @if ($this->hasButtons)
             <div class="btn-group sm">

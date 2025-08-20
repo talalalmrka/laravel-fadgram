@@ -32,7 +32,7 @@ class MenuItemFactory extends Factory
         return [
             'menu_id' => $menu_id,
             'parent_id' => $parent_id,
-            'name' =>  $this->faker->sentence(2),
+            'name' =>  $this->faker->words(2, true),
             'icon' => $this->faker->optional(0.3)->randomElement(['fa-home', 'fa-user', 'fa-cog', 'fa-envelope']),
             'order' => null, // Let model handle ordering
             'type' => $type,

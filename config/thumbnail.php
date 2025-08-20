@@ -3,12 +3,13 @@
 return [
     'default' => [
         'collection' => 'thumbnail',
-        'fallback_path' => public_path('assets/img/post-thumbnail.png'),
+        'fallback_path' => public_path('assets/images/post-thumbnail.svg'),
         'mime_types' => [
             'image/jpeg',
             'image/png',
             'image/webp',
-            'image/gif'
+            'image/gif',
+            'image/svg',
         ],
         'single' => true,
         'format' => 'webp',
@@ -38,7 +39,7 @@ return [
     //users
     'users' => [
         'collection' => 'avatar',
-        'fallback_path' => public_path('assets/img/profile.svg'),
+        'fallback_path' => public_path('assets/images/profile.svg'),
         'conversions' => [
             'sm' => [
                 'width' => 250,

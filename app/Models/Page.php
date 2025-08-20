@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -38,9 +38,10 @@ class Page extends Post
     {
         return $query->firstWhere('slug', $slug);
     }
-
-    /*public function getPermalinkAttribute()
+    public function getEditUrlAttribute()
     {
-        return !empty($this->id) && Route::has('page') ? route('page', $this) : null;
-    }*/
+        return Route::has("dashboard.pages.edit") ? route("dashboard.pages.edit", $this) : null;
+    }
+
 }
+ */

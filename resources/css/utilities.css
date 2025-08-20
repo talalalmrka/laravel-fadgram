@@ -1,20 +1,163 @@
+@utility navbar-transparent-top {
+    @apply transition-colors;
+}
 @utility navbar-transparent-* {
     background-color: transparent;
-    color: --value(--color-bg-*);
+    color: --value(--color-bg- *);
 
     &.scrolled {
-        background-color: --value(--color-*);
+        background-color: --value(--color- *);
         @apply shadow-xs;
     }
 
     .nav-link,
     .navbar-brand,
     .navbar-toggle {
-        color: --alpha(--value(--color-bg-*) / 80%);
+        color: --alpha(--value(--color-bg- *) / 80%);
 
         &.active,
         &:hover {
-            color: --value(--color-bg-*);
+            color: --value(--color-bg- *);
         }
+    }
+}
+
+@utility offcanvas-* {
+    background-color: --value(--color- *);
+    color: --value(--color-bg- *);
+
+    .offcanvas-header {
+        color: --value(--color-bg- *);
+    }
+
+    .offcanvas-title {
+        color: --value(--color-bg- *);
+    }
+
+    .nav-link,
+    .dropdown-link {
+        color: --alpha(--value(--color-bg- *) / 80%);
+
+        &:hover,
+        &.active {
+            color: --value(--color-bg- *);
+        }
+    }
+}
+
+@utility link {
+    @apply text-primary dark:text-primary-500 no-underline hover:underline;
+}
+@utility link-underline {
+    @apply text-primary dark:text-primary-500 underline;
+}
+@utility link-no-underline {
+    @apply text-primary dark:text-primary-500;
+}
+@utility btn-outline-* {
+    background-color: transparent;
+    border-color: --value(--color- *) !important;
+    color: --value(--color- *);
+
+    @variant hover {
+        background-color: --value(--color- *);
+        color: --value(--color-bg- *);
+    }
+}
+@utility text-muted {
+    @apply text-gray-500 dark:text-gray-300;
+}
+
+@utility border-dotted-* {
+    border: 1px dotted --value(--color- *);
+}
+
+@utility form-control {
+    @apply text-sm p-2 leading-6 appearance-none;
+    @apply border border-gray-300 dark:border-gray-600;
+    @apply rounded-lg;
+    @apply bg-gray-50 dark:bg-gray-700;
+    @apply text-gray-900 dark:text-white;
+
+    &::placeholder {
+        @apply text-gray-400;
+    }
+
+    &:disabled {
+        @apply opacity-60 cursor-not-allowed;
+    }
+
+    &:focus {
+        @apply outline-hidden border-primary ring-3 ring-primary/50 dark:ring-primary/30;
+    }
+
+    &.success {
+        @apply border-green-700 bg-green-100 text-green-700 ring-green-300;
+
+        &::placeholder {
+            @apply text-green-500;
+        }
+
+        &:focus {
+            @apply border-green-700 ring-green-300;
+        }
+
+        @variant dark {
+            @apply border-green-500 text-green-500;
+
+            &:focus {
+                @apply ring-green-300 border-green-500;
+            }
+        }
+    }
+
+    &.error {
+        @apply border-red-700 bg-red-100 text-red-700 ring-red-300;
+
+        &::placeholder {
+            @apply text-red-500;
+        }
+
+        &:focus {
+            @apply border-red-700 ring-red-300;
+        }
+
+        @variant dark {
+            @apply border-red-500 text-red-500;
+
+            &:focus {
+                @apply ring-red-300 border-red-500;
+            }
+        }
+    }
+
+    &.xs {
+        @apply text-xs px-2 py-0.5;
+    }
+
+    &.sm {
+        @apply text-xs px-3 py-1;
+        @apply leading-none;
+        @apply h-[36px];
+    }
+
+    &.lg {
+        @apply text-base px-5 py-2;
+    }
+
+    &.xl {
+        @apply text-lg px-6 py-3;
+    }
+
+    &.xxl {
+        @apply text-xl px-8 py-4;
+    }
+
+    &.has-start-icon {
+        @apply ps-8;
+    }
+
+    &.has-end-icon {
+        @apply pe-8;
     }
 }

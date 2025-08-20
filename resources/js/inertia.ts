@@ -1,5 +1,9 @@
 import "../css/inertia.css";
+// import 'jodit/build/jodit.min.css'
 
+// import 'fadgram-vue/dist/fadgram-vue.css'
+import Alpine from 'alpinejs'
+import collapse from '@alpinejs/collapse'
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import type { DefineComponent } from "vue";
@@ -8,6 +12,12 @@ import { ZiggyVue } from "ziggy-js";
 import { initializeTheme } from "./composables/useAppearance";
 import { useMessages } from './composables/useMessages';
 import FadgramVue from 'fadgram-vue'
+import JoditVue from 'jodit-vue'
+import Dump from "./components/Dump.vue";
+
+;(window as any).Alpine = Alpine
+Alpine.plugin(collapse)
+Alpine.start()
 
 // Extend ImportMeta interface for Vite...
 declare module "vite/client" {
@@ -36,6 +46,8 @@ createInertiaApp({
         vueApp.use(plugin);
         vueApp.use(ZiggyVue);
         vueApp.use(FadgramVue);
+        vueApp.use(JoditVue);
+        vueApp.component('Dump', Dump)
         // Add global helpers
         const { getErrorMessage, getFlashMessage } = useMessages();
         vueApp.config.globalProperties.$getErrorMessage = getErrorMessage;

@@ -9,6 +9,12 @@ if (!function_exists('category')) {
         return Category::find($id);
     }
 }
+if (!function_exists('instance_category')) {
+    function instance_category($object)
+    {
+        return $object instanceof Category;
+    }
+}
 if (!function_exists('category_option')) {
     function category_option($category, $level = 0) {}
 }
@@ -58,26 +64,47 @@ if (!function_exists('categories')) {
 }
 
 if (!function_exists('get_categories')) {
-    function get_categories($data = [])
+    function get_categories($options = [])
     {
-        $query = Category::type('category');
-        $parent_id = data_get($data, 'parent_id');
-        if (empty($parent_id)) {
-            $parent_id = null;
+        $ops = collect($options);
+        $query = Category::where('type', 'category');
+
+        // users
+        $users = $ops->get('users');
+        if ($users && !empty($users)) {
+            $query->withUser($users);
         }
-        if ($parent_id !== 'all') {
-            $query->where('parent_id', $parent_id);
+
+        $sort = $ops->get('sort');
+        if ($sort) {
+            $field = sort_field($sort);
+            $direction = sort_direction($sort);
+
+            if ($field && $direction) {
+                $query->orderBy($field, $direction);
+            }
         }
-        $sortField = data_get($data, 'sortField', 'id');
-        $sortDirection = data_get($data, 'sortDirection', 'asc');
-        if ($sortField && $sortDirection) {
-            $query->orderBy($sortField, $sortDirection);
+        $limit = $ops->get('limit');
+        if ($limit && !empty($limit)) {
+            return $query->take($limit)->get();
         }
-        $limit = data_get($data, 'limit');
-        if ($limit) {
-            return $query->limit($limit)->get();
-        }
-        $perPage = data_get($data, 'perPage');
-        return $query->paginate($perPage);
+
+        $per_page = $ops->get('per_page', get_option('posts_per_page', 10));
+        return $query->paginate($per_page);
+    }
+}
+
+if (!function_exists('category_choices_options')) {
+    function category_choices_options($selected = [])
+    {
+        $cats = Category::type('category')->get();
+        $options = $cats->map(function (Category $tag) use ($selected) {
+            return [
+                'label' => $tag->name,
+                'value' => $tag->id,
+                'selected' => in_array($tag->id, array_values($selected))
+            ];
+        })->toArray();
+        return $options;
     }
 }

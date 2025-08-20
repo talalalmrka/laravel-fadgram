@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt(1234),
         ])->each(function (User $user) {
             $user->assignRole('admin');
-            $user->addMedia(public_path('assets/img/admin.png'))->preservingOriginal()->toMediaCollection($user->thumbnailCollection());
+            // $user->addMedia(public_path('assets/img/admin.png'))->preservingOriginal()->toMediaCollection($user->thumbnailCollection());
             $user->saveMetas([
                 'first_name' => 'Talal',
                 'last_name' => 'Almrka',

@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Auth;
 
+use App\Events\LoggedIn;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
@@ -43,13 +45,18 @@ class Register extends Component
      */
     public function register(): void
     {
+        if (!get_option('user_can_register')) {
+            $this->addError('status', __('Sorry, registration is currently unavailable, please try again later'));
+            return;
+        }
         $validated = $this->validate();
-
+        $guestSessionId = Session::getId();
         $validated['password'] = Hash::make($validated['password']);
 
         event(new Registered(($user = User::create($validated))));
 
         Auth::login($user);
+        event(new LoggedIn('web', $user, $this->remember, $guestSessionId));
 
         $this->redirect(route('dashboard', absolute: false), navigate: true);
     }

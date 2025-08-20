@@ -199,4 +199,8 @@ return [
 
         'store' => 'default',
     ],
+    'guards' => [
+        'web',
+        'api' // Add this line
+    ],
 ];

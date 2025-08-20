@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 use App\Models\Category;
@@ -82,7 +83,6 @@ trait HasCategories
     {
         $categoryIds = $this->resolveCategoryIds($categories);
         $this->categories()->sync($categoryIds);
-
         return $this;
     }
 
@@ -201,5 +201,31 @@ trait HasCategories
         }
 
         return Category::where('slug', $category)->value('id');
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        return $this->category()?->name;
+    }
+    public function getCategoryPermalinkAttribute()
+    {
+        return $this->category()?->permalink;
+    }
+
+    public function categoriesLinks($options = [])
+    {
+        $default = [
+            'class' => 'link',
+        ];
+        $options = array_merge($default, $options);
+        $ret = "";
+        foreach ($this->categories as $cat) {
+            $ret .= a(array_merge($options, ['href' => $cat->permalink, 'label' => $cat->name]));
+        }
+        return $ret;
+    }
+    public function singleCategoriesEnabled()
+    {
+        return $this->categories()->count() && (bool) get_option(strtolower(class_basename($this)) . '_meta_categories');
     }
 }

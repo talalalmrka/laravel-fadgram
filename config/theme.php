@@ -2,6 +2,6 @@
 return [
     //'color' => 'emerald',
     //'color' => 'indigo',
-    //'color' => 'blue',
     'color' => 'sky',
+    // 'color' => 'orange',
 ];

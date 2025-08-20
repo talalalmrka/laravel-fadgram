@@ -17,8 +17,9 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->sentence(2);
+        $name = $this->faker->words(2, true);
         return [
+            'parent_id' => null,
             'name' => $name,
             'slug' => Category::generateSlug($name),
             'type' => 'category',

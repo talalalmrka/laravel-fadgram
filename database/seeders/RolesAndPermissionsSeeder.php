@@ -13,15 +13,22 @@ class RolesAndPermissionsSeeder extends Seeder
         return [
             'web' => [
                 'manage_users',
+                'manage_authors',
                 'manage_roles',
                 'manage_permissions',
                 'manage_posts',
                 'manage_pages',
                 'manage_categories',
+                'manage_quotes',
+                'manage_quote_images',
+                'manage_books',
                 'manage_tags',
+                'manage_comments',
+                'manage_favorites',
                 'manage_menus',
                 'manage_media',
                 'manage_settings',
+                'manage_fonts',
             ],
         ];
     }
@@ -31,13 +38,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'web' => [
                 'admin' => 'all',
                 'writer' => [
+                    'manage_authors',
                     'manage_posts',
                     'manage_pages',
                     'manage_categories',
                     'manage_tags',
+                    'manage_quotes',
+                    'manage_books',
+                    'manage_comments',
+                    'manage_favorites',
                     'manage_menus',
                     'manage_media',
                     'manage_settings',
+                    'manage_fonts',
                 ],
                 'editor' => [
                     'manage_posts',

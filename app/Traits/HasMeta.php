@@ -20,7 +20,7 @@ trait HasMeta
         }
         return $value;
     }
-    public function updateMeta(string $key, $value)
+    public function updateMeta(string $key, $value): bool
     {
         $meta = $this->metas()->firstOrCreate(['key' => $key]);
         if (is_array($value)) {
@@ -50,5 +50,14 @@ trait HasMeta
             }
         }
         return $updated;
+    }
+
+    public function singleMetaEnabled()
+    {
+        return (bool) get_option(strtolower(class_basename($this)) . '_meta_enabled');
+    }
+    public function singleMetaItemEnabled($name)
+    {
+        return (bool) get_option(strtolower(class_basename($this)) . '_meta_' . $name);
     }
 }

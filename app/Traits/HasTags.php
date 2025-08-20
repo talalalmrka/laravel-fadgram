@@ -30,11 +30,11 @@ trait HasTags
     {
         $tagIds = $this->resolveTagIds($tags);
 
-        return $query->whereHas('tags', function ($query) use ($tagIds, $without) {
+        return $query->whereHas('categories', function ($query) use ($tagIds, $without) {
             if ($without) {
-                $query->whereNotIn('tags.id', $tagIds);
+                $query->whereNotIn('categories.id', $tagIds);
             } else {
-                $query->whereIn('tags.id', $tagIds);
+                $query->whereIn('categories.id', $tagIds);
             }
         });
     }
@@ -198,5 +198,26 @@ trait HasTags
         }
 
         return Category::where('slug', $tag)->value('id');
+    }
+
+    public function tagsLinks($options = [])
+    {
+        $default = [
+            'class' => 'link',
+        ];
+        $options = array_merge($default, $options);
+        $ret = "";
+        foreach ($this->tags as $tag) {
+            $ret .= a(array_merge($options, ['href' => $tag->permalink, 'label' => $tag->name]));
+        }
+        return $ret;
+    }
+    public function tagsLabel()
+    {
+        return get_option(strtolower(class_basename($this)) . '_tags_label');
+    }
+    public function singleTagsEnabled()
+    {
+        return $this->tags()->count() && (bool) get_option(strtolower(class_basename($this)) . '_tags_enabled');
     }
 }

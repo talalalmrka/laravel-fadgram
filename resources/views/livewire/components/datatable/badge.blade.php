@@ -4,6 +4,9 @@
     'color' => 'primary',
     'outline' => true,
     'size' => 'sm',
+    'pill' => false,
+    'class' => null,
+    'atts' => [],
 ])
 @php
     $colors = [
@@ -41,8 +44,22 @@
     $flex = $hasLabel && $hasIcon;
 @endphp
 @if ($hasContent)
-    <span
-        class="{{ css_classes(['badge', $badgeColor, 'badge-outline' => $outline, $size => $size, 'flex-space-1' => $flex]) }}">
+    <span {!! $attributes->merge(
+        array_merge(
+            [
+                'class' => css_classes([
+                    'badge',
+                    $badgeColor,
+                    'badge-outline' => $outline,
+                    'pill' => $pill,
+                    $size => $size,
+                    'inline-flex items-center' => $flex,
+                    $class => $class,
+                ]),
+            ],
+            $atts,
+        ),
+    ) !!}>
         @if ($hasIcon)
             <i class="icon {{ $icon }} me-1.5"></i>
         @endif

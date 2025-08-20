@@ -13,6 +13,10 @@ export default defineConfig({
                 "resources/js/app.js",
                 "resources/js/preview.js",
                 "resources/js/inertia.ts",
+                "resources/js/icon-picker.js",
+                "resources/js/carousel.js",
+                "resources/js/cropper.js",
+                "resources/css/cropper.css",
             ],
             ssr: "resources/js/ssr.ts",
             refresh: true,
@@ -30,12 +34,14 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./resources/js"),
+            "@builder": path.resolve(__dirname, "./resources/js/pages/builder"),
             "ziggy-js": resolve(__dirname, "vendor/tightenco/ziggy"),
         },
     },
     server: {
         cors: true,
         watch: {
+            usePolling: false,
             interval: 1000,
         },
     },

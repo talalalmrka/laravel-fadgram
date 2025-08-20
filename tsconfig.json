@@ -17,6 +17,9 @@
       "@/*": [
         "./resources/js/*"
       ],
+      "@builder/*": [
+        "./resources/js/pages/builder/*"
+      ],
     },
     "types": [
       "vite/client",

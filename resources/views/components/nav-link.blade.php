@@ -30,5 +30,5 @@
     ) }}>
     @icon($icon)
     <span>{!! $label !!}</span>
-
+    {{ $slot ?? '' }}
 </a>

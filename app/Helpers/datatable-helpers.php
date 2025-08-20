@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Components\Datatable\Actions\Action;
 use App\Livewire\Components\Datatable\Buttons\Button;
 use App\Livewire\Components\Datatable\Columns\Column;
 use Illuminate\Support\Arr;
@@ -40,6 +41,13 @@ if (!function_exists('column')) {
     function column($name)
     {
         return Column::make($name);
+    }
+}
+
+if (!function_exists('taction')) {
+    function taction($name)
+    {
+        return Action::make($name);
     }
 }
 

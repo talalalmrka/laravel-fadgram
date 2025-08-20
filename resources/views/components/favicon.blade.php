@@ -1,0 +1,3 @@
+@if (favicon())
+    <link rel="icon" type="image/x-icon" href="{{ favicon() }}">
+@endif

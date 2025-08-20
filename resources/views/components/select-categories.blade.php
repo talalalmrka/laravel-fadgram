@@ -23,7 +23,7 @@
 
 <div {!! attributes($container_atts)->merge([
     'id' => "$id-container",
-    'class' => css_classes(['form-control', 'sm', 'max-h-40', 'overflow-auto']),
+    'class' => css_classes(['form-control', 'sm', 'h-40', 'max-h-40', 'overflow-auto']),
 ]) !!}>
     @component('components.select-categories-list', [
         'id' => $id,

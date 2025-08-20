@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "fadgram-ui";
+@import "./theme.css";
+@import "./utilities.css";
 @import "./icons.css";
+@import "./carousel.css";
+@import "./cropper.css";
 @source '../js/components/**/*.vue';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/talalalmrka/fgx/resources/views/**/*.blade.php';
@@ -8,18 +12,25 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-    --font-poppins: Poppins, sans-serif;
-}
-
 @layer base {
+    *,
+    ::before,
+    ::after {
+        box-sizing: border-box;
+        border-color: var(--color-gray-200);
+        @variant dark {
+            border-color: var(--color-gray-700);
+        }
+    }
     body {
         @apply relative font-poppins;
         @apply antialiased;
         @apply text-gray-700 dark:text-gray-100;
-        @apply bg-white dark:bg-gray-900;
+        @apply bg-body-bg dark:bg-body-bg-dark;
     }
-
+    .navbar {
+        @apply !max-w-full;
+    }
     pre {
         overflow: auto;
         font-size: 13px !important;
@@ -40,26 +51,29 @@
         line-height: 1.5;
         background-color: #333;
     }
+    .page-builder-container {
+        @apply !p-0 border-dotted-red relative;
+        height: calc(100vh - --spacing(14));
+    }
+    .choices__inner {
+        @apply !form-control;
+        @apply !text-xs !px-3 !py-1 !min-h-[auto];
+    }
 }
 
 @layer components {
     .card {
         @apply shadow-sm;
     }
-    .card-header{
+    .card-header {
         @apply rounded-t-lg;
     }
-    .card-footer{
+    .card-footer {
         @apply rounded-b-lg;
     }
     .card-header,
     .card-footer {
         @apply bg-gray-50 dark:bg-gray-800;
-    }
-
-    .link {
-        @apply inline-flex flex-space-2;
-        @apply text-blue dark:text-blue-500 no-underline hover:underline;
     }
 
     .dashboard-sidebar {
@@ -113,6 +127,53 @@
 
         .sort-item {
             opacity: 0 !important;
+        }
+    }
+    .mobile-offcanvas {
+        @apply lg:hidden;
+    }
+    .mobile-menu {
+        .dropdown {
+            @apply relative w-full block m-0 p-0;
+            .dropdown-toggle-label {
+                @apply flex-space-1;
+            }
+        }
+        .dropdown-menu {
+            @apply !relative !w-full !max-w-full;
+            @apply bg-transparent border-none shadow-none divide-y p-0 m-0;
+            @apply hidden;
+            &.show {
+                @apply block;
+            }
+        }
+    }
+    .archive-filter-container {
+        @apply relative w-40;
+        .archive-filter-dropdown {
+            @apply absolute z-20 w-full rounded-lg;
+            @apply bg-white  dark:bg-gray-800 shadow;
+            @apply mt-3;
+            .dropdown-link {
+                &.active {
+                    @apply bg-primary text-bg-primary;
+                }
+                &:first-child {
+                    @apply rounded-t-lg;
+                }
+                &:last-child {
+                    @apply rounded-b-lg;
+                }
+            }
+        }
+    }
+    .rating-bar {
+        @apply flex-space-1;
+        .icon {
+            @apply text-gray-300 dark:text-gray-300;
+            &.active {
+                @apply text-orange dark:text-orange;
+            }
         }
     }
 }

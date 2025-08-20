@@ -29,12 +29,12 @@ class MenuController extends Controller
             'menus' => Menu::all()->toArray(),
             'menu' => $menu,
             'positions' => menu_position_options(),
-            'pages' => fn() => Page::all()->toArray(),
-            'posts' => fn() => Post::all()->toArray(),
+            'pages' => fn() => Post::type('page')->get()->toArray(),
+            'posts' => fn() => Post::type('post')->get()->toArray(),
             'categories' => fn() => Category::category()->with('children')->get()->toArray(),
             'item_types' => menu_item_type_options(),
             'items' => fn() => $menu ? $menu->items()->with('children')->get()->toArray() : [],
-        ])->withViewData([
+        ])->rootView('layouts.dashboard-inertia')->withViewData([
             'title' => $menu ? __('Edit menu :name', ['name' => $menu->name]) : __('Menus'),
         ]);
     }
@@ -75,7 +75,7 @@ class MenuController extends Controller
     {
         try {
             foreach ($request->pages as $pageId) {
-                $page = Page::find($pageId);
+                $page = Post::find($pageId);
                 if ($page) {
                     $menu->items()->create([
                         'name' => $page->name,
@@ -181,7 +181,7 @@ class MenuController extends Controller
         }
         $delete = $menu->delete();
         if ($delete) {
-            return to_route('dashboard.menus.builder')->with('status', __('Delete success'));
+            return to_route('dashboard.menus')->with('status', __('Delete success'));
         } else {
             return back()->withErrors(['delete_status', __('An error occurred while deleting the menu')]);
         }

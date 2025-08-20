@@ -1,0 +1,25 @@
+@utility btn-outline-* {
+    background-color: transparent;
+    border-color: --value(--color- *) !important;
+    color: --value(--color- *);
+
+    @variant hover {
+        background-color: --value(--color- *);
+        color: --value(--color-bg- *);
+    }
+}
+/*
+@utility btn-outline-light {
+    border-color: var(--color-light) !important;
+}
+ */
+/* @utility btn-light{
+    background-color: ---value(--color-light);
+    border-color: --value(--color-light) !important;
+    color: --value(--color-gray-600);
+
+    @variant hover {
+        background-color: --value(--color- *);
+        color: --value(--color-bg- *);
+    }
+ } */
