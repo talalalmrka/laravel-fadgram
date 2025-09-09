@@ -1,6 +1,6 @@
 <?php
 
-use App\Events\LoggedIn;
+use App\Http\Controllers\ImageController;
 use App\Livewire\Site\Authors\Index as AuthorsPage;
 use App\Livewire\Site\Authors\Single as AuthorsSingle;
 use App\Livewire\Site\Users\Single as UsersSingle;
@@ -13,21 +13,14 @@ use App\Livewire\Site\Posts\Single as PostsSingle;
 use App\Livewire\Site\Quotes\Index as QuotesPage;
 use App\Livewire\Site\Quotes\Single as QuotesSingle;
 use App\Livewire\Site\Favorites\Index as FavoritesPage;
-use App\Livewire\Site\Test;
-use App\Models\Font;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Typography\FontFactory;
-use Intervention\Image\Geometry\Factories\RectangleFactory;
 use App\Http\Controllers\QuoteImageController;
+use App\Http\Controllers\StyleController;
 use App\Livewire\Components\Carousel;
-use App\Livewire\Cropper;
 use App\Livewire\ImageCropper;
 use App\Livewire\Site\Gallery\Index as Gallery;
-use App\Models\Favorite;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\Storage;
 
 // home
 $front_type = get_option('front_type', 'posts');
@@ -59,29 +52,27 @@ Route::get('authors/{author:slug}', AuthorsSingle::class)->name('author');
 Route::get('users/{user}', UsersSingle::class)->name('user');
 
 // Catecories
-Route::get('categories', CategoriesPage::class)->name('categories');
-Route::get('categories/{category:slug}', CategoriesSingle::class)->name('category');
+Route::get('topics', CategoriesPage::class)->name('categories');
+Route::get('topics/{category:slug}', CategoriesSingle::class)->name('category');
 
 // Favorites
 Route::get('favorites', FavoritesPage::class)->name('favorites');
 
-//test images
+// Imgen
 Route::get('imgen', [QuoteImageController::class, 'index'])->name('imgen');
-Route::get('imgen/random', [QuoteImageController::class, 'random'])->name('imgen.random');
 Route::get('imgen/{quote}-{quote_image}-{size}.{format}', [QuoteImageController::class, 'quote'])->name('imgen.quote');
 Route::get('imgen/{quote_image}-{size}.{format}', [QuoteImageController::class, 'preview'])->name('imgen.preview');
 Route::get('imgen/{quote_image}', [QuoteImageController::class, 'quoteImage'])->name('imgen.quote-image');
+Route::get('imgen/{quote}/random', [QuoteImageController::class, 'quoteRandom'])->name('imgen.quote.random');
+Route::get('imgen/{quote}/images', [QuoteImageController::class, 'quoteImages'])->name('imgen.quote.images');
+Route::get('imgen/download/{quote}-{quote_image}-{size}.{format}', [QuoteImageController::class, 'quoteDownload'])->name('imgen.quote.download');
 
 
 // Cropper
-Route::get('cropper', ImageCropper::class)->middleware('auth');
-// Route::get('cropper', Cropper::class)->middleware('auth');
+// Route::get('cropper', ImageCropper::class)->middleware('auth');
 
 //font style
-Route::get('/fonts-style.css', function () {
-    $css = Font::css();
-    return response()->make($css, 200, ['Content-Type' => 'text/css']);
-})->name('fonts-style');
+Route::get('/style.css', [StyleController::class, 'index'])->name('style');
 
 // robots
 Route::get('/robots.txt', function () {
@@ -95,11 +86,5 @@ Route::get('/robots.txt', function () {
 
     return response($content, 200, ['Content-Type' => 'text/plain']);
 })->name('robots.txt');
-// Rich Select Examples
-Route::get('/rich-select-examples', function () {
-    return view('examples.rich-select-example');
-})->name('rich-select.examples');
 
-Route::get('test', Test::class)->name('test');
-Route::get('carousel', Carousel::class)->name('carousel');
 Route::get('{post:slug}', PostsSingle::class)->name('post');

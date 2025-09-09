@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "quotes",
+    "icon": "bi-quote",
+    "label": "Quotes",
+    "features": [
+        "typography",
+        "bgColor",
+        "bgImage",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Latest quotes",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "show_title": {
+            "type": "boolean",
+            "default": false,
+            "rules": ["boolean"]
+        },
+        "layout": {
+            "type": "string",
+            "default": "grid",
+            "rules": ["required", "string"]
+        },
+        "categories": {
+            "type": "array",
+            "default": [],
+            "rules": ["nullable", "array"]
+        },
+        "tags": {
+            "type": "array",
+            "default": [],
+            "rules": ["nullable", "array"]
+        },
+        "users": {
+            "type": "array",
+            "default": [],
+            "rules": ["nullable", "array"]
+        },
+        "authors": {
+            "type": "array",
+            "default": [],
+            "rules": ["nullable", "array"]
+        },
+        "limit": {
+            "type": "number",
+            "default": 5,
+            "rules": ["nullable", "numeric", "max:100"]
+        },
+        "sort": {
+            "type": "string",
+            "default": "newest",
+            "rules": ["nullable", "string"]
+        }
+    }
+}

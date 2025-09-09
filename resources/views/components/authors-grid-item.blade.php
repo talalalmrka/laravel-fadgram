@@ -25,7 +25,7 @@
     <div class="relative aspect-video bg-gray-200 flex items-center justify-center overflow-hidden">
         <a href="{{ $author->permalink }}" title="{{ $author->name }}"
             class="relative leading-none w-full h-full overflow-hidden group">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
+            <img class="lozad w-full h-full object-cover group-hover:scale-110 transition-all duration-300" loading="lazy"
                 src="{{ $author->getThumbnailUrl('sm') }}"
                 alt="{{ $author->name }}">
             <div

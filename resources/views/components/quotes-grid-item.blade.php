@@ -1,11 +1,11 @@
 @props(['quote', 'share_enabled' => get_option('share_enabled'), 'class' => null, 'atts' => []])
-<div x-data="{
+<div wire:replace x-data="{
     quoteId: @js($quote->id),
     share: false,
     favorite: @js($quote->isFavorited()),
     toggleFavorite() {
         this.favorite = !this.favorite;
-        $wire.toggleFavorite(this.quoteId)
+        $wire.toggleFavorite('quote', this.quoteId)
     }
 }"
     {{ $attributes->merge(
@@ -14,7 +14,7 @@
                 'wire:key' => $quote->id,
                 'id' => "quote-{$quote->id}",
                 'class' => css_classes([
-                    'card relative rounded-3xl shadow-sm hover:shadow hover:scale-[1.03] transition-all duration-300',
+                    'card relative rounded-3xl shadow-sm hover:shadow hover:scale-[1.03] transition-all duration-300 overflow-hidden',
                     "quote-{$quote->id}",
                     $class => $class,
                 ]),
@@ -22,14 +22,12 @@
             $atts,
         ),
     ) }}>
-    <div class="relative aspect-video bg-gray-200 flex items-center justify-center overflow-hidden">
-        <a href="{{ $quote->permalink }}" title="{{ $quote->name }}"
-            class="relative leading-none w-full h-full overflow-hidden group">
-            <img class="w-full h-full object-cover"
-                src="{{ $quote->getThumbnailUrl('sm') }}"
-                alt="{{ $quote->name }}">
-            <div class="absolute z-1 inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 opacity-60">
-            </div>
+    <div class="relative aspect-video bg-gray-200">
+        <a href="{{ $quote->permalink }}" title="{{ $quote->content }}"
+            class="relative leading-none w-full h-auto group">
+            <img class="w-full h-auto object-cover opacity-0 transition-opacity duration-300"
+                src="{{ $quote->getThumbnailUrl('sm') }}" loading="lazy"
+                alt="{{ $quote->content }}" onload="this.classList.remove('opacity-0')">
         </a>
         @if ($quote->category())
             <a href="{{ $quote->category_permalink }}" title="{{ $quote->category_name }}"
@@ -37,18 +35,16 @@
                 {{ $quote->category_name }}
             </a>
         @endif
-        <button type="button"
+        <a href="{{ $quote->download_url }}"
             class="btn btn-blue p-0 space-x-0 inline-flex items-center justify-center w-6 h-6 rounded-full absolute bottom-2 end-2 z-1"
-            wire:click="downloadQuote({{ $quote->id }})" aria-label="Download">
-            <i wire:loading.remove wire:target="downloadQuote({{ $quote->id }})" class="icon bi-cloud-download"></i>
-            <i class="icon fg-loader-dots-move text-white" wire:loading
-                wire:target="downloadQuote({{ $quote->id }})"></i>
-        </button>
+            title="Download">
+            <i class="icon bi-cloud-download"></i>
+        </a>
     </div>
     <div class="card-body flex flex-col">
         <a href="{{ $quote->permalink }}"
             class="text-center hover:link-no-underline flex-1">
-            <p class="text-lg md:text-xl font-serif italic leading-relaxed tracking-wide">
+            <p class="text-lg md:text-xl leading-relaxed tracking-wide">
                 <i class="icon bi-quote text-primary dark:text-primary-400"></i>
                 {{ $quote->getExcerpt(100) }}
                 <i class="icon bi-quote text-primary dark:text-primary-400 rotate-180"></i>
@@ -80,5 +76,4 @@
             </button>
         </div>
     </div>
-    <x-share-buttons :post="$quote" />
 </div>

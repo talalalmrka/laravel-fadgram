@@ -77,6 +77,11 @@ abstract class ArchivePage extends Component
                 'direction' => 'desc',
                 'label' => __('Z → A'),
             ],
+            'popular' => [
+                'field' => 'meta.views',
+                'direction' => 'desc',
+                'label' => __('Popular'),
+            ],
         ];
     }
     public function getSortOptions()
@@ -134,8 +139,11 @@ abstract class ArchivePage extends Component
         $sort = $this->getFilter('sort');
         $field = data_get($this->sorts(), "{$sort}.field");
         $direction = data_get($this->sorts(), "{$sort}.direction");
-        if ($field) {
+        if ($field && $sort !== 'popular') {
             $this->query->orderBy($field, $direction);
+        }
+        if ($sort === 'popular') {
+            $this->query->popular();
         }
     }
     public function filterCategory()

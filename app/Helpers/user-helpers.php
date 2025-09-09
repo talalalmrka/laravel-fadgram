@@ -2,6 +2,12 @@
 
 use App\Models\User;
 
+if (!function_exists('instance_user')) {
+    function instance_user($object)
+    {
+        return $object instanceof User;
+    }
+}
 if (!function_exists('user_options')) {
     function user_options($options = [])
     {

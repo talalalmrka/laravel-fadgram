@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             QuoteImageSeeder::class,
             QuoteSeeder::class,
             MenuSeeder::class,
-            CommentSeeder::class,
+            // CommentSeeder::class,
+            PatternSeeder::class,
         ]);
     }
 }

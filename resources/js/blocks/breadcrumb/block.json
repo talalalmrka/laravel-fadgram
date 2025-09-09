@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "breadcrumb",
+    "icon": "bi-segmented-nav",
+    "label": "Breadcrumb",
+    "features": [
+        "typography",
+        "bgColor",
+        "bgImage",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "inset",
+        "zIndex",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {}
+}

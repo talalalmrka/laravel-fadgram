@@ -41,7 +41,7 @@ class Edit extends Component
             "slug" => ["required", "string", "max:255", Rule::unique("authors", "slug")->ignore($this->author)],
             "status" => ["required", "string", Rule::in(['draft', 'publish', 'trash'])],
             "content" => ["nullable", "string",],
-            "template" => ["nullable", "string", Rule::in(config('layouts.layouts'))],
+            "template" => ["nullable", "string", Rule::in(templates())],
             "seo_title" => ["nullable", "string", "max:255"],
             "seo_description" => ["nullable", "string", "max:255"],
             'thumbnail' => ['nullable', 'image', 'max:5120'],

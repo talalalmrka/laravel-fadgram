@@ -26,9 +26,9 @@ class StoreBlocksRequest extends FormRequest
         return [
             'blocks' => ['nullable', 'array'],
             'blocks.*' => ['required', 'array'],
-            'blocks.*.type' => ['required', 'string', Rule::in(PageBuilderController::blockTypes())],
-            'blocks.*.attributes' => ['nullable', 'array'],
-            'blocks.*.children' => ['nullable', 'array'],
+            // 'blocks.*.type' => ['required', 'string', Rule::in(PageBuilderController::blockTypes())],
+            // 'blocks.*.attributes' => ['nullable', 'array'],
+            // 'blocks.*.children' => ['nullable', 'array'],
         ];
     }
     public function ruless(): array

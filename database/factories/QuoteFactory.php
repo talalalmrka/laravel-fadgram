@@ -10,6 +10,7 @@ use App\Traits\WithRandomQuoteImageId;
 use App\Traits\WithRandomTagId;
 use App\Traits\WithRandomUserId;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Quote>
@@ -22,9 +23,16 @@ class QuoteFactory extends Factory
         WithRandomAuthorId,
         WithRandomQuoteImageId;
     public $categories = null;
+    public $meta = [];
+
     public function withCategories($categories)
     {
         $this->categories = $categories;
+        return $this;
+    }
+    public function withMetas($meta)
+    {
+        $this->meta = $meta;
         return $this;
     }
     /**
@@ -34,14 +42,16 @@ class QuoteFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->words(2, true);
+        $content = $this->faker->paragraph(1);
+        $name = Str::limit($content, 15, '', true);
+        $slug = Quote::generateSlug($name);
         return [
             'user_id' => $this->randomUserId(),
             'quote_image_id' => $this->randomQuoteImageId(),
-            'name' => $name,
-            'slug' => Quote::generateSlug($name),
+            // 'name' => $name,
+            // 'slug' => $slug,
             'status' => $this->faker->randomElement(status_values()),
-            'content' => $this->faker->paragraph(1)
+            'content' => $content,
         ];
     }
     public function status(string $status): static
@@ -67,6 +77,10 @@ class QuoteFactory extends Factory
             $quoteImages = QuoteImage::inRandomOrder()->take(5)->get();
             if ($quoteImages) {
                 $quote->syncQuoteImages($quoteImages);
+            }
+
+            if (!empty($this->meta)) {
+                $quote->saveMetas($this->meta);
             }
         });
     }

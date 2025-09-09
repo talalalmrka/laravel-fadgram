@@ -3,11 +3,12 @@
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageBuilderController;
-use App\Livewire\Components\BlockPreview;
+use App\Http\Controllers\PatternController;
 use App\Livewire\Dashboard\Authors\Index as Authors;
 use App\Livewire\Dashboard\Authors\Edit as EditAuthor;
 use App\Livewire\Dashboard\Books\Edit as EditBook;
 use App\Livewire\Dashboard\Books\Index as Books;
+use App\Livewire\Dashboard\Cache\Index as CacheManager;
 use App\Livewire\Dashboard\Categories\Index as Categories;
 use App\Livewire\Dashboard\Comments\Index as Comments;
 use App\Livewire\Dashboard\Favorites\Index as FavoritesPage;
@@ -26,6 +27,7 @@ use App\Livewire\Dashboard\QuoteImages\Index as QuoteImages;
 use App\Livewire\Dashboard\Roles\Index as Roles;
 use App\Livewire\Dashboard\Settings\AdsSettings;
 use App\Livewire\Dashboard\Settings\ArchiveSettings;
+use App\Livewire\Dashboard\Settings\ColorsSettings;
 use App\Livewire\Dashboard\Settings\DesignSettings;
 use App\Livewire\Dashboard\Settings\DiscussionSettings;
 use App\Livewire\Dashboard\Settings\EnvSettings;
@@ -37,14 +39,12 @@ use App\Livewire\Dashboard\Settings\ReadingSettings;
 use App\Livewire\Dashboard\Settings\SingleBookSettings;
 use App\Livewire\Dashboard\Settings\SinglePostSettings;
 use App\Livewire\Dashboard\Settings\SingleQuoteSettings;
-use App\Livewire\Dashboard\Settings\SingleSettings;
 use App\Livewire\Dashboard\Settings\TypographySettings;
 use App\Livewire\Dashboard\Tags\Index as Tags;
 use App\Livewire\Dashboard\Users\Index as Users;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
+use App\Livewire\Dashboard\Quotes\BulkCreate;
+use App\Livewire\Dashboard\Terminal\Index as TerminalManager;
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], function () {
     //dashboard home
@@ -98,13 +98,22 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::get('edit/{post}', EditPage::class)->name('dashboard.pages.edit');
         Route::get('create', EditPage::class)->name('dashboard.pages.create');
 
-        Route::get('builder/{page}', [PageBuilderController::class, 'index'])->name('builder');
+        // page builder
         Route::get('builder/classic/{page}', [PageBuilderController::class, 'classic'])->name('builder.classic');
         Route::post('builder/{page}', [PageBuilderController::class, 'store'])->name('builder.store');
         Route::any('block', [PageBuilderController::class, 'renderBlock'])->name('builder.block');
         Route::get('block/preview', [PageBuilderController::class, 'blockPreview'])->name('builder.block.preview');
         Route::get('builder/images/{page}', [PageBuilderController::class, 'pageImages'])->name('builder.images');
         Route::post('builder/images/{page}', [PageBuilderController::class, 'uploadImage'])->name('builder.upload');
+        Route::get('builder/{page}', [PageBuilderController::class, 'index'])->name('builder');
+    });
+
+    // patterns
+    Route::group(['prefix' => 'patterns', 'middleware' => ['can:manage_posts']], function () {
+        Route::get('/', [PatternController::class, 'index'])->name('patterns');
+        Route::get('{pattern}', [PatternController::class, 'show'])->name('patterns.show');
+        Route::post('store', [PatternController::class, 'store'])->name('patterns.store');
+        Route::any('destroy/{pattern}', [PatternController::class, 'destroy'])->name('patterns.destroy');
     });
 
     //quotes
@@ -112,6 +121,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::get('/', Quotes::class)->name('dashboard.quotes');
         Route::get('edit/{quote}', EditQuote::class)->name('dashboard.quotes.edit');
         Route::get('create', EditQuote::class)->name('dashboard.quotes.create');
+        Route::get('bulk-create', BulkCreate::class)->name('dashboard.quotes.create.bulk');
     });
 
     //quote images
@@ -159,6 +169,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         // Route::get('api/store', [MediaController::class, 'store'])->name('api.media.store');
     });
 
+    // cache
+    Route::group(['prefix' => 'cache', 'middleware' => ['can:manage_settings']], function () {
+        Route::get('/', CacheManager::class)->name('dashboard.cache');
+    });
+
     //settings
     Route::group(['prefix' => 'settings', 'middleware' => ['can:manage_settings']], function () {
         Route::get('/', ManageSettings::class)->name('dashboard.settings');
@@ -173,8 +188,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
         Route::get('/discussion', DiscussionSettings::class)->name('dashboard.settings.discussion');
         Route::get('/ads', AdsSettings::class)->name('dashboard.settings.ads');
         Route::get('/design', DesignSettings::class)->name('dashboard.settings.design');
+        Route::get('/colors', ColorsSettings::class)->name('dashboard.settings.colors');
         Route::get('/fonts', ManageFonts::class)->name('dashboard.settings.fonts');
         Route::get('/typography', TypographySettings::class)->name('dashboard.settings.typography');
         Route::get('/env', EnvSettings::class)->name('dashboard.settings.env');
+    });
+
+    // Terminal
+    Route::group(['prefix' => 'terminal', 'middleware' => ['can:manage_settings']], function () {
+        Route::get('/', TerminalManager::class)->name('terminal');
     });
 });

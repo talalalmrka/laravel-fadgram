@@ -5,9 +5,11 @@ namespace App\Livewire\Site\Posts;
 use App\Livewire\Site\Archive\ArchivePage;
 use App\Models\Post;
 use App\Traits\WithToast;
+use App\Traits\WithToggleFavorite;
 
 class Index extends ArchivePage
 {
+    use WithToggleFavorite;
     public $layout;
     public function mount()
     {
@@ -17,10 +19,6 @@ class Index extends ArchivePage
     public function builder()
     {
         return Post::where('type', 'post')->where('status', 'publish');
-    }
-    public function toggleFavorite(Post $post)
-    {
-        $post->toggleFavorite();
     }
     public function render()
     {

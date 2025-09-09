@@ -1,37 +1,117 @@
 <?php
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 
-if (!function_exists('get_the_title')) {
-    function get_the_title()
+if (!function_exists('models')) {
+    function models(): array
     {
-        return '';
+        return [
+            'author',
+            'book',
+            'category',
+            'post',
+            'quote',
+            'user',
+        ];
+    }
+}
+
+if (!function_exists('is_single')) {
+    function is_single($name): bool
+    {
+        $route = request()->route();
+        if (!$route) return false;
+        $routeName = $route->getName();
+        return $name === $routeName;
+    }
+}
+
+if (!function_exists('is_archive')) {
+    function is_archive($name)
+    {
+        $route = request()->route();
+        if (!$route) return false;
+        $routeName = $route->getName();
+        return plural($name) === $routeName;
     }
 }
 if (!function_exists('the_title')) {
-    function the_title($before = '', $after = '', $display = true)
+    function the_title($before = '', $after = '')
     {
-        $title = get_the_title();
-
-        if (strlen($title) === 0) {
-            return;
+        $route = request()->route();
+        if (!$route) return null;
+        $name = $route->getName();
+        $params = $route->parameters();
+        $title = '';
+        if (is_home()) {
+            $title = __('Home');
+        } elseif (is_blog()) {
+            $title = get_option('archive_post_title', __('Blog'));
         }
 
-        $title = $before . $title . $after;
+        // Author
+        elseif (is_archive('author')) {
+            $title = get_option('archive_author_title', __('Authors'));
+        } elseif (is_single('author')) {
+            $author = data_get($params, 'author');
+            if (instance_author($author)) {
+                $title = $author->seo_title;
+            }
+        }
 
-        if ($display) {
-            echo $title;
+        // Book
+        elseif (is_archive('book')) {
+            $title = get_option('archive_book_title', __('Books'));
+        } elseif (is_single('book')) {
+            $book = data_get($params, 'book');
+            if (instance_author($book)) {
+                $title = $book->seo_title;
+            }
+        }
+
+        // Category
+        elseif (is_archive('topic')) {
+            $title = get_option('archive_category_title', __('Topics'));
+        } elseif (is_single('category')) {
+            $cat = data_get($params, 'category');
+            if (instance_category($cat)) {
+                $title = $cat->seo_title;
+            }
+        }
+
+        // Post
+        elseif (is_single('post')) {
+            $post = data_get($params, 'post');
+            if (instance_post($post)) {
+                $title = $post->seo_title;
+            }
+        }
+
+        // Quote
+        elseif (is_archive('quote')) {
+            $title = get_option('archive_quote_title', __('Quotes'));
+        } elseif (is_single('quote')) {
+            $quote = data_get($params, 'quote');
+            if (instance_quote($quote)) {
+                $title = $quote->seo_title;
+            }
+        }
+        // User
+        elseif (is_single('user')) {
+            $user = data_get($params, 'user');
+            if (instance_user($user)) {
+                $title = $user->seo_title;
+            }
         } else {
-            return $title;
+            $title = __($name);
         }
+        return $before . $title . $after;
     }
 }
 
-if (!function_exists('breadcrumbs')) {
-    /**
-     * Generate breadcrumbs based on the current route and parameters.
-     * @return array
-     */
+
+/*if (!function_exists('breadcrumbs')) {
     function breadcrumbs()
     {
 
@@ -196,4 +276,4 @@ if (!function_exists('breadcrumbs')) {
         }
         return $crumbs;
     }
-}
+}*/

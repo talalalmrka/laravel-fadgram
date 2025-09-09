@@ -1,3 +1,5 @@
+import { computed, unref } from "vue";
+
 /**
  * Retrieve nested values from an object using dot-notation or array path.
  * Similar to Laravel's data_get helper.
@@ -139,3 +141,31 @@ export const range = (start: number, end: number, step = 1) =>
         { length: Math.floor((end - start) / step) + 1 },
         (_, i) => start + i * step,
     );
+
+export const flat = (obj: any): any[] => {
+    const ret: any[] = [];
+
+    if (Array.isArray(obj)) {
+        for (const val of obj) {
+            ret.push(...flat(val));
+        }
+    } else if (obj !== null && typeof obj === "object") {
+        for (const val of Object.values(obj)) {
+            ret.push(...flat(val));
+        }
+    } else {
+        ret.push(obj);
+    }
+
+    return ret.filter((n) => n && n !== undefined && n !== null && n !== "");
+};
+
+export const isFlex = (atts: Record<string, any>) => {
+    const a = unref(atts) ?? {};
+    return (
+        data_get(a.display, "sm") === "flex" ||
+        data_get(a.display, "md") === "md:flex" ||
+        data_get(a.display, "lg") === "lg:flex" ||
+        data_get(a.display, "xl") === "xl:flex"
+    );
+};

@@ -15,13 +15,14 @@ class Button
     public $loading = true;
     public $href = null;
     public $target = null;
+    public $title = null;
     public $customContent = null;
     public $class = null;
     public $atts = [];
     public ComponentAttributeBag $attributes;
     public ComponentAttributeBag $labelAttributes;
 
-    public function __construct($type = 'button', $click = null, $icon = null, $label = null, $class = null, $atts = [], $color = null, $disabled = false, $loading = true, $href = null, $target = null, $customContent = null)
+    public function __construct($type = 'button', $click = null, $icon = null, $label = null, $class = null, $atts = [], $color = null, $disabled = false, $loading = true, $href = null, $target = null, $title = null, $customContent = null)
     {
         $this->attributes = new ComponentAttributeBag($atts);
         $this->labelAttributes = new ComponentAttributeBag();
@@ -36,6 +37,7 @@ class Button
         $this->loading($loading);
         $this->href($href);
         $this->target($target);
+        $this->title($title);
         $this->content($customContent);
     }
     public static function make($click = null)
@@ -74,6 +76,7 @@ class Button
         $this->label = $label;
         return $this;
     }
+
     public function class($class)
     {
         $this->class = $class;
@@ -99,6 +102,17 @@ class Button
             'blue' => 'btn-blue',
             'red' => 'btn-red',
             'yellow' => 'btn-yellow',
+            'orange' => 'btn-orange',
+            'sky' => 'btn-sky',
+            'purple' => 'btn-purple',
+            'violet' => 'btn-violet',
+            'teal' => 'btn-teal',
+            'emerald' => 'btn-emerald',
+            'pink' => 'btn-pink',
+            'rose' => 'btn-rose',
+            'cyan' => 'btn-cyan',
+            'amber' => 'btn-amber',
+            'lime' => 'btn-lime',
         ];
         $this->color = $color;
         if (!empty($this->color)) {
@@ -145,6 +159,14 @@ class Button
         }
         return $this;
     }
+    public function title($title)
+    {
+        $this->title = $title;
+        if (!empty($this->title)) {
+            $this->attributes(['title' => $this->title]);
+        }
+        return $this;
+    }
     public function getLabel()
     {
         return $this->customContent ?? $this->label;
@@ -152,12 +174,14 @@ class Button
     public function attributes($atts)
     {
         $this->attributes->setAttributes(array_merge($this->attributes->getAttributes(), $atts));
+        return $this;
         //$this->attributes = $this->attributes->merge($atts);
     }
     public function labelAttributes($atts)
     {
         //$this->labelAttributes = $this->labelAttributes->merge($atts);
         $this->labelAttributes->setAttributes(array_merge($this->labelAttributes->getAttributes(), $atts));
+        return $this;
     }
     public function addClass($class)
     {

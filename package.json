@@ -26,12 +26,13 @@
         "jodit-vue": "^3.1.0",
         "laravel-vite-plugin": "^1.2.0",
         "lodash": "^4.17.21",
+        "lozad": "^1.16.0",
         "mitt": "^3.0.1",
         "tailwindcss": "^4.0.0",
         "typescript": "^5.8.3",
         "vite": "^6.0.11",
         "vue": "^3.5.13",
-        "vue-draggable-next": "^2.2.1",
+        "vuedraggable": "^4.1.0",
         "ziggy-js": "^2.5.2"
     },
     "dependencies": {
@@ -41,7 +42,6 @@
         "@vueuse/core": "^13.1.0",
         "jodit": "^4.6.1",
         "lucide-vue-next": "^0.488.0",
-        "primevue": "^4.3.3",
-        "vuedraggable": "^4.1.0"
+        "primevue": "^4.3.3"
     }
 }

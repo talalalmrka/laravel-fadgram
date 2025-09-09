@@ -130,11 +130,14 @@ abstract class Datatable extends Component
         return [
             Button::make('create')
                 ->icon('bi-plus-lg')
+                ->title(__('Create'))
                 ->color('green'),
 
             Button::make('deleteSelected')
-                ->icon('bi-trash')
+                ->icon('bi-x-lg')
+                ->title(__('Delete'))
                 ->color('red')
+                ->attributes(['wire:confirm' => __('Are you shure to delete selected?')])
                 ->disabled(!$this->hasSelected()),
         ];
     }

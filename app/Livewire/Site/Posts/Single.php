@@ -4,9 +4,12 @@ namespace App\Livewire\Site\Posts;
 
 use App\Models\Post;
 use Livewire\Component;
+use App\Traits\WithDownloadQuoteDialog;
+use App\Traits\WithToggleFavorite;
 
 class Single extends Component
 {
+    use WithDownloadQuoteDialog, WithToggleFavorite;
     public Post $post;
     public $editPermission;
     public $editUrl;
@@ -31,7 +34,7 @@ class Single extends Component
                     'navbarclass' => 'navbar-transparent-top navbar-transparent-primary fixed top-0 start-0 end-0 z-40',
                 ]);
             } else {
-                return view('livewire.site.posts.single')->layout('layouts.curve', [
+                return view('livewire.site.posts.page')->layout('layouts.curve', [
                     'title' => $this->post->name,
                     'seo_title' => $this->post->seo_title,
                     'seo_description' => $this->post->seo_description,
@@ -43,19 +46,6 @@ class Single extends Component
             'title' => $this->post->name,
             'seo_title' => $this->post->seo_title,
             'seo_description' => $this->post->seo_description,
-            /* 'subtitle' => container([
-                'tag' => 'span',
-                'icon' => 'bi-person-fill',
-                'content' => $this->post->author_name,
-                'class' => 'justify-center',
-            ]),
-            'secondSubtitle' => container([
-                'tag' => 'span',
-                'icon' => 'bi-calendar-fill',
-                'content' => $this->post->date,
-                'class' => 'justify-center',
-            ]), */
-            'image' => $this->post->getThumbnailUrl('lg')
         ]);
     }
 }

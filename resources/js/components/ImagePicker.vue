@@ -6,7 +6,7 @@ import { route } from 'ziggy-js';
 import { PageType } from '@/types';
 import axios from 'axios';
 import { MediaType } from '@/types/media';
-import eventBus from '@/types/eventBus';
+import EventBus from '@/types/event-bus';
 
 const props = defineProps<{
     id?: string;
@@ -123,7 +123,7 @@ const upload = async (file: File) => {
 }
 
 function pickImage() {
-    eventBus.emit('openMediaModal', {
+    EventBus.emit('openMediaModal', {
         id: inputId.value,
         title: 'Select image',
         type: 'image',
@@ -135,7 +135,7 @@ function pickImage() {
 }
 
 onMounted(() => {
-    eventBus.on('mediaSelected', (data) => {
+    EventBus.on('mediaSelected', (data) => {
         console.log('mediaSelected', data)
         if (data.id === inputId.value) {
             image.value = data.media as MediaType;
@@ -144,7 +144,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    eventBus.off('mediaSelected');
+    EventBus.off('mediaSelected');
 });
 </script>
 <template>

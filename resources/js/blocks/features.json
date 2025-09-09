@@ -1,0 +1,285 @@
+{
+    "typography": {
+        "textColor": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "fontSize": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "fontWeight": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "fontStyle": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "textTransform": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "textAlign": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "bgColor": {
+        "bgColor": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "bgImage": {
+        "bgImage": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "bgSize": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "bgPosition": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "bgAttachment": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "margin": {
+        "margin": {
+            "type": "array",
+            "default": {
+                "sm": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "md": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "lg": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "xl": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                }
+            },
+            "rules": ["nullable", "array"]
+        }
+    },
+    "padding": {
+        "padding": {
+            "type": "array",
+            "default": {
+                "sm": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "md": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "lg": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "xl": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                }
+            },
+            "rules": ["nullable", "array"]
+        }
+    },
+    "border": {
+        "borderSize": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "borderColor": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "borderStyle": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "borderRadius": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "shadow": {
+        "shadowSize": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "shadowColor": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "htmlAnchor": {
+        "htmlAnchor": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "className": {
+        "className": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "style": {
+        "style": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    },
+    "position": {
+        "position": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        }
+    },
+    "display": {
+        "display": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        },
+        "flexDirection": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        },
+        "alignItems": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        },
+        "justifyContent": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        },
+        "gap": {
+            "type": "array",
+            "default": {
+                "sm": null,
+                "md": null,
+                "lg": null,
+                "xl": null
+            },
+            "rules": ["nullable", "array", "max:255"]
+        }
+    },
+    "inset": {
+        "inset": {
+            "type": "array",
+            "default": {
+                "sm": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "md": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "lg": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                },
+                "xl": {
+                    "top": "",
+                    "start": "",
+                    "end": "",
+                    "bottom": ""
+                }
+            },
+            "rules": ["nullable", "array", "max:255"]
+        }
+    },
+    "zIndex": {
+        "zIndex": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

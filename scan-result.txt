@@ -1,0 +1,32 @@
+user@Talal-Air quoteread % ./scan.sh
+Scanning Laravel project for common causes of image corruption...
+Project path: /Users/user/Desktop/laravel-projects/quoteread
+-----------------------------------------------------
+[1] Checking for closing PHP tags '?>'...
+app//Providers/AppServiceProvider.php:35:            ?>
+[2] Checking for echo, print, dd(), var_dump()...
+app//Traits/WithEditModel.php:22:            dd('Error', 'You must set the $model_type', 'add protected $model_type = (user, post, ...etc)');
+app//Livewire/Components/DownloadQuoteDialog.php:62:            echo $img->toString();
+app//Livewire/Components/DownloadQuote.php:41:            echo $img->toString();
+app//Livewire/Site/Quotes/Single.php:55:            echo $img->toString();
+app//View/Components/CoverLayout.php:31:        dd($this);
+app//Helpers/title-helpers.php:23:            echo $title;
+app//Helpers/menu-helpers.php:69:            echo view('components.nav-menu', ['menu' => $menu, 'atts' => $attributes])->render();
+app//Services/ImageService.php:71:                dd($e);
+[3] Checking for BOM in PHP files...
+[4] Listing files with extended attributes...
+No extended attributes found
+[5] Checking permissions for storage and public/uploads...
+drwxrwxr-x+  5 user  staff   160 Sep  1 21:13 bootstrap/cache
+drwxrwxr-x  40 user  staff  1280 Sep  1 20:45 public/uploads
+drwxrwxr-x+  8 user  staff   256 May  4 22:32 storage
+[6] Checking for Debugbar or middleware that may affect responses...
+No Debugbar references found
+grep: app/Http/Kernel.php: No such file or directory
+No custom middleware found
+[7] Checking for ob_start(), ob_end_flush(), ob_clean() in project...
+No output buffering functions found
+-----------------------------------------------------
+Scan complete. Review the warnings above to identify possible causes of image corruption.
+user@Talal-Air quoteread % touch scan-result.txt
+user@Talal-Air quoteread %

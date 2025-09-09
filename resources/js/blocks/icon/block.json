@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "icon",
+    "icon": "bi-emoji-smile",
+    "label": "Icon",
+    "features": [
+        "typography",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "icon": {
+            "type": "string",
+            "default": "bi-star",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "size": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

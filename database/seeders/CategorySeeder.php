@@ -13,9 +13,20 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(30)->create()->each(function (Category $category) {
-            Category::factory(3)->parent($category->id)->create();
-        });
-        Category::factory(30)->tag()->create();
+        $cats = [
+            'Motivational',
+            'Funny',
+            'Inspirational',
+            'Life',
+            'Positive',
+            'Love',
+            'Friendship',
+            'Attitude',
+            'Music',
+            'Dreams'
+        ];
+        foreach ($cats as $cat) {
+            Category::factory()->name($cat)->create();
+        }
     }
 }

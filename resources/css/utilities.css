@@ -54,6 +54,20 @@
 @utility link-no-underline {
     @apply text-primary dark:text-primary-500;
 }
+
+@utility link-* {
+    color: --value(--color- *);
+    &:hover {
+        color: --value(--color- * -700);
+    }
+    @variant dark {
+        color: --value(--color- * -500);
+        &:hover {
+            color: --value(--color- * -400);
+        }
+    }
+}
+
 @utility btn-outline-* {
     background-color: transparent;
     border-color: --value(--color- *) !important;
@@ -159,5 +173,30 @@
 
     &.has-end-icon {
         @apply pe-8;
+    }
+}
+
+@utility icon-link {
+    @apply inline-flex space-x-1 rtl:space-x-reverse items-center;
+    @apply text-sm font-medium;
+    @apply text-inherit;
+    @apply transition-all duration-150 ease-in-out;
+    @apply appearance-none p-0;
+    @apply opacity-75 hover:opacity-100;
+    &:disabled {
+        @apply cursor-not-allowed opacity-60;
+    }
+}
+@utility icon-link-* {
+    opacity: 1;
+    color: --value(--color- *);
+    &:hover {
+        color: --value(--color- * -700);
+    }
+    @variant dark {
+        color: --value(--color- * -500);
+        &:hover {
+            color: --value(--color- * -400);
+        }
     }
 }

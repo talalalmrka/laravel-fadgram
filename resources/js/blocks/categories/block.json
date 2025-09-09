@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "categories",
+    "icon": "bi-folder",
+    "label": "Categories",
+    "features": [
+        "typography",
+        "bgColor",
+        "bgImage",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Categories",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "show_title": {
+            "type": "boolean",
+            "default": false,
+            "rules": ["boolean"]
+        },
+        "layout": {
+            "type": "string",
+            "default": "grid",
+            "rules": ["required", "string"]
+        },
+        "users": {
+            "type": "array",
+            "default": [],
+            "rules": ["nullable", "array"]
+        },
+        "limit": {
+            "type": "number",
+            "default": 5,
+            "rules": ["nullable", "numeric", "max:100"]
+        },
+        "sort": {
+            "type": "string",
+            "default": "newest",
+            "rules": ["nullable", "string"]
+        }
+    }
+}

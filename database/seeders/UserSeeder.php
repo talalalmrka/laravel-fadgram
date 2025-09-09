@@ -8,26 +8,34 @@ use App\Models\User;
 
 class UserSeeder extends Seeder
 {
+    public static function createAdmin(): User
+    {
+        $admin = \App\Models\User::role('admin')->first();
+        if (!$admin) {
+            $admin = User::create([
+                'name' => 'admin',
+                'email' => 'talalminfo@gmail.com',
+                'password' => bcrypt('raysh77@@'),
+            ]);
+            if ($admin) {
+                $admin->assignRole('admin');
+                $admin->saveMetas([
+                    'first_name' => 'Talal',
+                    'last_name' => 'Almrka',
+                    'display_name' => 'Talal Almrka',
+                    'phone' => '+967772800166',
+                ]);
+            }
+        }
+        return $admin;
+    }
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'talalminfo@gmail.com',
-            'password' => bcrypt(1234),
-        ])->each(function (User $user) {
-            $user->assignRole('admin');
-            // $user->addMedia(public_path('assets/img/admin.png'))->preservingOriginal()->toMediaCollection($user->thumbnailCollection());
-            $user->saveMetas([
-                'first_name' => 'Talal',
-                'last_name' => 'Almrka',
-                'display_name' => 'Talal Almrka',
-                'phone' => '+967772800166',
-            ]);
-        });
-        User::factory()->create([
+        self::createAdmin();
+        /*User::factory()->create([
             'name' => 'editor',
             'email' => 'editor@gmail.com',
             'password' => bcrypt(1234),
@@ -43,6 +51,6 @@ class UserSeeder extends Seeder
         });
         User::factory(27)->create()->each(function (User $user) {
             $user->assignRole('member');
-        });
+        });*/
     }
 }

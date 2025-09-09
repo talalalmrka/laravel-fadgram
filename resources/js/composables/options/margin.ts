@@ -1,4 +1,47 @@
+import { Breakpoint, Side } from "@/types";
+const sides: Record<Side, string> = {
+    top: "mt",
+    bottom: "mb",
+    start: "ms",
+    end: "me",
+};
+
+const breakpoints: Breakpoint[] = ["sm", "md", "lg", "xl"];
+
+/**
+ * توليد خيارات margin للـ breakpoints
+ */
 export const useMarginOptions = () => {
+    const options: Record<
+        Breakpoint,
+        Record<Side, { label: string; value: string }[]>
+    > = {
+        sm: { top: [], bottom: [], start: [], end: [] },
+        md: { top: [], bottom: [], start: [], end: [] },
+        lg: { top: [], bottom: [], start: [], end: [] },
+        xl: { top: [], bottom: [], start: [], end: [] },
+    };
+
+    for (const bp of breakpoints) {
+        for (const side in sides) {
+            const prefix = sides[side as Side];
+            const bpPrefix = bp === "sm" ? "" : `${bp}:`;
+
+            options[bp][side as Side] = [
+                { label: "none", value: "" },
+                { label: "auto", value: `${bpPrefix}${prefix}-auto` },
+                ...Array.from({ length: 11 }, (_, i) => ({
+                    label: `${i}`,
+                    value: `${bpPrefix}${prefix}-${i}`,
+                })),
+            ];
+        }
+    }
+
+    return options;
+};
+
+/* export const useMarginOptions = () => {
     return {
         sm: {
             top: [
@@ -249,4 +292,4 @@ export const useMarginOptions = () => {
             ],
         },
     };
-};
+}; */

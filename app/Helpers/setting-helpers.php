@@ -20,7 +20,11 @@ if (!function_exists('setting')) {
 if (!function_exists('get_option')) {
     function get_option($key, $defaultValue = null)
     {
-        return Setting::getValue($key, $defaultValue);
+        try {
+            return Setting::getValue($key, $defaultValue);
+        } catch (\Exception $e) {
+            return $defaultValue;
+        }
     }
 }
 
@@ -173,5 +177,12 @@ if (!function_exists('front_page')) {
     {
         $front_page_id = get_option('front_page');
         return $front_page_id && is_numeric($front_page_id) ? Post::where('type', 'page')->find($front_page_id) : null;
+    }
+}
+
+if (!function_exists('app_date_format')) {
+    function app_date_format()
+    {
+        return get_option('date_format', 'j F، Y');
     }
 }

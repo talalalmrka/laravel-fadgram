@@ -35,13 +35,7 @@ class MenuSeeder extends Seeder
                 'url' => route('gallery'),
                 'navigate' => false,
             ]);
-            $headerMenu->items()->create([
-                'name' => 'Blog',
-                'icon' => 'bi-newspaper',
-                'type' => 'custom',
-                'url' => url('/blog'),
-                'navigate' => false,
-            ]);
+
             $headerMenu->items()->create([
                 'name' => 'Quotes',
                 'icon' => 'bi-quote',
@@ -64,71 +58,12 @@ class MenuSeeder extends Seeder
                 'navigate' => false,
             ]);
             $headerMenu->items()->create([
-                'name' => 'Categories',
+                'name' => 'Topics',
                 'icon' => 'bi-folder',
                 'type' => 'custom',
                 'url' => route('categories'),
                 'navigate' => false,
             ]);
-
-            $about = Post::slug('about-us');
-            if ($about) {
-                $headerMenu->items()->create([
-                    'name' => $about->name,
-                    'icon' => 'bi-info-circle',
-                    'type' => 'page',
-                    'page_id' => $about->id,
-                    'navigate' => false,
-                ]);
-            }
-
-            $contact = Post::slug('contact-us');
-            if ($contact) {
-                $headerMenu->items()->create([
-                    'name' => $contact->name,
-                    'icon' => 'bi-telephone-fill',
-                    'type' => 'page',
-                    'page_id' => $contact->id,
-                    'navigate' => false,
-                ]);
-            }
-
-            $privacy = Post::slug('privacy-policy');
-            if ($privacy) {
-                $headerMenu->items()->create([
-                    'name' => $privacy->name,
-                    'icon' => 'bi-hammer',
-                    'type' => 'page',
-                    'page_id' => $privacy->id,
-                    'navigate' => false,
-                ]);
-            }
-
-            $parent = $headerMenu->items()->create([
-                'name' => 'Parent',
-                'icon' => 'bi-star',
-                'type' => 'custom',
-                'url' => url('/parent'),
-                'navigate' => false,
-            ]);
-            if ($parent) {
-                $sub1 = $headerMenu->items()->create([
-                    'parent_id' => $parent->id,
-                    'name' => 'Sub 1',
-                    'icon' => 'bi-activity',
-                    'type' => 'custom',
-                    'url' => url('/sub1'),
-                    'navigate' => false,
-                ]);
-                $sub2 = $headerMenu->items()->create([
-                    'parent_id' => $parent->id,
-                    'name' => 'Sub 2',
-                    'icon' => 'bi-airplane',
-                    'type' => 'custom',
-                    'url' => url('/sub2'),
-                    'navigate' => false,
-                ]);
-            }
         }
 
         //footer
@@ -150,6 +85,39 @@ class MenuSeeder extends Seeder
                 'type' => 'custom',
                 'url' => url('/blog'),
             ]);
+
+            $about = Post::slug('about-us');
+            if ($about) {
+                $footerMenu->items()->create([
+                    'name' => $about->name,
+                    'icon' => 'bi-info-circle',
+                    'type' => 'page',
+                    'page_id' => $about->id,
+                    'navigate' => false,
+                ]);
+            }
+
+            $contact = Post::slug('contact-us');
+            if ($contact) {
+                $footerMenu->items()->create([
+                    'name' => $contact->name,
+                    'icon' => 'bi-telephone-fill',
+                    'type' => 'page',
+                    'page_id' => $contact->id,
+                    'navigate' => false,
+                ]);
+            }
+
+            $privacy = Post::slug('privacy-policy');
+            if ($privacy) {
+                $footerMenu->items()->create([
+                    'name' => $privacy->name,
+                    'icon' => 'bi-hammer',
+                    'type' => 'page',
+                    'page_id' => $privacy->id,
+                    'navigate' => false,
+                ]);
+            }
         }
         //social
         $socialMenu = Menu::create([

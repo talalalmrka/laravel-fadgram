@@ -141,9 +141,10 @@ class Post extends Model implements HasMedia
     public static function resolveBlocks($blocks)
     {
         return arr_map($blocks, function ($block) {
-            $block = array_merge($block, [
-                'id' => uniqid('block-'),
-            ]);
+            $id = data_get($block, 'id');
+            if (empty($id)) {
+                $block['id'] = uniqid('block-');
+            }
             $attributes = data_get($block, 'attributes', []);
             $block['attributes'] = [
                 ...PageBuilderController::blockDefaults($block['type']),

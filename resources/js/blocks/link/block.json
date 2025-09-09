@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "link",
+    "icon": "bi-link-45deg",
+    "label": "Link",
+    "features": [
+        "typography",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "label": {
+            "type": "string",
+            "default": "Link",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "icon": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "type": {
+            "type": "string",
+            "default": "link hover:link-underline",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "url": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "target": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

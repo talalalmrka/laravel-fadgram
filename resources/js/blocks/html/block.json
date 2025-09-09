@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "html",
+    "icon": "bi-code",
+    "label": "Custom html",
+    "features": [],
+    "attributes": {
+        "content": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:5000"]
+        }
+    }
+}

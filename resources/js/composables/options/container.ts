@@ -2,6 +2,7 @@ import { OptionType } from "@/types";
 
 export const useContainerTypeOptions = (): OptionType[] => {
     const types = [
+        "",
         "container",
         "container-fluid",
         "grid",
@@ -13,10 +14,52 @@ export const useContainerTypeOptions = (): OptionType[] => {
         "list-group",
         "list-group-item",
     ];
-    return types.map((item) => ({
-        label: item === "container" ? "Container (default)" : item,
-        value: item,
-    }));
+    return [
+        {
+            label: "No class",
+            value: "",
+        },
+        {
+            label: "Container (default)",
+            value: "container",
+        },
+        {
+            label: "container-fluid",
+            value: "container-fluid",
+        },
+        {
+            label: "grid",
+            value: "grid",
+        },
+        {
+            label: "col",
+            value: "col",
+        },
+        {
+            label: "card",
+            value: "card",
+        },
+        {
+            label: "card-header",
+            value: "card-header",
+        },
+        {
+            label: "card-body",
+            value: "card-body",
+        },
+        {
+            label: "card-footer",
+            value: "card-footer",
+        },
+        {
+            label: "list-group",
+            value: "list-group",
+        },
+        {
+            label: "list-group-item",
+            value: "list-group-item",
+        },
+    ];
 };
 
 export const useGridColsOptions = (): Record<string, OptionType[]> => {

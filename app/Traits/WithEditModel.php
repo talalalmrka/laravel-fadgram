@@ -19,7 +19,7 @@ trait WithEditModel
     public function mountWithEditModel()
     {
         if (!$this->model()) {
-            dd('Error', 'You must set the $model_type', 'add protected $model_type = (user, post, ...etc)');
+            abort(500, 'You must set the $model_type add protected $model_type = (user, post, ...etc)');
         }
         if (method_exists($this, 'beforeMount')) {
             $this->beforeMount();

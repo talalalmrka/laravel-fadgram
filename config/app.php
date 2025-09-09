@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Fadgram starter'),
+    'name' => env('APP_NAME', 'Quoteread'),
 
     /*
     |--------------------------------------------------------------------------

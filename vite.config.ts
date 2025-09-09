@@ -10,6 +10,7 @@ export default defineConfig({
         laravel({
             input: [
                 "resources/css/app.css",
+                "resources/css/dashboard.css",
                 "resources/js/app.js",
                 "resources/js/preview.js",
                 "resources/js/inertia.ts",
@@ -38,11 +39,11 @@ export default defineConfig({
             "ziggy-js": resolve(__dirname, "vendor/tightenco/ziggy"),
         },
     },
-    server: {
+    /*server: {
         cors: true,
         watch: {
             usePolling: false,
             interval: 1000,
         },
-    },
+    },*/
 });

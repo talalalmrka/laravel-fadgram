@@ -3,10 +3,12 @@
 namespace App\Livewire\Site\Users;
 
 use App\Models\User;
+use App\Traits\WithToggleFavorite;
 use Livewire\Component;
 
 class Single extends Component
 {
+    use WithToggleFavorite;
     public User $user;
     public $posts;
     public $quotes;
@@ -21,7 +23,9 @@ class Single extends Component
     public function render()
     {
         return view('livewire.site.users.single')->layout('layouts.curve', [
-            'title' => __(get_option('user_title', 'User: :name'), ['name' => $this->user->name]),
+            'title' => $this->user->display_name,
+            'seo_title' => $this->user->seo_title,
+            'seo_description' => $this->user->seo_description,
         ]);
     }
 }

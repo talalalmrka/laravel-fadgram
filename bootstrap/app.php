@@ -7,6 +7,12 @@ use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandlePageBuilderRequests;
 
 return Application::configure(basePath: dirname(__DIR__))
+    ->registered(function ($app) {
+        $url = config('app.url');
+        if ($url !== 'http://localhost:8000') {
+            $app->usePublicPath(path: realpath(base_path('/../public_html')));
+        }
+    })
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',

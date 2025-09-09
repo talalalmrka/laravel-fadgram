@@ -9,8 +9,14 @@
     'navigate' => true,
     'class' => null,
     'atts' => [],
+    'customClick' => null,
     'item',
 ])
+@php
+    $itemKey = $item->getKey();
+    $itemKeyVal = is_string($itemKey) ? "'$itemKey'" : $itemKey;
+    $clickAttr = !empty($customClick) ? call_user_func($customClick, $item) : "{$click}($itemKeyVal)";
+@endphp
 @if ($href)
     <a {!! attributes($atts)->merge([
         'href' => call_user_func($href, $item),
@@ -34,7 +40,7 @@
 @else
     <button {!! attributes($atts)->merge([
         'type' => 'button',
-        'wire:click' => "$click($item->id)",
+        'wire:click' => $clickAttr,
         'class' => css_classes([
             $color => $color,
             $class => $class,
@@ -44,11 +50,11 @@
     ]) !!} {{ $click ? 'wire:click' : '' }}>
         @if ($icon)
             <i class="icon {{ $icon }} w-4 h-4" wire:loading.remove
-                wire:target="{{ $click . '(' . $item->id . ')' }}"></i>
+                wire:target="{!! $clickAttr !!}"></i>
         @endif
         @if ($label)
-            <span wire:loading.remove wire:target="{{ $click . '(' . $item->id . ')' }}">{!! $label !!}</span>
+            <span wire:loading.remove wire:target="{!! $clickAttr !!}">{!! $label !!}</span>
         @endif
-        <fgx:loader wire:loading wire:target="{{ $click . '(' . $item->id . ')' }}" />
+        <i wire:loading wire:target="{!! $clickAttr !!}" class="icon fg-loader-dots-move"></i>
     </button>
 @endif

@@ -3,15 +3,14 @@
 namespace App\Livewire\Site\Books;
 
 use App\Models\Book;
-use App\Models\Quote;
-use App\Traits\WithDownloadQuoteDialog;
 use App\Traits\WithToast;
-use Illuminate\Support\Str;
+use App\Traits\WithToggleFavorite;
 use Livewire\Component;
 
 class Single extends Component
 {
-    use WithToast;
+    use WithToast,
+        WithToggleFavorite;
     public Book $book;
     public $related;
     public $relatedLabel;
@@ -44,20 +43,7 @@ class Single extends Component
         ])->layout($this->book->layout, [
             'title' => $this->book->name,
             'seo_title' => $this->book->seo_title,
-            'description' => $this->book->seo_description,
-            /* 'subtitle' => container([
-                'tag' => 'span',
-                'icon' => 'bi-person-fill',
-                'content' => $this->book->author_name,
-                'class' => 'justify-center',
-            ]),
-            'secondSubtitle' => container([
-                'tag' => 'span',
-                'icon' => 'bi-calendar-fill',
-                'content' => $this->book->date_ago,
-                'class' => 'justify-center',
-            ]), */
-            'image' => $this->book->getThumbnailUrl('lg')
+            'seo_description' => $this->book->seo_description,
         ]);
     }
 }

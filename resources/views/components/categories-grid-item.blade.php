@@ -5,7 +5,7 @@
     favorite: @js($category->isFavorited()),
     toggleFavorite() {
         this.favorite = !this.favorite;
-        $wire.toggleFavorite(this.categoryId)
+        $wire.toggleFavorite('category', this.categoryId)
     }
 }"
     {{ $attributes->merge(
@@ -25,8 +25,8 @@
     <div class="relative aspect-video bg-gray-200 flex items-center justify-center overflow-hidden">
         <a href="{{ $category->permalink }}" title="{{ $category->name }}"
             class="relative leading-none w-full h-full overflow-hidden group">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                src="{{ $category->getThumbnailUrl('sm') }}"
+            <img class="lozad w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
+                src="{{ $category->getThumbnailUrl('sm') }}" loading="lazy"
                 alt="{{ $category->name }}">
             <div
                 class="absolute z-1 inset-0 bg-gradient-to-r from-black/30 via-black/10 to-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">

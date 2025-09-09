@@ -39,4 +39,11 @@ class CategoryFactory extends Factory
             'type' => 'tag',
         ]);
     }
+    public function name($name): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'name' => $name,
+            'slug' => Category::generateSlug($name),
+        ]);
+    }
 }

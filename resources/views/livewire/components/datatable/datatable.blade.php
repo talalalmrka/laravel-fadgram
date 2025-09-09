@@ -30,7 +30,8 @@
             <tbody class="{{ $this->bodyClass }}">
                 @if ($this->items()->isNotEmpty())
                     @foreach ($this->items() as $item)
-                        <tr class="{{ $this->rowClass }}" wire:key="{{ data_get($item, 'id', '') }}">
+                        <tr class="{{ $this->rowClass }}"
+                            wire:key="row-{{ $item->getKey() }}">
                             @foreach ($this->cols() as $col)
                                 <td class="{{ $this->cellClass }}{{ !empty($col->class) ? ' ' . $col->class : '' }}">
                                     @if ($col->customContent)

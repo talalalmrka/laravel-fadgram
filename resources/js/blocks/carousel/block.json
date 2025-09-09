@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "carousel",
+    "icon": "bi-collection",
+    "label": "Carousel",
+    "features": [
+        "typography",
+        "bgColor",
+        "bgImage",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "inset",
+        "zIndex",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "inner": ["slide"],
+    "children": [
+        {
+            "type": "slide",
+            "attributes": {
+                "title": "Slide 1",
+                "subtitle": "Slide 1 subtitle",
+                "text": "Slide 1 text slide 1 text"
+            }
+        },
+        {
+            "type": "slide",
+            "attributes": {
+                "title": "Slide 2",
+                "subtitle": "Slide 2 subtitle",
+                "text": "Slide 2 text slide 2 text"
+            }
+        },
+        {
+            "type": "slide",
+            "attributes": {
+                "title": "Slide 3",
+                "subtitle": "Slide 3 subtitle",
+                "text": "Slide 3 text slide 3 text"
+            }
+        }
+    ],
+    "attributes": {
+        "theme": {
+            "type": "string",
+            "default": "dark",
+            "rules": ["nullable", "string", "in:light,dark"]
+        },
+        "autoplay": {
+            "type": "boolean",
+            "default": true,
+            "rules": ["boolean"]
+        },
+        "controls": {
+            "type": "boolean",
+            "default": true,
+            "rules": ["boolean"]
+        },
+        "indicators": {
+            "type": "boolean",
+            "default": true,
+            "rules": ["boolean"]
+        },
+        "transition": {
+            "type": "string",
+            "default": "slide",
+            "rules": ["nullable", "string"]
+        },
+        "duration": {
+            "type": "number",
+            "default": 700,
+            "rules": ["nullable", "numeric"]
+        },
+        "interval": {
+            "type": "number",
+            "default": 3500,
+            "rules": ["nullable", "numeric"]
+        }
+    }
+}

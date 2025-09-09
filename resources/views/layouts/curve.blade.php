@@ -11,6 +11,8 @@
     'headerAtts' => [],
     'avatarImage' => null,
     'avatarText' => null,
+    'seo_title' => null,
+    'seo_description' => null,
 ])
 @php
     $hasTitle = !empty($title) && $showTitle;
@@ -71,11 +73,11 @@
     ];
     $navbarColor = data_get($navbarColors, $color, 'navbar-transparent-primary');
 @endphp
-<x-default-layout :title="$title" logo_theme="light" :navbarclass="css_classes(['navbar-transparent-top fixed top-0 start-0 end-0 z-40', $navbarColor => $navbarColor])" description="$description">
+<x-default-layout :title="$seo_title ?? ($title ?? '')" :description="$seo_description" logo_theme="light" :navbarclass="css_classes(['navbar-transparent-top fixed top-0 start-0 end-0 z-40', $navbarColor => $navbarColor])">
     <section class="relative bg-gradient-to-br from-primary-800 to-primary-600 text-white">
         <div class="max-w-4xl mx-auto px-4 pt-18 pb-12 md:py-28 text-center relative" data-theme="dark">
             @if ($hasTitle)
-                <h1 class="">{{ $title }}</h1>
+                <h1 class="text-3xl md:text-5xl">{{ $title }}</h1>
             @endif
             @if ($hasSubtitle)
                 <div class="text-lg">{!! $subtitle !!}</div>

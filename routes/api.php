@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\MediaController;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -48,11 +47,29 @@ Route::any('categories', function (Request $request) {
         })
     );
 })->name('api.categories');
+Route::get('blocks', function (Request $request) {
+    return response()->json(registered_blocks());
+})->name('api.blocks');
 
-//media
-/* Route::group(['prefix' => 'media'], function () {
-    Route::get('/', [MediaController::class, 'index'])->name('api.media');
-    // Route::post('/', [MediaController::class, 'store'])->name('api.media.store');
-    Route::get('store', [MediaController::class, 'store'])->name('api.media.store');
-});
- */
+Route::get('blocks/{type}', function (Request $request, $type) {
+    $block = registered_block($type);
+    if (empty($block)) {
+        abort(404);
+    }
+    return response()->json([
+        ...[
+            '$schema' => 'https://schemas.wp.org/trunk/block.json',
+        ],
+        ...$block,
+    ]);
+})->name('api.block');
+
+Route::get('blocks/{type}/features', function ($type) {
+    $features = block_features($type);
+    return response()->json($features);
+})->name('api.block.features');
+
+Route::get('features', function () {
+    $features = features();
+    return response()->json($features);
+})->name('api.features');

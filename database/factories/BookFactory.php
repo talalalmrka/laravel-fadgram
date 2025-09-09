@@ -49,7 +49,12 @@ class BookFactory extends Factory
             'content' => $this->faker->paragraphs(5, true),
         ];
     }
-
+    public function status($status)
+    {
+        return $this->state(fn(array $attributes) => [
+            'status' => $status,
+        ]);
+    }
     public function configure()
     {
         return $this->afterCreating(function (Book $book) {

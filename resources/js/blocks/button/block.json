@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "button",
+    "icon": "bi-square",
+    "label": "Button",
+    "features": [
+        "typography",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "label": {
+            "type": "string",
+            "default": "Button",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "icon": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "color": {
+            "type": "string",
+            "default": "btn-primary",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "size": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "url": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "target": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

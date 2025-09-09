@@ -1,6 +1,21 @@
 @source '../../node_modules/fadgram-vue/dist/**/*.js';
-@import "./app.css";
-
+@import "./dashboard.css";
+@layer base {
+    .page-builder {
+        .form-label {
+            @apply !text-sm !text-gray-500;
+            &.error {
+                @apply !text-red;
+            }
+            @variant dark {
+                @apply !text-gray-200;
+                &.error {
+                    @apply !text-red-500;
+                }
+            }
+        }
+    }
+}
 @layer components {
     .categories-list {
         @apply list-none m-0 p-0;
@@ -12,6 +27,5 @@
                 @apply list-none m-0 p-0 ms-3 border-s;
             }
         }
-
     }
 }

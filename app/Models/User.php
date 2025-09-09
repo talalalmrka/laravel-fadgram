@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -110,17 +111,6 @@ class User extends Authenticatable implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->registerThumbnail();
-        /*$this
-            ->addMediaCollection('avatar')
-            ->useFallbackUrl(asset('assets/img/profile.svg'))
-            ->useFallbackPath(public_path('/assets/img/profile.svg'))
-            ->singleFile()
-            ->acceptsMimeTypes([
-                'image/jpeg',
-                'image/png',
-                'image/webp',
-                'image/gif'
-            ]);*/
         $this
             ->addMediaCollection('images')
             ->acceptsMimeTypes([
@@ -155,8 +145,12 @@ class User extends Authenticatable implements HasMedia
         return $this->getAvatarUrl('sm');
     }
 
-    /* public function getDisplayNameAttribute()
+    public function seoTitle(): Attribute
     {
-        return $this->getMeta('display_name', $this->name);
-    } */
+        return Attribute::get(fn() => $this->getMeta('seo_title', $this->display_name));
+    }
+    public function seoDescription(): Attribute
+    {
+        return Attribute::get(fn() => $this->getMeta('seo_description', Str::limit($this->getMeta('about'), 160, '', true)));
+    }
 }

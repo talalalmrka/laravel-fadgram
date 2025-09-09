@@ -4,7 +4,9 @@
         <x-breadcrumbs class="mb-4" class="justify-center" />
         <x-single-meta :model="$quote" class="text-white justify-center" />
     </x-slot>
-    @include('livewire.components.download-quote')
+    {{-- @include('livewire.components.download-quote') --}}
+    {{-- <livewire:components.download-quote :quote="$quote" key="download-quote-{{ $quote->id }}" /> --}}
+    <x-quote-images-picker :quote="$quote" />
 
     <p class="text-center mt-6 text-xl md:text-2xl lg:text-3xl">
         @icon('bi-quote text-primary')
@@ -33,6 +35,5 @@
             </a>
         </x-slot>
     @endcan
-    <livewire:components.download-quote-dialog />
-
+    {{-- <livewire:components.download-quote-dialog /> --}}
 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
@@ -262,6 +263,18 @@ if (!function_exists('is_book')) {
         return request()->routeIs('book');
     }
 }
+if (!function_exists('is_author')) {
+    function is_author()
+    {
+        return request()->routeIs('author');
+    }
+}
+if (!function_exists('is_user')) {
+    function is_user()
+    {
+        return request()->routeIs('user');
+    }
+}
 if (!function_exists('is_debug')) {
     function is_debug(): bool
     {
@@ -316,5 +329,19 @@ if (!function_exists('colored_title')) {
             $words[] = "<span class=\"text-primary\">$lastWord</span>"; // Add the last word with class
         }
         return implode(' ', $words);
+    }
+}
+
+if (!function_exists('today')) {
+    function today()
+    {
+        return Carbon::today();
+    }
+}
+
+if (!function_exists('today_formatted')) {
+    function today_formatted()
+    {
+        return date_format(today(), app_date_format());
     }
 }

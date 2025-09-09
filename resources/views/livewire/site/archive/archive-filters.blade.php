@@ -8,12 +8,12 @@
         :placeholder="__('Search')" />
     <div class="flex-space-3 justify-end mt-3 lg:mt-0">
         @if ($category_options)
-            <div class="lg:w-60">
+            <div class="w-1/2 lg:w-60">
                 <fgx:select id="filters.category" wire:model.live="filters.category" startIcon="bi-funnel-fill"
                     :options="$category_options" class="sm" />
             </div>
         @endif
-        <div class="lg:w-60">
+        <div class="w-1/2 lg:w-60">
             <fgx:select id="filters.sort" wire:model.live="filters.sort" startIcon="bi-sort-up"
                 :options="$sort_options" class="sm" />
         </div>

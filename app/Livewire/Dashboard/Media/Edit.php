@@ -46,7 +46,8 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.dashboard.media.edit', [
-            'collection_options' => media_collection_name_options($this->media->model()->first())
+            // 'collection_options' => media_collection_name_options($this->media->model()->first())
+            'collection_options' => [],
         ]);
     }
 }

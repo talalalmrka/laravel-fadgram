@@ -29,7 +29,10 @@ abstract class SettingsPage extends Component
     public function fillSettings()
     {
         foreach ($this->all() as $key => $value) {
-            $this->{$key} = get_option($key, get_default_option($key));
+            $type = get_option_type($key);
+            if ($type !== 'file') {
+                $this->{$key} = get_option($key, get_default_option($key));
+            }
         }
     }
     public function updated($property, $value)

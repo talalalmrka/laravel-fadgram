@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "slide",
+    "icon": "bi-window",
+    "label": "Slide",
+    "features": [
+        "typography",
+        "position",
+        "display",
+        "inset",
+        "zIndex",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "subtitle": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "actionLabel": {
+            "type": "string",
+            "default": "Action",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "actionIcon": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "actionIconPosition": {
+            "type": "string",
+            "default": "start",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "actionUrl": {
+            "type": "string",
+            "default": "",
+            "rules": ["nullable", "string", "max:255"]
+        },
+        "actionTarget": {
+            "type": "string",
+            "default": "_blank",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

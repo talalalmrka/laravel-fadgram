@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
 use App\Models\Setting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -10,21 +11,23 @@ class SettingSeeder extends Seeder
 {
     public static function defaultSettings(): array
     {
+        $home = PageSeeder::createHome();
+        $blog = PageSeeder::createBlog();
         return [
             [
                 'type' => 'string',
                 'key' => 'name',
-                'value' => 'FadGram starter',
+                'value' => config('app.name'),
             ],
             [
                 'type' => 'string',
                 'key' => 'description',
-                'value' => 'FadGram starter kit project',
+                'value' => 'Discover quotes that heal souls, spark inspiration, and books that whisper the truth.',
             ],
             [
                 'type' => 'string',
                 'key' => 'url',
-                'value' => 'http://localhost:8000',
+                'value' => config('app.url'),
             ],
             [
                 'type' => 'file',
@@ -69,7 +72,7 @@ class SettingSeeder extends Seeder
             [
                 'type' => 'string',
                 'key' => 'date_format',
-                'value' => 'j F، Y',
+                'value' => 'j F Y',
             ],
             [
                 'type' => 'boolean',
@@ -185,6 +188,16 @@ class SettingSeeder extends Seeder
             ],
             [
                 'type' => 'string',
+                'key' => 'color_primary',
+                'value' => null,
+            ],
+            [
+                'type' => 'string',
+                'key' => 'color_secondary',
+                'value' => null,
+            ],
+            [
+                'type' => 'string',
                 'key' => 'font_family',
                 'value' => 'sans',
             ],
@@ -201,27 +214,27 @@ class SettingSeeder extends Seeder
             [
                 'type' => 'string',
                 'key' => 'front_type',
-                'value' => 'posts',
+                'value' => $home ? 'page' : 'posts',
             ],
             [
                 'type' => 'string',
                 'key' => 'front_page',
-                'value' => null,
+                'value' => $home?->id,
             ],
             [
                 'type' => 'string',
                 'key' => 'posts_page',
-                'value' => null,
+                'value' => $blog?->id,
             ],
             [
                 'type' => 'number',
                 'key' => 'posts_per_page',
-                'value' => 10,
+                'value' => 8,
             ],
             [
                 'type' => 'boolean',
                 'key' => 'disable_search_engines',
-                'value' => false,
+                'value' => true,
             ],
             [
                 'type' => 'boolean',

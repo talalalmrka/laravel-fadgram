@@ -27,6 +27,7 @@ class Edit extends Component
     public $content = '';
 
     public $excerpt;
+    public $views = 1;
     public $template = 'default';
     public $seo_title;
     public $seo_description;
@@ -45,7 +46,7 @@ class Edit extends Component
     ];
 
     protected $fillable_data = ['user_id', 'quote_image_id', 'name', 'slug', 'status', 'content'];
-    protected $fillable_meta = ['excerpt', 'seo_title', 'seo_description', 'template'];
+    protected $fillable_meta = ['views', 'excerpt', 'seo_title', 'seo_description', 'template'];
     protected $fillable_media = [];
     public $editUrl;
     public function mount(?Quote $quote)
@@ -78,6 +79,8 @@ class Edit extends Component
             'content' => ['nullable', 'string',],
             'template' => ['nullable', 'string', Rule::in(templates())],
             'seo_title' => ['nullable', 'string', 'max:255'],
+            'views' => ['nullable', 'numeric'],
+            'excerpt' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:255'],
             'categories' => ['nullable', 'array'],
             'categories.*' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('type', 'category')],

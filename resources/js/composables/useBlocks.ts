@@ -1,17 +1,18 @@
-import { BlockFeatures, BlockType } from "@/types";
+import { Block, Pattern } from "@/types";
 import { usePage } from "@inertiajs/vue3";
 import { uniqid } from "../helpers/uniqid";
+import { data_get } from "@/helpers";
 
-export const useBlocks = (): BlockType[] => {
-    const page = usePage<{ props: { registeredBlocks: BlockType[] } }>();
-    return (page.props.registeredBlocks as BlockType[]) ?? [];
+export const useBlocks = (): Block[] => {
+    const page = usePage<{ props: { registeredBlocks: Block[] } }>();
+    return (page.props.registeredBlocks as Block[]) ?? [];
 };
 
 export const useBlockTypes = () => {
     const blocks = useBlocks();
     return blocks.map((item) => item.type);
 };
-export const useInnerBlocks = (type: string): BlockType[] => {
+export const useInnerBlocks = (type: string): Block[] => {
     const block = useBlock(type);
     if (block) {
         const blocks = useBlocks();
@@ -31,7 +32,7 @@ export const useInnerTypes = (type: string): string[] => {
     const innerBlocks = useInnerBlocks(type);
     return innerBlocks.map((block) => block.type);
 };
-export const useBlock = (type: string): BlockType | undefined => {
+export const useBlock = (type: string): Block | undefined => {
     const blocks = useBlocks();
     return blocks.find((b) => b.type === type);
 };
@@ -43,7 +44,7 @@ export const useBlockLabel = (type: string | undefined) => {
     const block = useBlock(type);
     return block?.label;
 };
-export const useBlockDefaults = (type: string): Partial<BlockType> => {
+export const useBlockDefaults = (type: string): Partial<Block> => {
     const block = useBlock(type);
     const defaults: Record<string, any> = {};
     if (block && block.attributes) {
@@ -53,49 +54,11 @@ export const useBlockDefaults = (type: string): Partial<BlockType> => {
     }
     return defaults;
 };
-// Precomputed valid keys for runtime validation
-const BLOCK_FEATURE_KEYS: (keyof BlockFeatures)[] = [
-    "typography",
-    "bgColor",
-    "bgImage",
-    "margin",
-    "padding",
-    "border",
-    "shadow",
-    "htmlAnchor",
-    "className",
-    "style",
-];
 
-export const useBlockFeatures = (type: string): BlockFeatures => {
-    const block = useBlock(type);
-    const features: BlockFeatures = {
-        typography: false,
-        bgColor: false,
-        bgImage: false,
-        margin: false,
-        padding: false,
-        border: false,
-        shadow: false,
-        htmlAnchor: false,
-        className: false,
-        style: false,
-    };
-
-    // Use Set for O(1) lookups
-    const validKeysSet = new Set(BLOCK_FEATURE_KEYS);
-    const blockFeatures = block?.features ?? [];
-    for (const f of blockFeatures) {
-        if (validKeysSet.has(f as keyof BlockFeatures)) {
-            features[f as keyof BlockFeatures] = true;
-        }
-    }
-    return features;
-};
 export const resolveBlock = (
     type: string,
-    data?: Partial<BlockType>,
-): BlockType | undefined => {
+    data?: Partial<Block>,
+): Block | undefined => {
     const block = useBlock(type);
     if (block) {
         const defaults = useBlockDefaults(type);
@@ -116,7 +79,7 @@ export const resolveBlock = (
             ...(resolvedChildren !== undefined
                 ? { children: resolvedChildren }
                 : {}),
-        } as BlockType;
+        } as Block;
     } else {
         return undefined;
     }
@@ -124,19 +87,37 @@ export const resolveBlock = (
 
 export const useHasChildren = (type: string) => {
     const block = useBlock(type);
-    return block && block.children;
+    return block && Array.isArray(block.children);
 };
 
 export const useBlockAllowed = (type: string, parent: string | undefined) => {
     return parent ? useInnerTypes(parent).includes(type) : true;
 };
-/* export const useNewBlock = (type: string, data = {}): BlockType => {
-    const defaults = useBlockDefaults(type);
-
-    return resolveBlock({
-        type: type,
-        id: uniqid("block-"),
-        ...defaults,
-        ...data,
+export const resolveBlocks = (data: Partial<Block>[]): Block[] => {
+    return data.map((item) => {
+        const block: Block = {
+            ...item,
+            ...{
+                id: uniqid("block-"),
+            },
+        } as Block;
+        const children = data_get(item, "children");
+        if (children && Array.isArray(children)) {
+            block.children = resolveBlocks(children);
+        }
+        return block;
     });
-}; */
+};
+export const useBlockFeatures = (type: string): Record<string, boolean> => {
+    const block = useBlock(type);
+    const features: Record<string, boolean> = {};
+    if (block) {
+        (block.features ?? []).forEach((feature) => (features[feature] = true));
+    }
+    return features;
+};
+
+export const usePatterns = (): Pattern[] => {
+    const page = usePage<{ props: { patterns: Pattern[] } }>();
+    return (page.props.patterns as Pattern[]) ?? [];
+};

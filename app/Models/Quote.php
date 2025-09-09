@@ -10,10 +10,6 @@ use App\Traits\HasMeta;
 use App\Traits\HasNextPrev;
 use App\Traits\HasSlug;
 use App\Traits\HasTags;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Traits\HasThumbnail;
 use App\Traits\WithDate;
 use App\Traits\WithExcerpt;
@@ -24,7 +20,12 @@ use App\Traits\WithStatus;
 use App\Traits\WithTemplate;
 use App\Traits\WithViews;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
 class Quote extends Model implements HasMedia
@@ -60,6 +61,27 @@ class Quote extends Model implements HasMedia
         'permalink',
         'excerpt',
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($quote) {
+            if (empty($quote->name)) {
+                $quote->name = Str::limit($quote->content, 15, '', true);
+            }
+            if (empty($quote->slug)) {
+                $quote->slug = self::generateSlug($quote->name);
+            }
+        });
+        static::updating(function ($quote) {
+            if (empty($quote->name)) {
+                $quote->name = Str::limit($quote->content, 15, '', true);
+            }
+            if (empty($quote->slug)) {
+                $quote->slug = self::generateSlug($quote->name);
+            }
+        });
+    }
     public function books()
     {
         return $this->morphedByMany(
@@ -122,7 +144,13 @@ class Quote extends Model implements HasMedia
     public function thumbnailFallbackUrl(): Attribute
     {
         $quoteImage = $this->quoteImage ?? $this->images->first();
-        $url = $quoteImage ? $quoteImage->generatedImage($this, 'md', 'webp') : asset('assets/images/quote.svg');
+        $url = $quoteImage ? $quoteImage->generatedImage($this, 'sm', 'webp') : asset('assets/images/quote.svg');
+        return Attribute::get(fn() => $url);
+    }
+    public function downloadUrl(): Attribute
+    {
+        $quoteImage = $this->quoteImage ?? $this->images->first();
+        $url = $quoteImage ? $this->getDownloadImageUrl($quoteImage) : null;
         return Attribute::get(fn() => $url);
     }
     public function registerMediaCollections(): void
@@ -146,6 +174,34 @@ class Quote extends Model implements HasMedia
             if ($images->count() < 5) {
                 $images = $images->merge(QuoteImage::all()->whereNotIn('id', $images->pluck('id')->toArray())->take(5 - $images->count()));
             }
+            return $images->take(5);
+        });
+    }
+    public function randomImages(): Attribute
+    {
+        return Attribute::get(function () {
+            $images = collect();
+
+            // صور عشوائية من نفس التصنيف
+            $categoryImages = QuoteImage::query()
+                ->inRandomOrder()
+                ->category($this->getCategoryIds()->toArray())
+                ->take(5)
+                ->get();
+
+            $images = $images->merge($categoryImages);
+
+            // لو أقل من 5، كمّل من صور عامة
+            if ($images->count() < 5) {
+                $fallbackImages = QuoteImage::query()
+                    ->inRandomOrder()
+                    ->whereNotIn('id', $images->pluck('id'))
+                    ->take(5 - $images->count())
+                    ->get();
+
+                $images = $images->merge($fallbackImages);
+            }
+
             return $images->take(5);
         });
     }
@@ -207,5 +263,26 @@ class Quote extends Model implements HasMedia
 
         // Deduplicate and limit
         return $related->unique('id')->take($count);
+    }
+
+    public function getDownloadImageUrl(QuoteImage $quoteImage, $size = 'full', $format = 'jpg')
+    {
+        return !empty($this->id) ? route('imgen.quote.download', ['quote' => $this, 'quote_image' => $quoteImage, 'size' => $size, 'format' => $format]) : null;
+    }
+    public function imagesResponse()
+    {
+        return $this->images->map(fn(QuoteImage $quoteImage) => [
+            'source' => $quoteImage->generatedImage($this->id, 'md', 'webp'),
+            'download' => route('imgen.quote.download', ['quote' => $this, 'quote_image' => $quoteImage, 'size' => 'full', 'format' => 'jpg']),
+            'preview' => $quoteImage->preview_url,
+        ])->toArray();
+    }
+    public function randomImagesResponse()
+    {
+        return $this->random_images->map(fn(QuoteImage $quoteImage) => [
+            'source' => $quoteImage->generatedImage($this->id, 'md', 'webp'),
+            'download' => route('imgen.quote.download', ['quote' => $this, 'quote_image' => $quoteImage, 'size' => 'full', 'format' => 'jpg']),
+            'preview' => $quoteImage->preview_url,
+        ])->toArray();
     }
 }

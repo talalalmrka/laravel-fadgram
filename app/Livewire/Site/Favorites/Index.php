@@ -5,12 +5,14 @@ namespace App\Livewire\Site\Favorites;
 use App\Livewire\Site\Archive\ArchivePage;
 use App\Models\Favorite;
 use App\Traits\WithDownloadQuoteDialog;
+use App\Traits\WithToggleFavorite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class Index extends ArchivePage
 {
-    use WithDownloadQuoteDialog;
+    use WithDownloadQuoteDialog,
+        WithToggleFavorite;
     public function title()
     {
         return __('Favorites');
@@ -24,15 +26,6 @@ class Index extends ArchivePage
             $query->where('session_id', Session::getId());
         }
         return $query;
-    }
-    public function toggleFavorite($id)
-    {
-        $favorite = Favorite::findOrFail($id);
-        if ($favorite) {
-            $favorite->model->toggleFavorite();
-        } else {
-            $this->toastError(__('Not found!'));
-        }
     }
     public function render()
     {

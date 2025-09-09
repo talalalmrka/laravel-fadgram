@@ -1,17 +1,25 @@
-import { BlockType } from "@/types";
-import { computed } from "vue";
-import { useBlockDefaults } from "./useBlocks";
+import { Block } from "@/types";
+import { computed, ComputedRef } from "vue";
 import { data_get, data_set } from "@/helpers";
-import _ from "lodash";
 
-export const useAttributes = (block: BlockType) => {
-    const defaults = useBlockDefaults(block.type);
+export const useAttributes = (block: Block): Record<string, any> => {
     return computed({
         get() {
             return block.attributes ?? {};
         },
         set(val) {
             block.attributes = val;
+        },
+    });
+};
+
+export const useChildren = (block: Block) => {
+    return computed({
+        get() {
+            return block.children ?? [];
+        },
+        set(val) {
+            block.children = val;
         },
     });
 };

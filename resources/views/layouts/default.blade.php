@@ -1,4 +1,8 @@
-<x-app-layout :title="$title ?? ''">
+@props([
+    'title' => '',
+    'description' => '',
+])
+<x-app-layout :title="$title ?? ''" :description="$description">
     <x-mobile-menu />
     @include('partials.header', [
         'class' => $navbarclass ?? 'header sticky top-0 bg-gray-50 dark:bg-gray-700 max-w-full z-50 shadow-xs',

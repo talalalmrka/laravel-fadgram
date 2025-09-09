@@ -100,6 +100,22 @@ if (!function_exists('get_authors')) {
             $query->tag($tags);
         }
 
+        //has quotes
+        $hasQuotes = $ops->get('hasQuotes');
+        if ($hasQuotes) {
+            $query->whereHas('quotes', function ($q) {
+                $q->where('status', 'publish');
+            });
+        }
+
+        //has books
+        $hasBooks = $ops->get('hasBooks');
+        if ($hasBooks) {
+            $query->whereHas('books', function ($q) {
+                $q->where('status', 'publish');
+            });
+        }
+
         // users
         $users = $ops->get('users');
         if ($users && !empty($users)) {

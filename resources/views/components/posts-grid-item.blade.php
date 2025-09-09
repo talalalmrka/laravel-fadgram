@@ -5,7 +5,7 @@
     favorite: @js($post->isFavorited()),
     toggleFavorite() {
         this.favorite = !this.favorite;
-        $wire.toggleFavorite(this.postId)
+        $wire.toggleFavorite('post', this.postId)
     }
 }"
     {{ $attributes->merge(
@@ -25,8 +25,8 @@
     <div class="relative aspect-video bg-gray-200 flex items-center justify-center overflow-hidden">
         <a href="{{ $post->permalink }}" title="{{ $post->name }}"
             class="relative leading-none w-full h-full overflow-hidden group">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                src="{{ $post->getThumbnailUrl('sm') }}"
+            <img class="lozad w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
+                src="{{ $post->getThumbnailUrl('sm') }}" loading="lazy"
                 alt="{{ $post->name }}">
             <div
                 class="absolute z-1 inset-0 bg-gradient-to-r from-black/30 via-black/10 to-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">

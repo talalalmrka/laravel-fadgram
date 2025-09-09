@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlocksRequest;
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Pattern;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,571 +18,217 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PageBuilderController extends Controller
 {
+    /**
+     * Discover and load blocks from resources/js/blocks.
+     *
+     * @return Collection
+     */
     public static function registeredBlocks(): Collection
     {
-        $blocks = [
-            [
-                'type' => 'container',
-                'icon' => 'bi-window',
-                'label' => __('Container'),
-                'inner' => 'all',
-                'features' => [
-                    'typography',
-                    'bgColor',
-                    'bgImage',
-                    'margin',
-                    'padding',
-                    'border',
-                    'shadow',
-                    'htmlAnchor',
-                    'className',
-                    'style',
-                ],
-                'children' => [],
-                'attributes' => [
-                    'type' => [
-                        'type' => 'string',
-                        'default' => 'container',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'paragraph',
-                'icon' => 'bi-paragraph',
-                'label' => __('Paragraph'),
-                'features' => [
-                    'typography',
-                    'bgColor',
-                    'margin',
-                    'padding',
-                    'htmlAnchor',
-                    'className',
-                    'style',
-                ],
-                'attributes' => [
-                    'content' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'heading',
-                'icon' => 'bi-bookmark-fill',
-                'label' => __('Heading'),
-                'features' => [
-                    'typography',
-                    'bgColor',
-                    'margin',
-                    'padding',
-                    'border',
-                    'shadow',
-                    'htmlAnchor',
-                    'className',
-                    'style',
-                ],
-                'attributes' => [
-                    'tag' => [
-                        'type' => 'string',
-                        'default' => 'h1',
-                        'rules' => ['required', 'string', Rule::in(collect(range(1, 6))->map(fn($l) => "h$l")->toArray())],
-                    ],
-                    'title' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'icon' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'button',
-                'icon' => 'bi-square',
-                'label' => __('Button'),
-                'inner' => 'all',
-                'features' => [
-                    'margin',
-                    'padding',
-                    'border',
-                    'htmlAnchor',
-                    'className',
-                    'style',
-                ],
-                'attributes' => [
-                    'color' => [
-                        'type' => 'string',
-                        'default' => 'btn-primary',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'size' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'url' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'target' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'hero',
-                'icon' => 'bi-journal-bookmark-fill',
-                'label' => __('Hero'),
-                'inner' => ['button'],
-                'features' => [
-                    'typography',
-                    'bgColor',
-                    'bgImage',
-                    'margin',
-                    'padding',
-                    'border',
-                    'shadow',
-                    'htmlAnchor',
-                    'className',
-                    'style',
-                ],
-                'children' => [
-                    [
-                        'type' => 'button',
-                        'attributes' => [
-                            'color' => 'btn-outline-light',
-                            'size' => 'btn-lg',
-                            'url' => '',
-                            'target' => '',
-                        ],
-                    ],
-                ],
-                'attributes' => [
-                    'theme' => [
-                        'type' => 'string',
-                        'default' => 'dark',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fullscreen' => [
-                        'type' => 'boolean',
-                        'default' => false,
-                        'rules' => ['boolean'],
-                    ],
-                    'title' => [
-                        'type' => 'string',
-                        'default' => 'Hero title',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'subtitle' => [
-                        'type' => 'string',
-                        'default' => 'Hero subtitle',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'text' => [
-                        'type' => 'string',
-                        'default' => 'Hero text',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ]
-            /*[
-                'type' => 'paragraph',
-                'icon' => 'bi-paragraph',
-                'label' => __('Paragraph'),
-                'attributes' => [
-                    'content' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgImage' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgSize' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgPosition' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgAttachment' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontSize' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontWeight' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontStyle' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textTransform' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textAlign' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'className' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'style' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'heading',
-                'icon' => 'bi-bookmark-fill',
-                'label' => __('Heading'),
-                'attributes' => [
-                    'tag' => [
-                        'type' => 'string',
-                        'default' => 'h1',
-                        'rules' => ['required', 'string', Rule::in(collect(range(1, 6))->map(fn($l) => "h$l")->toArray())],
-                    ],
-                    'title' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'icon' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontSize' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontWeight' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontStyle' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textTransform' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textAlign' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'className' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'style' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],
-            [
-                'type' => 'posts_grid',
-                'icon' => 'bi-newspaper',
-                'label' => __('Posts grid'),
-                'attributes' => [
-                    'title' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'show_title' => [
-                        'type' => 'boolean',
-                        'default' => true,
-                    ],
-                    'categories' => [
-                        'type' => 'array',
-                        'default' => [],
-                        'rules' => [
-                            'categories' => ['nullable', 'array'],
-                            'categories.*' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('type', 'category')],
-                        ],
-                    ],
-                    'tags' => [
-                        'type' => 'array',
-                        'default' => [],
-                        'rules' => [
-                            'tags' => ['nullable', 'array'],
-                            'tags.*' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('type', 'tag')],
-                        ],
-                    ],
-                    'users' => [
-                        'type' => 'array',
-                        'default' => [],
-                        'rules' => [
-                            'users' => ['nullable', 'array'],
-                            'users.*' => ['nullable', 'integer', Rule::exists('users', 'id')],
-                        ],
-                    ],
-                    'limit' => [
-                        'type' => 'integer',
-                        'default' => 5,
-                        'rules' => ['nullable', 'numeric'],
-                    ],
-                    'sort' => [
-                        'type' => 'string',
-                        'default' => 'newest',
-                        'rules' => ['nullable', 'string', Rule::in(sort_values())],
-                    ],
-                    'textColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'bgColor' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontSize' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontWeight' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'fontStyle' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textTransform' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'textAlign' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'className' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                    'style' => [
-                        'type' => 'string',
-                        'default' => '',
-                        'rules' => ['nullable', 'string', 'max:255'],
-                    ],
-                ],
-            ],*/
-        ];
-        return collect(self::resolveRegisteredBlocks($blocks));
+        $blocks = collect();
+        $path = resource_path('js/blocks');
+
+        if (!is_dir($path)) {
+            return $blocks;
+        }
+
+        $directories = File::directories($path);
+
+        foreach ($directories as $dir) {
+            $jsonPath = $dir . DIRECTORY_SEPARATOR . 'block.json';
+            if (!File::exists($jsonPath)) {
+                continue;
+            }
+
+            $raw = File::get($jsonPath);
+            $data = json_decode($raw, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+                continue;
+            }
+
+            if (isset($data['label'])) {
+                $data['label'] = __($data['label']);
+            }
+
+            if (!isset($data['children'])) {
+                $data['children'] = [];
+            }
+
+            $data['attributes'] = self::resolveBlockAttributes($data);
+
+            $blocks->push($data);
+        }
+
+        return $blocks->values();
     }
+    /**
+     * Get the flattened feature attribute keys enabled for a given block type.
+     *
+     * @param string $type
+     * @return Collection
+     */
+    public static function blockFeatures($type): Collection
+    {
+        $features = collect();
+        $block = registered_block($type);
+        if ($block) {
+            $blockFeatures = data_get($block, 'features', []);
+            foreach ($blockFeatures as $group) {
+                $features->push(array_keys(self::featureAtts($group)));
+            }
+        }
+        return $features->flatten();
+    }
+    /**
+     * Collect all feature attribute keys across all registered blocks.
+     *
+     * @return Collection
+     */
+    public static function registeredFeatures(): Collection
+    {
+        $blocks = self::registeredBlocks();
+        $features = collect();
+        $blocks->each(function ($block) use (&$features) {
+            $blockFeatures = data_get($block, 'features', []);
+            foreach ($blockFeatures as $feature) {
+                $featureAtts = self::featureAtts($feature);
+                foreach (array_keys($featureAtts) as $f) {
+                    if (!$features->contains($f)) {
+                        $features->push($f);
+                    }
+                }
+            }
+        });
+        return $features;
+    }
+
+    public static function features(): Collection
+    {
+        $features = [];
+        $path = resource_path('js/blocks/features.json');
+        if (File::exists($path)) {
+            $raw = File::get($path);
+            $data = json_decode($raw, true);
+
+            if (json_last_error() == JSON_ERROR_NONE || is_array($data)) {
+                $features = $data;
+            }
+        }
+        return collect($features);
+    }
+    /**
+     * Map a feature group to its attribute schema definition.
+     *
+     * Accepts:
+     *  - string feature name (e.g. "typography")
+     *  - array of feature names (e.g. ["typography", "bgColor"])
+     *  - associative array to override defaults (e.g. ["typography" => ["fontSize" => "16px"]])
+     *
+     * @param string|array $feature
+     * @return array|null
+     */
+    public static function featureAttributes($feature)
+    {
+        $all = self::features()->toArray();
+
+        // string key
+        if (is_string($feature)) {
+            return $all[$feature] ?? [];
+        }
+
+        // array (list or associative)
+        if (is_array($feature)) {
+            $result = [];
+
+            // numeric-indexed list: ["typography", "bgColor"]
+            // associative: ["typography" => ["fontSize" => "16px"], "bgImage" => true]
+            foreach ($feature as $key => $value) {
+                if (is_int($key)) {
+                    // value may be string or nested array
+                    if (is_string($value)) {
+                        $result = array_merge($result, self::featureAttributes($value));
+                    } elseif (is_array($value)) {
+                        // nested array: treat like associative map
+                        $result = array_merge($result, self::featureAttributes($value));
+                    }
+                    continue;
+                }
+
+                // $key is feature name, $value can be:
+                //  - false => skip
+                //  - true  => include whole feature
+                //  - array  => override defaults for attributes in that feature
+                if ($value === false) {
+                    continue;
+                }
+
+                $base = $all[$key] ?? [];
+                if (empty($base)) {
+                    continue;
+                }
+
+                if ($value === true || $value === null) {
+                    // include base as-is
+                    $result = array_merge($result, $base);
+                    continue;
+                }
+
+                if (is_array($value)) {
+                    // apply overrides to defaults
+                    foreach ($base as $attKey => $attDef) {
+                        if (array_key_exists($attKey, $value)) {
+                            // replace default only (keep rules/type)
+                            $attDef['default'] = $value[$attKey];
+                        }
+                        $result[$attKey] = $attDef;
+                    }
+                } else {
+                    // unexpected scalar — include base
+                    $result = array_merge($result, $base);
+                }
+            }
+
+            return $result;
+        }
+
+        return [];
+    }
+
+    /**
+     * Backwards-compatible alias used across this controller.
+     *
+     * @param mixed $feature
+     * @return array
+     */
     public static function featureAtts($feature)
     {
-        $atts = [
-            'typography' => [
-                'textColor' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'fontSize' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'fontWeight' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'fontStyle' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'textTransform' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'textAlign' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'bgColor' => [
-                'bgColor' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'bgImage' => [
-                'bgImage' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'bgSize' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'bgPosition' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'bgAttachment' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'margin' => [
-                'margin' => [
-                    'type' => 'array',
-                    'default' => self::spacingAttributes(),
-                    'rules' => ['nullable', 'array'],
-                ],
-            ],
-            'padding' => [
-                'padding' => [
-                    'type' => 'array',
-                    'default' => self::spacingAttributes(),
-                    'rules' => ['nullable', 'array'],
-                ],
-            ],
-            'border' => [
-                'borderSize' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'borderColor' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'borderStyle' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'borderRadius' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'shadow' => [
-                'shadowSize' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-                'shadowColor' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'htmlAnchor' => [
-                'htmlAnchor' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'className' => [
-                'className' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-            'style' => [
-                'style' => [
-                    'type' => 'string',
-                    'default' => '',
-                    'rules' => ['nullable', 'string', 'max:255'],
-                ],
-            ],
-
-        ];
-        return data_get($atts, $feature);
+        return self::featureAttributes($feature);
     }
+
+    /**
+     * Merge feature-driven attributes into a block's base attributes.
+     *
+     * @param array $block
+     * @return array
+     */
     public static function resolveBlockAttributes($block)
     {
         $features = data_get($block, 'features', []);
         $atts = data_get($block, 'attributes', []);
         foreach ($features as $feature) {
             $featureAtts = self::featureAtts($feature);
-            foreach ($featureAtts as $k => $v);
-            $atts[$k] = $v;
+            foreach ($featureAtts as $k => $v) {
+                $atts[$k] = $v;
+            }
         }
         return $atts;
     }
+    /**
+     * Default spacing attribute structure for responsive breakpoints.
+     *
+     * @return array
+     */
     public static function spacingAttributes()
     {
         $atts = [];
@@ -595,6 +242,12 @@ class PageBuilderController extends Controller
         }
         return $atts;
     }
+    /**
+     * Normalize a tree of registered blocks (add ids, resolve attributes, recurse children).
+     *
+     * @param array $blocks
+     * @return array
+     */
     public static function resolveRegisteredBlocks(array $blocks)
     {
         return arr_map($blocks, function ($block) {
@@ -609,20 +262,43 @@ class PageBuilderController extends Controller
             return $block;
         });
     }
+    /**
+     * Find a registered block by type.
+     *
+     * @param string $type
+     * @return array|null
+     */
     public static function registeredBlock($type): array | null
     {
         return self::registeredBlocks()->firstWhere('type', $type);
     }
+    /**
+     * Get array of all registered block types.
+     *
+     * @return array
+     */
     public static function blockTypes()
     {
         return self::registeredBlocks()->map(fn($block) => data_get($block, 'type'))->toArray();
     }
+    /**
+     * Back-compat: return rules array for a block type (if any).
+     *
+     * @param string $type
+     * @return array
+     */
     public static function blockRuless($type)
     {
         $blocks = self::registeredBlocks();
         $block = collect($blocks)->firstWhere('type', $type);
         return $block ? ($block['rules'] ?? []) : [];
     }
+    /**
+     * Build validation rules array from a block's attribute schema.
+     *
+     * @param string $type
+     * @return array
+     */
     public static function blockRules($type): array
     {
         $block = self::registeredBlock($type);
@@ -638,6 +314,12 @@ class PageBuilderController extends Controller
         }
     }
 
+    /**
+     * Extract default values for all attributes of a block type.
+     *
+     * @param string $type
+     * @return array
+     */
     public static function blockDefaults($type): array
     {
         $block = self::registeredBlock($type);
@@ -650,12 +332,14 @@ class PageBuilderController extends Controller
         }
         return $defaults;
     }
-    public static function blockDefaultss($type)
-    {
-        $blocks = self::registeredBlocks();
-        $block = collect($blocks)->firstWhere('type', $type);
-        return $block ? ($block['defaults'] ?? []) : [];
-    }
+
+    /**
+     * Render the page builder UI with necessary datasets.
+     *
+     * @param Request $request
+     * @param Post $page
+     * @return Response
+     */
     public function index(Request $request, Post $page): Response
     {
         $page->updateMeta('builder_enabled', true);
@@ -668,6 +352,7 @@ class PageBuilderController extends Controller
             'users' => fn() => User::all()->toArray(),
             'sortOptions' => fn() => sort_options(),
             'registeredBlocks' => fn() => self::registeredBlocks()->toArray(),
+            'patterns' => fn() => Pattern::all()->toArray(),
         ])
             ->rootView('layouts.inertia')
             ->withViewData([
@@ -677,30 +362,53 @@ class PageBuilderController extends Controller
             ]);
     }
 
+    /**
+     * Persist builder blocks for a page.
+     *
+     * @param StoreBlocksRequest $request
+     * @param Post $page
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreBlocksRequest $request, Post $page)
     {
         $blocks = data_get($request->validated(), 'blocks', []);
         // dd($blocks);
         $save = $page->saveBlocks($blocks);
         if ($save) {
-            $label = __('Show the page');
-            //return back()->with('save', __('Saved successfully :link', ['link' => a(['href' => $page->permalink, 'title' => $page->name, 'target' => 'blank', 'label' => $label])]));
             return back()->with('save', __('Saved successfully.'));
         } else {
             return back()->withErrors(['save', __('Save failed!')]);
         }
     }
 
+    /**
+     * Render a single block payload server-side and return its HTML.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Support\Renderable|string
+     */
     public function renderBlock(Request $request)
     {
         return block($request->all())->render();
     }
+    /**
+     * Return the block preview view for a given block payload.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function blockPreview(Request $request)
     {
         return view('components.block-preview', [
             'block' => $request->all(),
         ]);
     }
+    /**
+     * Resolve media conversions (original + generated conversions) to URLs map.
+     *
+     * @param Media $media
+     * @return array
+     */
     public function resolveConversions(Media $media)
     {
         $conversions = [
@@ -719,18 +427,37 @@ class PageBuilderController extends Controller
         return $conversions;
     }
 
+    /**
+     * Transform a Media model to array with conversions map.
+     *
+     * @param Media $media
+     * @return array
+     */
     public function resolveImage(Media $media): array
     {
         return array_merge($media->toArray(), [
             'conversions' => $this->resolveConversions($media),
         ]);
     }
+    /**
+     * List images attached to a page for the builder image picker.
+     *
+     * @param Post $page
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function pageImages(Post $page)
     {
         return response()->json(
             $page->getMedia('images')->map(fn(Media $media) => $this->resolveImage($media))->toArray()
         );
     }
+    /**
+     * Upload an image and attach it to the page's images collection.
+     *
+     * @param Request $request
+     * @param Post $page
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function uploadImage(Request $request, Post $page)
     {
         $request->validate([
@@ -746,6 +473,12 @@ class PageBuilderController extends Controller
         return response()->json($this->resolveImage($media));
     }
 
+    /**
+     * Switch the editor mode back to the classic editor.
+     *
+     * @param Post $page
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function classic(Post $page)
     {
         $page->updateMeta('builder_enabled', false);

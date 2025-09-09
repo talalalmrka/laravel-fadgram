@@ -1,4 +1,4 @@
-import { BlockType } from "@/types";
+import { Block } from "@/types";
 import { defineAsyncComponent } from "vue";
 
 /**
@@ -11,7 +11,7 @@ export function useComponent(path: string) {
     return defineAsyncComponent(() => import(/* @vite-ignore */ path));
 }
 
-export function useBlockEdit(block?: BlockType) {
+export function useBlockEdit(block?: Block) {
     if (block) {
         const path = `@/blocks/${block.type}/Edit.vue`;
         return useComponent(path);
@@ -20,7 +20,7 @@ export function useBlockEdit(block?: BlockType) {
     }
 }
 
-export function useBlockRender(block?: BlockType) {
+export function useBlockRender(block?: Block) {
     if (block) {
         const path = `@/blocks/${block.type}/Render.vue`;
         return useComponent(path);

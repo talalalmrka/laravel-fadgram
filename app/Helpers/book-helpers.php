@@ -40,13 +40,17 @@ if (!function_exists('get_books')) {
         }
 
         $sort = $ops->get('sort');
-        if ($sort) {
+        if ($sort && $sort !== 'popular') {
             $field = sort_field($sort);
             $direction = sort_direction($sort);
 
             if ($field && $direction) {
                 $query->orderBy($field, $direction);
             }
+        }
+
+        if ($sort === 'popular') {
+            $query->popular();
         }
 
         $limit = $ops->get('limit');

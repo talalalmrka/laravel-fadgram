@@ -31,3 +31,6 @@ require __DIR__ . '/breadcrumbs-helpers.php';
 require __DIR__ . '/quote-image-helpers.php';
 require __DIR__ . '/favorite-helpers.php';
 require __DIR__ . '/block-helpers.php';
+require __DIR__ . '/quote-day-helpers.php';
+require __DIR__ . '/color-helpers.php';
+require __DIR__ . '/og-helpers.php';

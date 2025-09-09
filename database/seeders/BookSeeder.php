@@ -14,6 +14,9 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        Book::factory(30)->create();
+        Book::factory(20)->status('publish')->create()->each(function (Book $book) {
+            $book->updateMeta('views', rand(1, 10000));
+            $book->updateMeta('downloads', rand(1, 10000));
+        });
     }
 }

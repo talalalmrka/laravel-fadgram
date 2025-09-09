@@ -10,6 +10,8 @@ class Index extends Datatable
 {
 
     public $id_column = true;
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
     public function builder()
     {
         return Media::query();

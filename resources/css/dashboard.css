@@ -1,0 +1,6 @@
+@import "./base";
+@source '../../vendor/talalalmrka/fgx/resources/views*.blade.php';
+@source "../js/composables";
+@source '../js/components';
+@source '../js/pages';
+@import "./cropper.css";

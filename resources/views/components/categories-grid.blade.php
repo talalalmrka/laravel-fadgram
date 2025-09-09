@@ -2,7 +2,7 @@
     'title' => null,
     'class' => null,
     'atts' => [],
-    'quotes' => null,
+    'categories' => null,
 ])
 <div
     {{ $attributes->merge(
@@ -19,7 +19,7 @@
         <x-heading-strip :title="$title" />
     @endif
     @if ($categories && $categories->isNotEmpty())
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @foreach ($categories as $category)
                 <x-categories-grid-item :category="$category" />
             @endforeach

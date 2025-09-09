@@ -2,7 +2,7 @@
     <form wire:submit="save">
         <fgx:card>
             <fgx:card-header class="flex-space-2">
-                <img src="{{ $user->getAvatarUrl('sm') }}" class="w-8 h-8 rounded-full border border-2 border-primary">
+                <img src="{{ $user->getAvatarUrl('sm') }}" class="w-8 h-8 rounded-full border-2 border-primary">
                 <span>{{ $user->display_name }}</span>
             </fgx:card-header>
             <fgx:card-body>

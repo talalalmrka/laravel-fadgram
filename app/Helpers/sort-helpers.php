@@ -23,6 +23,11 @@ if (!function_exists('sorts')) {
                 'direction' => 'desc',
                 'label' => __('Z → A'),
             ],
+            'popular' => [
+                'field' => 'meta.views',
+                'direction' => 'desc',
+                'label' => __('Popular'),
+            ],
         ];
     }
 }

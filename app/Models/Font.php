@@ -75,16 +75,16 @@ class Font extends Model implements HasMedia
     }
     public function getCssAttribute()
     {
-        $css = "@font-face {\n";
-        $css .= "   font-family: '{$this->name}';\n";
-        $css .= "   font-style: {$this->style};\n";
-        $css .= "   font-weight: {$this->weight};\n";
-        $css .= "   src: url('{$this->file_url}') format('truetype');\n";
-        $css .= "   font-display: {$this->display};\n";
+        $css = "@font-face {";
+        $css .= "font-family: '{$this->name}';";
+        $css .= "font-style: {$this->style};";
+        $css .= "font-weight: {$this->weight};";
+        $css .= "src: url('{$this->file_url}') format('truetype');";
+        $css .= "font-display: {$this->display};";
         //$css .= "   unicode-range: U+0000-00FF;\n";
-        $css .= "}\n";
-        $css .= ".font-{$this->slug} {\n";
-        $css .= "   font-family: '{$this->name}';\n";
+        $css .= "}";
+        $css .= ".font-{$this->slug} {";
+        $css .= "   font-family: '{$this->name}';";
         $css .= "}";
         return $css;
     }
@@ -93,7 +93,7 @@ class Font extends Model implements HasMedia
         $css = "";
         $fonts = self::enabled();
         foreach ($fonts as $font) {
-            $css .= "{$font->css}\n";
+            $css .= "{$font->css}";
         }
         return $css;
     }

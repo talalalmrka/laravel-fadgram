@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, useTemplateRef } from 'vue';
-import eventBus from '@/types/eventBus';
+import EventBus from '@/types/event-bus';
 import axios from 'axios';
 import { route } from 'ziggy-js';
 import { MediaType } from '@/types/media';
@@ -153,12 +153,12 @@ function toggleSelect(media: any) {
 
 function confirmSelection() {
     if (multiple.value) {
-        eventBus.emit('mediaSelected', {
+        EventBus.emit('mediaSelected', {
             id: id.value,
             media: selectedMedia.value,
         });
     } else {
-        eventBus.emit('mediaSelected', {
+        EventBus.emit('mediaSelected', {
             id: id.value,
             media: selectedMedia.value[0],
         });
@@ -223,7 +223,7 @@ function onDrop(e: DragEvent) {
 }
 
 onMounted(() => {
-    eventBus.on('openMediaModal', open);
+    EventBus.on('openMediaModal', open);
 });
 </script>
 

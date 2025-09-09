@@ -9,31 +9,19 @@ import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
 export const breakpoints = ["sm", "md", "lg", "xl"];
+export const breakpointTabs = breakpoints.map((b) => ({
+    name: b,
+    title: b,
+}));
+
 export const sides = ["top", "start", "end", "bottom"];
-export const useSizeOptions = (): OptionType[] => {
-    return [
-        {
-            label: "xs",
-            value: "xs",
-        },
-        {
-            label: "sm",
-            value: "sm",
-        },
-        {
-            label: "lg",
-            value: "lg",
-        },
-        {
-            label: "xl",
-            value: "xl",
-        },
-        {
-            label: "xxl",
-            value: "xxl",
-        },
-    ];
-};
+
+export const sideOptions = sides.map((s) => ({
+    label: s.charAt(0).toUpperCase() + s.slice(1),
+    name: s,
+    value: s.charAt(0),
+}));
+
 export const useThemeOptions = (): OptionType[] => {
     return [
         {

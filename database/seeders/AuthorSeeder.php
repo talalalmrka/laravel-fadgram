@@ -13,6 +13,8 @@ class AuthorSeeder extends Seeder
      */
     public function run(): void
     {
-        Author::factory(30)->create();
+        Author::factory(20)->create([
+            'status' => 'publish',
+        ]);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Livewire\Components;
 use App\Models\Quote;
 use App\Models\QuoteImage;
 use App\Services\ImageService;
-use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class DownloadQuote extends Component
@@ -27,12 +26,14 @@ class DownloadQuote extends Component
     public function selectImage(QuoteImage $quoteImage)
     {
         $this->image = $quoteImage;
+        // $this->js('lozad');
     }
     public function shuffleImages()
     {
         $this->images = QuoteImage::inRandomOrder()->take(5)->get();
         $this->image = $this->images->first();
         $this->shuffle = true;
+        // $this->js('lozad');
     }
     public function downloadImage()
     {

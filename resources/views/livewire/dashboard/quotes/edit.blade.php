@@ -76,21 +76,26 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <x-rich-select id="user_id" wire:model.live="user_id" :label="__('User')"
+                                <livewire:components.select-user key="user-{{ $user_id ?? 'no' }}"
+                                    wire:model.live="user_id"
+                                    label="{{ __('User') }}" user="{{ $user_id }}" />
+                                {{-- <x-rich-select id="user_id" wire:model.live="user_id" :label="__('User')"
                                     :placeholder="__('Select user')"
                                     :options="user_options(['selected' => $user_id])"
-                                    :ajax-url="route('api.users')" :selected="$user_id" />
+                                    :ajax-url="route('api.users')" :selected="$user_id" /> --}}
                             </div>
                             <div class="col">
-                                <x-rich-select id="author_id" wire:model.live="author_id" :label="__('Author')"
-                                    :placeholder="__('Select author')"
-                                    :options="author_options(['selected' => $author_id])"
-                                    ajaxUrl="{{ route('api.authors') }}" :selected="$author_id" />
+                                <livewire:components.select-author key="author-{{ $author_id ?? 'no' }}"
+                                    wire:model.live="author_id" :label="__('Author')" />
                                 <a target="_blank" href="{{ route('dashboard.authors.create') }}"
                                     class="link flex-space-2 text-sm mt-2">
                                     @icon('fg-plus')
                                     <span>{{ __('Create new author') }}</span>
                                 </a>
+                            </div>
+                            <div class="col">
+                                <fgx:input type="number" id="views" wire:model.live="views"
+                                    :label="__('Views')" />
                             </div>
                             <div class="col">
                                 <fgx:textarea id="excerpt" wire:model.live="excerpt" :label="__('Excerpt')" />

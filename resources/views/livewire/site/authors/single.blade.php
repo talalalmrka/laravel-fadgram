@@ -6,22 +6,10 @@
         <img src="{{ $author->getThumbnailUrl('sm') }}" class="w-full h-full object-cover" />
     </div>
     @if (!empty($author->content))
-        <fgx:card class="mt-6">
-            <fgx:card-header :title="__('About :name', ['name' => $author->name])" />
-            <div class="card-body">
-                {{ $author->content }}
-            </div>
-        </fgx:card>
+        <p>{!! $author->content !!}</p>
     @endif
-
     <div x-tabs class="mt-6">
         <div x-tabs-header>
-            @if ($posts)
-                <button x-tab="posts" class="flex-space-1">
-                    @icon('bi-newspaper')
-                    <span>{{ __('Posts') }}</span>
-                </button>
-            @endif
             @if ($quotes)
                 <button x-tab="quotes" class="flex-space-1">
                     @icon('bi-quote')
@@ -36,11 +24,6 @@
             @endif
         </div>
         <div x-tabs-content>
-            @if ($posts)
-                <div x-tab-panel="posts">
-                    <x-posts-grid :posts="$posts" />
-                </div>
-            @endif
             @if ($quotes)
                 <div x-tab-panel="quotes">
                     <x-quotes-grid :quotes="$quotes" />

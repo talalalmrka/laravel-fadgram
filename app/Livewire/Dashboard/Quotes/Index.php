@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard\Quotes;
 
+use App\Livewire\Components\Datatable\Buttons\Button;
 use App\Livewire\Components\Datatable\Datatable;
 use App\Models\Quote;
 
@@ -24,6 +25,47 @@ class Index extends Datatable
             $query->status($this->publish_status);
         }
         return $query;
+    }
+    public function getButtons()
+    {
+        return [
+            Button::make('create')
+                ->icon('bi-plus-lg')
+                ->title(__('Create'))
+                ->color('emerald'),
+
+            Button::make('bulk_create')
+                ->icon('bi-window-plus')
+                ->title(__('Create multiple'))
+                ->color('lime'),
+
+            Button::make('publishSelected')
+                ->icon('bi-check2-circle')
+                ->title(__('Publish'))
+                ->color('sky')
+                ->disabled(!$this->hasSelected()),
+
+            Button::make('draftSelected')
+                ->icon('bi-clock')
+                ->title(__('Draft'))
+                ->color('secondary')
+                ->class('btn-orange')
+                ->disabled(!$this->hasSelected()),
+
+            Button::make('trashSelected')
+                ->icon('bi-trash')
+                ->title(__('Move to trash'))
+                ->color('orange')
+                ->class('btn-orange')
+                ->disabled(!$this->hasSelected()),
+
+            Button::make('deleteSelected')
+                ->icon('bi-x-lg')
+                ->title(__('Delete'))
+                ->color('red')
+                ->attributes(['wire:confirm' => __('Are you shure to delete selected?')])
+                ->disabled(!$this->hasSelected()),
+        ];
     }
     public function getColumns()
     {
@@ -95,6 +137,28 @@ class Index extends Datatable
                 ->href(fn(Quote $quote) => $quote->edit_url),
             taction('delete')->icon('bi-trash')->title(__('Delete')),
         ];
+    }
+    public function bulk_create()
+    {
+        $this->authorizeCreate();
+        $this->redirect(route('dashboard.quotes.create.bulk'), true);
+    }
+    public function updateSelectedStatus($status)
+    {
+        $this->authorize('manage_quotes');
+        $this->builder()->whereIn('id', $this->selected)->update(['status' => $status]);
+    }
+    public function publishSelected()
+    {
+        $this->updateSelectedStatus('publish');
+    }
+    public function draftSelected()
+    {
+        $this->updateSelectedStatus('draft');
+    }
+    public function trashSelected()
+    {
+        $this->updateSelectedStatus('trash');
     }
     public function render()
     {

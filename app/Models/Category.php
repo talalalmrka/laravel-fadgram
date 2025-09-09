@@ -90,6 +90,12 @@ class Category extends Model implements HasMedia
     {
         return Attribute::get(fn() => $this->posts()->status('publish')->count());
     }
+    public function scopeHasPosts($query)
+    {
+        return $query->type('category')->whereHas('posts', function ($query) {
+            $query->where('type', 'post')->where('status', 'publish');
+        });
+    }
     public function books()
     {
         return $this->morphedByMany(
@@ -101,6 +107,12 @@ class Category extends Model implements HasMedia
     public function booksCount(): Attribute
     {
         return Attribute::get(fn() => $this->books()->status('publish')->count());
+    }
+    public function scopeHasBooks($query)
+    {
+        return $query->type('category')->whereHas('books', function ($query) {
+            $query->where('status', 'publish');
+        });
     }
     public function quotes()
     {
@@ -114,6 +126,12 @@ class Category extends Model implements HasMedia
     {
         return Attribute::get(fn() => $this->quotes()->status('publish')->count());
     }
+    public function scopeHasQuotes($query)
+    {
+        return $query->type('category')->whereHas('quotes', function ($query) {
+            $query->where('status', 'publish');
+        });
+    }
     public function quoteImages()
     {
         return $this->morphedByMany(
@@ -125,6 +143,12 @@ class Category extends Model implements HasMedia
     public function quoteImagesCount(): Attribute
     {
         return Attribute::get(fn() => $this->quoteImages()->count());
+    }
+    public function scopeHasQuoteImages($query)
+    {
+        return $query->type('category')->whereHas('quote_images', function ($query) {
+            $query->where('status', 'publish');
+        });
     }
     public function scopeTop($query)
     {
@@ -184,6 +208,7 @@ class Category extends Model implements HasMedia
     {
         return $query->where('type', 'tag');
     }
+
     public function hasAnyChild($categories)
     {
         $categoryIds = $this->resolveCategoryIds($categories);

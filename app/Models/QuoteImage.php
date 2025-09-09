@@ -110,6 +110,9 @@ class QuoteImage extends Model implements HasMedia
     }
     public function generatedImage($quote, $size = 'full', $format = 'jpg')
     {
+        if($quote instanceof Quote && empty($quote->id)){
+            return null;
+        }
         return !empty($this->id) ? route('imgen.quote', ['quote' => $quote, 'quote_image' => $this, 'size' => $size, 'format' => $format]) : null;
     }
 }

@@ -23,21 +23,19 @@
             @foreach ($quotes as $quote)
                 <!-- Each item -->
                 <div class="masonry-item relative mb-6 group rounded-2xl overflow-hidden">
-                    <a href="{{ $quote->permalink }}" title="{{ $quote->name }}">
+                    <a href="{{ $quote->permalink }}" title="{{ $quote->content }}">
                         <img
-                            src="{{ $quote->getThumbnailUrl('sm') }}"
-                            alt="{{ $quote->name }}"
-                            class="w-full rounded-2xl shadow-lg" />
+                            src="{{ $quote->getThumbnailUrl('sm') }}" loading="lazy"
+                            alt="{{ $quote->content }}"
+                            class="w-full rounded-2xl shadow-lg opacity-0 transition-opacity duration-300"
+                            onload="this.classList.remove('opacity-0')" />
                         <div class="absolute inset-0 hidden group-hover:block rounded-2xl bg-black/30"></div>
                     </a>
-                    <button type="button"
-                        class="btn btn-blue p-0 space-x-0 items-center justify-center w-8 h-8 rounded-full absolute top-2 end-2 z-1 hidden group-hover:inline-flex"
-                        wire:click="downloadQuote({{ $quote->id }})" aria-label="Download">
-                        <i wire:loading.remove wire:target="downloadQuote({{ $quote->id }})"
-                            class="icon bi-cloud-download"></i>
-                        <i class="icon fg-loader-dots-move text-white" wire:loading
-                            wire:target="downloadQuote({{ $quote->id }})"></i>
-                    </button>
+                    <a href="{{ $quote->download_url }}"
+                        class="btn btn-blue p-0 space-x-0 inline-flex items-center justify-center w-6 h-6 rounded-full absolute bottom-2 end-2 z-1"
+                        title="Download">
+                        <i class="icon bi-cloud-download"></i>
+                    </a>
                     @if ($quote->categories)
                         <div class="absolute bottom-2 inset-x-2 gap-4 flex-wrap hidden group-hover:flex">
                             {!! $quote->categoriesLinks([

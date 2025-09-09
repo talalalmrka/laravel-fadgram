@@ -5,6 +5,9 @@
     'containerClass' => null,
 ])
 <x-app-layout :title="$title ?? ''">
+    <slot name="style">
+        @vite(['resources/css/dashboard.css'])
+    </slot>
     <div class="min-h-screen bg-primary/3 dark:bg-gray-900">
         <div class="offcanvas offcanvas-start offcanvas-primary expand-lg dashboard-sidebar" id="dashboard-sidebar">
             <div class="offcanvas-header flex-space-2 items-center h-14">
@@ -86,6 +89,8 @@
                                 :label="__('All quotes')" />
                             <x-nav-link wire:navigate :href="route('dashboard.quotes.create')" wire:current.exact="active" icon="fg-plus"
                                 :label="__('Create new quote')" />
+                            <x-nav-link wire:navigate :href="route('dashboard.quotes.create.bulk')" wire:current.exact="active" icon="bi-window-plus"
+                                :label="__('Create multi')" />
                             <x-nav-link wire:navigate :href="route('dashboard.quote-images')" wire:current.exact="active" icon="bi-image"
                                 :label="__('Quote images')" />
                         </x-nav-link-collapse>
@@ -117,6 +122,10 @@
                     @endcan
                     <!-- Settings -->
                     @can('manage_settings')
+                        <x-nav-link wire:navigate :href="route('dashboard.cache')" wire:current="active" icon="bi-hdd"
+                            :label="__('Cache')" />
+                        <x-nav-link wire:navigate :href="route('terminal')" wire:current="active" icon="bi-terminal"
+                            :label="__('Terminal')" />
                         <x-nav-link-collapse icon="bi-gear-wide-connected" :label="__('Settings')"
                             :open="request()->routeIs(['dashboard.settings', 'dashboard.settings.*'])">
                             <x-nav-link wire:navigate :href="route('dashboard.settings')" wire:current.exact="active"
@@ -144,8 +153,10 @@
                                 :label="__('Discussion settings')" />
                             <x-nav-link wire:navigate :href="route('dashboard.settings.ads')" wire:current="active" icon="bi-megaphone"
                                 :label="__('Ads settings')" />
-                            <x-nav-link wire:navigate :href="route('dashboard.settings.design')" wire:current="active" icon="bi-palette"
+                            <x-nav-link wire:navigate :href="route('dashboard.settings.design')" wire:current="active" icon="bi-window"
                                 :label="__('Design settings')" />
+                            <x-nav-link wire:navigate :href="route('dashboard.settings.colors')" wire:current="active" icon="bi-palette"
+                                :label="__('Colors settings')" />
                             <x-nav-link-collapse icon="bi-type" :label="__('Typography')"
                                 :open="request()->routeIs([
                                     'dashboard.settings.typography',

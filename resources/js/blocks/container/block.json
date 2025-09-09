@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "type": "container",
+    "icon": "bi-window",
+    "label": "Container",
+    "inner": "all",
+    "features": [
+        "typography",
+        "bgColor",
+        "bgImage",
+        "margin",
+        "padding",
+        "border",
+        "shadow",
+        "position",
+        "display",
+        "inset",
+        "zIndex",
+        "htmlAnchor",
+        "className",
+        "style"
+    ],
+    "children": [],
+    "attributes": {
+        "type": {
+            "type": "string",
+            "default": "container",
+            "rules": ["nullable", "string", "max:255"]
+        }
+    }
+}

@@ -18,15 +18,15 @@ class CommentSeeder extends Seeder
     public function run(): void
     {
         // authors
-        Author::all()->each(fn(Author $author) => Comment::factory(5)->model($author)->create());
+        Author::all()->each(fn(Author $author) => Comment::factory(1)->model($author)->create());
 
         // posts
-        Post::all()->each(fn(Post $post) => Comment::factory(5)->model($post)->create());
+        Post::all()->each(fn(Post $post) => Comment::factory(1)->model($post)->create());
 
         // quotes
-        Quote::all()->each(fn(Quote $quote) => Comment::factory(5)->model($quote)->create());
+        Quote::all()->each(fn(Quote $quote) => Comment::factory(1)->model($quote)->create());
 
         // books
-        Book::all()->each(fn(Book $book) => Comment::factory(5)->model($book)->create());
+        Book::all()->each(fn(Book $book) => Comment::factory(1)->model($book)->create());
     }
 }

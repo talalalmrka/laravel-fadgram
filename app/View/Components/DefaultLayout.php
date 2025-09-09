@@ -10,7 +10,7 @@ class DefaultLayout extends AppLayout
 {
     public function __construct(
         public string $title = '',
-        public string|null $description = null,
+        public $description = '',
         public string $navbarclass = 'header sticky top-0 bg-gray-50 dark:bg-gray-700 max-w-full z-50 shadow-xs',
         public string $logo_theme = 'dark',
         public string|null $seo_title = null,

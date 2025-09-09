@@ -5,7 +5,7 @@
     favorite: @js($book->isFavorited()),
     toggleFavorite() {
         this.favorite = !this.favorite;
-        $wire.toggleFavorite(this.bookId)
+        $wire.toggleFavorite('book', this.bookId)
     }
 }"
     {{ $attributes->merge(
@@ -26,8 +26,8 @@
         class="relative w-full aspect-[3/4] bg-gray-200 flex items-center justify-center overflow-hidden">
         <a href="{{ $book->permalink }}" title="{{ $book->name }}"
             class="relative leading-none w-full h-full overflow-hidden group object-cover">
-            <img class="w-full h-full object-cover group-hover:scale-[1.05] transition-all duration-300"
-                src="{{ $book->getThumbnailUrl('sm') }}"
+            <img class="lozad w-full h-full object-cover group-hover:scale-[1.05] transition-all duration-300"
+                src="{{ $book->getThumbnailUrl('sm') }}" loading="lazy"
                 alt="{{ $book->name }}">
             <div
                 class="absolute z-1 inset-0 bg-gradient-to-r from-black/30 via-black/10 to-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
@@ -64,13 +64,17 @@
                     <span class="truncate overflow-hidden whitespace-nowrap">{{ $book->date_ago }}</span>
                 </span>
                 <span class="flex-space-1 overflow-hidden text-xs">
+                    @icon('bi-eye')
+                    <span class="truncate overflow-hidden whitespace-nowrap">{{ $book->views_formatted }}</span>
+                </span>
+                {{-- <span class="flex-space-1 overflow-hidden text-xs">
                     @icon('bi-book')
                     <span class="truncate overflow-hidden whitespace-nowrap">{{ $book->reads_formatted }}</span>
                 </span>
                 <span class="flex-space-1 overflow-hidden text-xs">
                     @icon('bi-cloud-download')
                     <span class="truncate overflow-hidden whitespace-nowrap">{{ $book->downloads_formatted }}</span>
-                </span>
+                </span> --}}
             </div>
             <button type="button" x-on:click="toggleFavorite"
                 class="text-lg flex-space-1">

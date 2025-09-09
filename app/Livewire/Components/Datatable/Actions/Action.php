@@ -18,6 +18,7 @@ class Action
     public $class = null;
     public $atts = [];
     public $customContent = null;
+    public $customClick = null;
     public $item;
     public static function make($click = null)
     {
@@ -94,6 +95,16 @@ class Action
     {
         $this->item = $item;
         return $this;
+    }
+    public function customClick($click)
+    {
+        $this->customClick = $click;
+        return $this;
+    }
+    public function clickAttribute()
+    {
+        $key = data_get($this->item, $this->item->primaryKey);
+        return !empty($this->customClick) ? call_user_func($this->customClick, $this->item) : "{$this->click}($key)";
     }
     public function toArray()
     {
