@@ -1,0 +1,1 @@
+import{d as c,S as n,c as r,o as a,O as p,u as o}from"./inertia-BCvEm3QN.js";import"./toast-CYXYB1Fz.js";const f=c({__name:"Render",props:{block:{},activeBlock:{}},setup(s){const e=n(s.block);return(t,l)=>(a(),r("i",p(t.$attrs,{class:["icon",["icon",o(e).icon,o(e).size]]}),null,16))}});export{f as default};

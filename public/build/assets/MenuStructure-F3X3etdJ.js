@@ -1,0 +1,1 @@
+import{_ as o}from"./MenuStructure.vue_vue_type_script_setup_true_lang-DOAH5vfC.js";import"./inertia-BCvEm3QN.js";import"./toast-CYXYB1Fz.js";import"./MenuItem.vue_vue_type_script_setup_true_lang-C9ATHKXZ.js";export{o as default};

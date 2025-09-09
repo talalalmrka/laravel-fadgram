@@ -1,0 +1,1 @@
+import{_ as o}from"./AddCategories.vue_vue_type_script_setup_true_lang-DWKOJb2b.js";import"./inertia-BCvEm3QN.js";import"./toast-CYXYB1Fz.js";import"./CategoriesCheckboxGroup.vue_vue_type_script_setup_true_lang-B7iiBkbZ.js";export{o as default};
