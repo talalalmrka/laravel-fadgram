@@ -4,6 +4,8 @@ Welcome to the **Fadgram Laravel Starter Kit**! This starter kit is designed to 
 
 ![Image](https://github.com/user-attachments/assets/ec7bda9d-3bbe-4eb2-8fff-e84793925bba)
 
+## New release
+
 ## Tech Stack
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
